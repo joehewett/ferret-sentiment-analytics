@@ -1,18 +1,38 @@
-import logo from './logo.svg';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+
+import { css } from '@emotion/css'
+import Events from './components/events';
+import Event from './components/event';
+
+import fgb from './img/ferretbg.jpg';
 import './App.css';
-import fgb from './img/ferretbg.jpg'
+import TopBar from './components/topbar'
 
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-          <img src={fgb}></img>
-          <AmplifySignOut />
-      </header>
-    </div>
-  );
+function Router() {
+    return ( 
+        <>
+
+            <TopBar />
+
+            <BrowserRouter>
+            <div className = {contentStyle}>
+            <Switch>
+                <Route exact path = "/" component={Events} />
+                <Route path = "/event/:id" component={Event} />
+            </Switch> 
+            </div> 
+            </BrowserRouter> 
+            <AmplifySignOut />
+        </>
+    );
 }
 
-export default withAuthenticator(App);
+const contentStyle = css`
+    min-height: calc(100vh - 45px);
+    padding: 0px 40px;
+`
+
+export default withAuthenticator(Router);

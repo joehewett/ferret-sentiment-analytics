@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "ferret80a63b0d_identitypool_80a63b0d",
+    "identityPoolName": "ferret062ac125_identitypool_062ac125",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "ferret80a63b0d",
-    "userPoolName": "ferret80a63b0d_userpool_80a63b0d",
+    "resourceNameTruncated": "ferret062ac125",
+    "userPoolName": "ferret062ac125_userpool_062ac125",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "ferret80a63b0d_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "ferret062ac125_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "80a63b0d",
-    "resourceName": "ferret80a63b0d",
+    "sharedId": "062ac125",
+    "resourceName": "ferret062ac125",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

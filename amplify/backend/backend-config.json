@@ -7,11 +7,39 @@
     }
   },
   "auth": {
-    "ferret80a63b0d": {
+    "ferret062ac125": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false
     }
-  }
+  },
+  "predictions": {},
+  "function": {},
+  "api": {
+    "ferretapi": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7,
+              "description": "public"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authferret062ac125"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "storage": {}
 }
