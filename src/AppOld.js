@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
-
-import { DataStore } from '@aws-amplify/datastore';
-import { Feedback, Event } from './models';
-
 import './App.css';
 import fgb from './img/ferretbg.jpg';
 
@@ -14,13 +10,17 @@ import { API, graphqlOperation } from 'aws-amplify';
 const initialFormState = { name: '', description: '' }
 
 function App() {       
+    // We'll store our events in state in events and update with setEvents
     const [events, setEvents] = useState([]);
+    // Store the form data for a new event in state too - set it blank to begin with
     const [formData, setFormData] = useState(initialFormState);
 
+    // On load, fetch all the events. This only happens when the component mounts because of the [] passed
     useEffect(() => {
         fetchEvents();
     }, []);
         
+    // Get all events for this user using the GraphQL Api
     async function fetchEvents() {
         try {
             const apiData = await API.graphql(graphqlOperation(listEvents));
@@ -31,9 +31,8 @@ function App() {
             console.log("Error while fetching events", err)
         }
     }
-
     
-
+    // Creates an event using the createEvent mutation, taking in the form data 
     async function createEvent() {
          if (!formData.name && !formData.description) return; 
          console.log("createEventMutation")
@@ -59,10 +58,7 @@ function App() {
 
     return (
         <div className="App">
-            <div className="App-header">
-                <img src={fgb}></img>
-                <AmplifySignOut />
-            </div>
+            <TopBar /> 
             <div>
                 <h1>Events</h1>
                 <input

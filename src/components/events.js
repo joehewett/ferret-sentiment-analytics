@@ -101,15 +101,14 @@ export default function Events() {
             events.map(event => (
                 <>
                 {/* Use react router to link to event page */}
-                <Link
-                    to={`/event/${event.id}`}
-                    className={linkStyle} key={event.id}
-                >
                 <div key={event.id} className={eventContainer}>
-                    <h1 className={eventTitleStyle}>{event.name}</h1>
-                </div>
-                </Link>
+                    <Link to={`/event/${event.id}`} className={linkStyle} key={event.id}>
+                        <h1 className={eventTitleStyle}>{event.name}</h1>
+                        <Button title="View Analytics" onClick ={() => deleteEvent(event)} />
+                    </Link>
+                    <Button title="Go to Form" />
                     <Button title="Delete Event" onClick ={() => deleteEvent(event)} />
+                </div>
                 </>
             ))
         }
@@ -145,7 +144,7 @@ const eventContainer = css`
     padding: 1px 20px;
     border: 1px solid #ddd;
     margin-bottom: 20px;
-    width: 30%;
+    width: 40%;
     :hover {
         border-color: #0070f3;
     }
