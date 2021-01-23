@@ -1,33 +1,44 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-
-import { css } from '@emotion/css'
-import Events from './components/events';
-import Event from './components/event';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import fgb from './img/ferretbg.jpg';
 import './App.css';
-import TopBar from './components/topbar'
+import { css } from '@emotion/css'
 
+import Home from './components/pages';
+import SignIn from './components/pages/signin';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar'
+import Host from './components/pages/host';
+import Events from './components/events';
+import Event from './components/event';
 
 function Router() {
-    return ( 
-        <>
+  const [isOpen, setIsOpen] = useState(true)
 
-            <TopBar />
+    const onToggle = () => {
+        setIsOpen(!isOpen)
+    }
+  return (
 
-            <BrowserRouter>
-            <div className = {contentStyle}>
-            <Switch>
-                <Route exact path = "/" component={Events} />
-                <Route path = "/event/:id" component={Event} />
-            </Switch> 
-            </div> 
-            </BrowserRouter> 
-            <AmplifySignOut />
-        </>
-    );
+    <div className="App">
+      
+      <Router>
+      <Sidebar isOpen= {isOpen} onToggle = {onToggle}/>
+      <Navbar onToggle = {onToggle}/>
+        <Switch>
+          <Route path="/" component={Home} exact/>
+          <Route path="/signin" component={SignIn} exact/>
+          <Route path="/host" component={Host} exact/>
+        </Switch>
+        </Router>
+      <header className="App-header">
+          <img src={fgb}></img>
+          <AmplifySignOut />
+      </header>
+    </div>
+  );
 }
 
 const contentStyle = css`
