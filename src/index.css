@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.signin button {
+    background-color: #0af;
+    outline:none;
+    border-radius: 14px
+}
+
+:root {
+    --amplify-primary-color: #0091ff;
+    --amplify-primary-tint: #0073c9;
+    --amplify-primary-shade: #0073c9;
+    
+}

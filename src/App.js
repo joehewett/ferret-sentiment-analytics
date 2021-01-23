@@ -1,16 +1,20 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+
+import fgb from './img/ferretbg.jpg';
 import './App.css';
-import fgb from './img/ferretbg.jpg'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {useState} from 'react'
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+import { css } from '@emotion/css'
+
 import Home from './components/pages';
 import SignIn from './components/pages/signin';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar'
 import Host from './components/pages/host';
+import Events from './components/events';
+import Event from './components/event';
 
-function App() {
+function Router() {
   const [isOpen, setIsOpen] = useState(true)
 
     const onToggle = () => {
@@ -37,4 +41,9 @@ function App() {
   );
 }
 
-export default withAuthenticator(App);
+const contentStyle = css`
+    min-height: calc(100vh - 45px);
+    padding: 0px 40px;
+`
+
+export default withAuthenticator(Router);
