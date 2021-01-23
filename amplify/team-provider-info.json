@@ -19,7 +19,9 @@
         }
       },
       "auth": {
-        "ferret80a63b0d": {}
+        "ferret80a63b0d": {},
+        "userPoolGroups": {},
+        "ferret062ac125": {}
       }
     }
   }

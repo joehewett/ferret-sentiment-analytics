@@ -1,0 +1,15 @@
+type Event @model
+          @key(
+              name: "eventsByUser",
+              fields: ["owner"],
+              queryField: "eventsByUser"
+              )
+         @auth(rules: [
+             { allow: owner },
+             { allow: public, operations: [read] }
+         ]) {
+                id: ID!
+                name: String!
+                description: String!
+                owner: String
+            }
