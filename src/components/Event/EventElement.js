@@ -55,7 +55,7 @@ export const EventValue = styled.p`
 	/* margin: 20px 0px; */
     color: ${
     ({score}) => 
-    ((score == 1) ? '#7E0C85': (score == 2) ? '#F82E06' : (score == 3) ? '#F6AB00': (score == 4) ? '#06F8DB': (score == 5) ? '#4FEE24' : '#818181')};
+    ((score === 1) ? '#7E0C85': (score === 2) ? '#F82E06' : (score === 3) ? '#F6AB00': (score === 4) ? '#06F8DB': (score === 5) ? '#4FEE24' : '#818181')};
 `
 
 export const EventListContainer = styled.div`

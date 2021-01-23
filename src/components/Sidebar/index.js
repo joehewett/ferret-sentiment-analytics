@@ -1,15 +1,15 @@
-import React, {component, useState} from 'react';
-import {SidebarContainer, Icon, CloseIcon, SidebarWrapper, SidebarMenu, SidebarLink, SideBtnWrap, SidebarRoute} from './SidebarElement';
+import React, { useState } from 'react';
+import {SidebarContainer, Icon, CloseIcon, SidebarWrapper, SidebarMenu, SidebarLink, SidebarRoute} from './SidebarElement';
 
 const Sidebar = ({isOpen, onToggle}) => {
-    // const [isOpen, setIsOpen] = useState(true)
+    const [open, setOpen] = useState(isOpen)
 
-    // const onToggle = () => {
-    //     setIsOpen(!isOpen)
-    // }
+    const toggle = () => {
+        setOpen(!open)
+    }
     return (
         <SidebarContainer isOpen={isOpen} onClick={onToggle}>
-            <Icon onClick={onToggle}>
+            <Icon onClick={toggle}>
                 <CloseIcon />
             </Icon>
             
@@ -18,20 +18,13 @@ const Sidebar = ({isOpen, onToggle}) => {
                     <SidebarLink to ="about"> 
                         About
                     </SidebarLink>
-                    <SidebarRoute to ="/host" > 
+                    <SidebarRoute to ="/events" > 
                         Admin
                     </SidebarRoute>
                     <SidebarLink to ="attendees"> 
                         Attendees
                     </SidebarLink>
-                    <SidebarLink to ="signup"> 
-                        Sign Up
-                    </SidebarLink>
                 </SidebarMenu>
-                <SideBtnWrap>
-                
-                    <SidebarRoute to = "/signin" >Sign In</SidebarRoute>
-                </SideBtnWrap>
             </SidebarWrapper>
         </SidebarContainer>
     )

@@ -1,11 +1,12 @@
 import React from 'react'
 import {EventContainer, EventName, DescWrapper, SubDesc, Label, EventValue} from './EventElement'
 
-const Event = ({name, overall, reviews, score}) => {
+const EventCard = ({id, name, score, reviews, overall}) => {
     return (
+        // TODO: Need to update the schema to hold all of the details necessary here 
         <>
         <EventContainer>
-            <EventName>{name}</EventName>
+        <EventName>{name}</EventName>
             <DescWrapper>
                 <SubDesc>
                     <Label>Overall</Label>
@@ -22,4 +23,4 @@ const Event = ({name, overall, reviews, score}) => {
     )
 }
 
-export default Event
+export default EventCard

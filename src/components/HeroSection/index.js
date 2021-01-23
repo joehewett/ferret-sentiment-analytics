@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import Video from '../../Video/video.mp4'
 import {BrowserRouter as Router} from 'react-router-dom'
 import {Button, ButtonR} from '../ButtonElement'
-import {HeroBg, VideoBg, HeroContainer, HeroContent, HeroH1, HeroP, HeroBtnWrapper, ArrowForward, ArrowRight} from './HeroElement'
+import {HeroBg, VideoBg, HeroContainer, HeroContent, HeroH1, HeroP, HeroBtnWrapper } from './HeroElement'
 
 
 const HeroSection = () => {
@@ -26,10 +26,10 @@ const HeroSection = () => {
                 </HeroP>
                 <HeroBtnWrapper>
                     <Router>
-                    <ButtonR to = "/host" onMouseEnter={onHover} onMouseLeave={onHover}>
+                    <ButtonR to = "/events" onMouseEnter={onHover} onMouseLeave={onHover}>
                         Host Event
                     </ButtonR>
-                    <Button to='attendee' onMouseEnter={onHover} onMouseLeave={onHover}>
+                    <Button to='/' onMouseEnter={onHover} onMouseLeave={onHover}>
                         Join Event
                     </Button>
                     </Router>
