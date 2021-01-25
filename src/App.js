@@ -7,7 +7,7 @@ import './App.css';
 import Home from './components/pages';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar'
-import Events from './components/Events';
+import Events from './components/Events/Events';
 import Event from './components/Events/Event';
 import Feedback from './components/Feedback';
 function App() {
