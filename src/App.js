@@ -8,8 +8,8 @@ import Home from './components/pages';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar'
 import Events from './components/Events';
-import Event from './components/Event';
-
+import Event from './components/Events/Event';
+import Feedback from './components/Feedback';
 function App() {
   const [isOpen, setIsOpen] = useState(true)
 
@@ -26,6 +26,7 @@ function App() {
                         <Route path="/" component={Home} exact/>
                         <Route path="/events" component={Events} exact/>
                         <Route path="/event/:id" component={Event} />
+                        <Route path="/feedback/:id" component={Feedback} />
                     </Switch>
             </Router>
         </div>

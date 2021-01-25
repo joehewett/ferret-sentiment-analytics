@@ -8,7 +8,7 @@ import { createEvent as createEventMutation } from '../../graphql/mutations';
 
 const initialFormState = { name: '', description: '' }
 
-const EventCreate = ({allEvents}) => {
+const EventCreate = ({events,setEvents}) => {
     // Store the form data for a new event in state too - set it blank to begin with
     const [formData, setFormData] = useState(initialFormState)
     // const [events, setEvents] = useState(allEvents)
@@ -26,6 +26,7 @@ const EventCreate = ({allEvents}) => {
                 authMode: "AMAZON_COGNITO_USER_POOLS"
             });
             console.log("createEventMutation success")
+            setEvents([...events,formData])
          } catch(error) {
              console.log(error)
          }
