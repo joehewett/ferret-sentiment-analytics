@@ -8,11 +8,12 @@ import { createEvent as createEventMutation } from '../../graphql/mutations';
 
 const initialFormState = { name: '', description: '' }
 
-const EventCreate = ({allEvents}) => {
+const EventCreate = ({allEvents, setEvents}) => {
     // Store the form data for a new event in state too - set it blank to begin with
     const [formData, setFormData] = useState(initialFormState)
     // const [events, setEvents] = useState(allEvents)
 
+    console.log("Set events is", setEvents)
     // Creates an event using the createEvent mutation, taking in the form data 
     async function createEvent() {
          if (!formData.name && !formData.description) return; 

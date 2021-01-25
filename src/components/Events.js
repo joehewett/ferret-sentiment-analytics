@@ -60,7 +60,7 @@ export default function Events() {
 
     return (
         <>
-            <EventCreate allEvents={events} />
+            <EventCreate allEvents={events} setEvents={"Hello"} />
             <EventHeader>Your Events</EventHeader>
 
             <EventListContainer>
