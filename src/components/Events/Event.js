@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { css } from '@emotion/css';
 import { useParams } from 'react-router-dom';
 import { API } from 'aws-amplify';
-import { getEvent } from '../graphql/queries';
+import { getEvent } from '../../graphql/queries';
 import { Link } from 'react-router-dom';
 
 export default function Event() {
@@ -38,6 +38,9 @@ export default function Event() {
 
         <Link to={`/`}>
             <h2>Home</h2>
+        </Link>
+        <Link to={'/feedback/' + id}>
+            <button>See Feedback Form</button>
         </Link>
 
         </>

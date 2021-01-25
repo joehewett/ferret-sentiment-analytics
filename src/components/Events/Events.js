@@ -3,21 +3,28 @@ import { css } from '@emotion/css';
 import { Link } from 'react-router-dom';
 import { API, Auth } from 'aws-amplify'
 // import { deleteEvent as deleteEventMutation } from '../graphql/mutations';
-import { listEvents, eventsByUser } from '../graphql/queries';
+import { listEvents, eventsByUser } from '../../graphql/queries';
 
-import EventCreate from './CreateEvent'
-import EventCard from './Event'
-import {EventHeader, EventListContainer} from './Event/EventElement'
+import EventCreate from '../CreateEvent'
+import EventCard from './EventCard'
+import { EventHeader, EventListContainer } from './EventElement'
 
 
 export default function Events() {
     // We'll store our events in state in events and update with setEvents
     const [events, setEvents] = useState([]);
+    const [eventCount, setEventCount] = useState(events.length)
+    console.log("in evenets")
+
 
     // On load, fetch all the events. This only happens when the component mounts because of the [] passed
     useEffect(() => {
         fetchEvents();
     }, []);
+
+    useEffect(() => {
+        fetchEvents();
+    }, [eventCount]);
 
     async function fetchEvents(postType = 'my-events') {
         let eventData, newEvents;
@@ -60,7 +67,7 @@ export default function Events() {
 
     return (
         <>
-            <EventCreate allEvents={events} />
+            <EventCreate events={events} setEvents={setEvents} eventCount={eventCount} setEventCount={setEventCount}/>
             <EventHeader>Your Events</EventHeader>
 
             <EventListContainer>
@@ -68,7 +75,8 @@ export default function Events() {
                     events.map(event => (
                         <>
                             <Link to={`/event/${event.id}`} className={linkStyle} key={event.id}>
-                                <EventCard key={event.id} id={event.id} name={event.name} score={event.score} reviews={event.reviews} overall={event.overall} />
+                                <EventCard key={event.id} id={event.id} name={event.name}  />
+                                {/* <EventCard key={event.id} id={event.id} name={event.name} score={event.score} reviews={event.reviews} overall={event.overall} /> */}
                             </Link>
                         </>
                     ))
