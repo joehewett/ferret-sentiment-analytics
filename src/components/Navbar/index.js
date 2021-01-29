@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import {FaBars} from 'react-icons/fa'
-import { Nav, NavbarContainer, NavLogo, MobileIcon, NavMenu, NavItem, NavLinks, NavBtn } from './NavbarElement'
+import { Nav, NavbarContainer, NavLogo, MobileIcon, NavMenu, NavItem, NavLinks, NavBtn, NavBtnLink } from './NavbarElement'
 import { AmplifySignOut } from '@aws-amplify/ui-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { Auth } from 'aws-amplify'
 
 const Navbar = ({onToggle}) => {
@@ -29,10 +29,8 @@ const Navbar = ({onToggle}) => {
                             <NavLinks to="about">About</NavLinks>
                         </NavItem>
                         <NavItem>
+                            <NavBtnLink to="/events">Events</NavBtnLink>
                             {/* TODO Styling is broken here */}
-                            <NavLinks>
-                                <NavLink to="/events">Events</NavLink>
-                            </NavLinks>
                         </NavItem>
                     </NavMenu>
 
