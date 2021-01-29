@@ -37,7 +37,7 @@ export default function Event() {
         <p>here we will display the feedback for this event</p>
 
         <Link to={`/`}>
-            <h2>Home</h2>
+            <button>Home</button>
         </Link>
         <Link to={'/feedback/' + id}>
             <button>See Feedback Form</button>

@@ -13,6 +13,18 @@ export const createEvent = /* GraphQL */ `
       owner
       createdAt
       updatedAt
+      components {
+        items {
+          id
+          type
+          text
+          event_id
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -28,6 +40,18 @@ export const updateEvent = /* GraphQL */ `
       owner
       createdAt
       updatedAt
+      components {
+        items {
+          id
+          type
+          text
+          event_id
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -43,6 +67,237 @@ export const deleteEvent = /* GraphQL */ `
       owner
       createdAt
       updatedAt
+      components {
+        items {
+          id
+          type
+          text
+          event_id
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createComponent = /* GraphQL */ `
+  mutation CreateComponent(
+    $input: CreateComponentInput!
+    $condition: ModelComponentConditionInput
+  ) {
+    createComponent(input: $input, condition: $condition) {
+      id
+      type
+      text
+      event_id
+      createdAt
+      updatedAt
+      event {
+        id
+        name
+        description
+        owner
+        createdAt
+        updatedAt
+        components {
+          nextToken
+        }
+      }
+      owner
+      feedbacks {
+        items {
+          id
+          component_id
+          response
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updateComponent = /* GraphQL */ `
+  mutation UpdateComponent(
+    $input: UpdateComponentInput!
+    $condition: ModelComponentConditionInput
+  ) {
+    updateComponent(input: $input, condition: $condition) {
+      id
+      type
+      text
+      event_id
+      createdAt
+      updatedAt
+      event {
+        id
+        name
+        description
+        owner
+        createdAt
+        updatedAt
+        components {
+          nextToken
+        }
+      }
+      owner
+      feedbacks {
+        items {
+          id
+          component_id
+          response
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const deleteComponent = /* GraphQL */ `
+  mutation DeleteComponent(
+    $input: DeleteComponentInput!
+    $condition: ModelComponentConditionInput
+  ) {
+    deleteComponent(input: $input, condition: $condition) {
+      id
+      type
+      text
+      event_id
+      createdAt
+      updatedAt
+      event {
+        id
+        name
+        description
+        owner
+        createdAt
+        updatedAt
+        components {
+          nextToken
+        }
+      }
+      owner
+      feedbacks {
+        items {
+          id
+          component_id
+          response
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createFeedback = /* GraphQL */ `
+  mutation CreateFeedback(
+    $input: CreateFeedbackInput!
+    $condition: ModelFeedbackConditionInput
+  ) {
+    createFeedback(input: $input, condition: $condition) {
+      id
+      component_id
+      response
+      createdAt
+      updatedAt
+      component {
+        id
+        type
+        text
+        event_id
+        createdAt
+        updatedAt
+        event {
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+        owner
+        feedbacks {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const updateFeedback = /* GraphQL */ `
+  mutation UpdateFeedback(
+    $input: UpdateFeedbackInput!
+    $condition: ModelFeedbackConditionInput
+  ) {
+    updateFeedback(input: $input, condition: $condition) {
+      id
+      component_id
+      response
+      createdAt
+      updatedAt
+      component {
+        id
+        type
+        text
+        event_id
+        createdAt
+        updatedAt
+        event {
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+        owner
+        feedbacks {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const deleteFeedback = /* GraphQL */ `
+  mutation DeleteFeedback(
+    $input: DeleteFeedbackInput!
+    $condition: ModelFeedbackConditionInput
+  ) {
+    deleteFeedback(input: $input, condition: $condition) {
+      id
+      component_id
+      response
+      createdAt
+      updatedAt
+      component {
+        id
+        type
+        text
+        event_id
+        createdAt
+        updatedAt
+        event {
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+        owner
+        feedbacks {
+          nextToken
+        }
+      }
+      owner
     }
   }
 `;

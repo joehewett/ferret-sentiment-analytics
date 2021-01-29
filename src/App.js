@@ -10,6 +10,8 @@ import Sidebar from './components/Sidebar'
 import Events from './components/Events/Events';
 import Event from './components/Events/Event';
 import Feedback from './components/Feedback';
+import Edit from './components/Feedback/Edit';
+
 function App() {
   const [isOpen, setIsOpen] = useState(true)
 
@@ -26,6 +28,7 @@ function App() {
                         <Route path="/" component={Home} exact/>
                         <Route path="/events" component={Events} exact/>
                         <Route path="/event/:id" component={Event} />
+                        <Route path="/feedback/edit/:id" component={Edit} />
                         <Route path="/feedback/:id" component={Feedback} />
                     </Switch>
             </Router>

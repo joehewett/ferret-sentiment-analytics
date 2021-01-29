@@ -12,4 +12,39 @@ type Event @model
                 name: String!
                 description: String!
                 owner: String
+                components: [Component] @connection(name: "EventComponents")
+            }
+
+type Component @model
+          @key(
+              name: "componentsByEvent",
+              fields: ["event_id"],
+              queryField: "componentsByEvent"
+              )
+         @auth(rules: [
+             { allow: owner },
+             { allow: public }
+         ]) {
+                id: ID!
+                type: String!
+                text: String! 
+                event_id: ID!
+                event: Event @connection(name: "EventComponents")
+                feedbacks: [Feedback] @connection(name: "ComponentFeedback")
+            }
+
+type Feedback @model
+          @key(
+              name: "feedbackByComponent",
+              fields: ["component_id"],
+              queryField: "feedbackByComponent"
+              )
+         @auth(rules: [
+             { allow: owner },
+             { allow: public }
+         ]) {
+                id: ID!
+                component_id: ID!
+                response: String!
+                component: Component @connection(name: "ComponentFeedback")
             }

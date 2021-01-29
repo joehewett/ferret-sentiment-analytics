@@ -44,7 +44,6 @@ const EventCreate = ({events, setEvents, eventCount, setEventCount}) => {
                     <TextWrapper>
                         <EventCreateWrapper>
                             <EventHeadLine>Create Event</EventHeadLine>
-                            <inputContainer>
                                 <EventContentWrapper>
                                     <Eventh2>Event Name</Eventh2>
                                     {/* <EventNaming
@@ -75,7 +74,6 @@ const EventCreate = ({events, setEvents, eventCount, setEventCount}) => {
                                         value = {formData.description}
                                     />
                                 </EventContentWrapper>
-                            </inputContainer>
                             <ButtonWrapper>
                                 <Button onClick={() => createEvent()}>Create Event</Button>
                             </ButtonWrapper>
