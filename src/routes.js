@@ -12,9 +12,9 @@ const routes = [
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      { path: 'feedback', element: <FeedbackView /> },
-      { path: 'dashboard', element: <DashboardView /> },
       { path: 'events', element: <EventsListView /> },
+      { path: 'dashboard', element: <DashboardView /> },
+      { path: 'feedback', element: <FeedbackView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
