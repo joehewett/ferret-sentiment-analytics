@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   Divider,
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
   statsIcon: {
     marginRight: theme.spacing(1)
-  }
+  },
 }));
 
 const EventCard = ({ className, event, ...rest }) => {
@@ -96,15 +97,13 @@ const EventCard = ({ className, event, ...rest }) => {
               className={classes.statsIcon}
               color="action"
             />
-            <Typography
-              color="textSecondary"
-              display="inline"
-              variant="body2"
+            <Button
+              variant="contained"
+              size="medium"
+              color="secondary"
             >
-              {event.totalDownloads}
-              {' '}
-              Downloads
-            </Typography>
+              Testing
+            </Button>
           </Grid>
         </Grid>
       </Box>
