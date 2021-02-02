@@ -1,0 +1,283 @@
+type Event @aws_cognito_user_pools @aws_api_key {
+  id: ID!
+  name: String!
+  description: String!
+  owner: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  components(filter: ModelComponentFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelComponentConnection @aws_cognito_user_pools @aws_api_key
+}
+
+type Component @aws_cognito_user_pools @aws_api_key {
+  id: ID!
+  type: String!
+  text: String!
+  event_id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  event: Event @aws_cognito_user_pools @aws_api_key
+  owner: String
+  feedbacks(filter: ModelFeedbackFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelFeedbackConnection @aws_cognito_user_pools @aws_api_key
+}
+
+type Feedback @aws_cognito_user_pools @aws_api_key {
+  id: ID!
+  component_id: ID!
+  response: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  component: Component @aws_cognito_user_pools @aws_api_key
+  owner: String
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelEventConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Event]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelEventFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  owner: ModelStringInput
+  and: [ModelEventFilterInput]
+  or: [ModelEventFilterInput]
+  not: ModelEventFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  listEvents(filter: ModelEventFilterInput, limit: Int, nextToken: String): ModelEventConnection @aws_api_key @aws_cognito_user_pools
+  getEvent(id: ID!): Event @aws_api_key @aws_cognito_user_pools
+  eventsByUser(owner: String, sortDirection: ModelSortDirection, filter: ModelEventFilterInput, limit: Int, nextToken: String): ModelEventConnection @aws_cognito_user_pools @aws_api_key
+  listComponents(filter: ModelComponentFilterInput, limit: Int, nextToken: String): ModelComponentConnection @aws_api_key @aws_cognito_user_pools
+  getComponent(id: ID!): Component @aws_api_key @aws_cognito_user_pools
+  componentsByEvent(event_id: ID, sortDirection: ModelSortDirection, filter: ModelComponentFilterInput, limit: Int, nextToken: String): ModelComponentConnection @aws_cognito_user_pools @aws_api_key
+  getFeedback(id: ID!): Feedback @aws_api_key @aws_cognito_user_pools
+  listFeedbacks(filter: ModelFeedbackFilterInput, limit: Int, nextToken: String): ModelFeedbackConnection @aws_api_key @aws_cognito_user_pools
+  feedbackByComponent(component_id: ID, sortDirection: ModelSortDirection, filter: ModelFeedbackFilterInput, limit: Int, nextToken: String): ModelFeedbackConnection @aws_cognito_user_pools @aws_api_key
+}
+
+input CreateEventInput {
+  id: ID
+  name: String!
+  description: String!
+  owner: String
+}
+
+input UpdateEventInput {
+  id: ID!
+  name: String
+  description: String
+  owner: String
+}
+
+input DeleteEventInput {
+  id: ID
+}
+
+type Mutation {
+  createEvent(input: CreateEventInput!, condition: ModelEventConditionInput): Event @aws_api_key @aws_cognito_user_pools
+  updateEvent(input: UpdateEventInput!, condition: ModelEventConditionInput): Event @aws_api_key @aws_cognito_user_pools
+  deleteEvent(input: DeleteEventInput!, condition: ModelEventConditionInput): Event @aws_api_key @aws_cognito_user_pools
+  createComponent(input: CreateComponentInput!, condition: ModelComponentConditionInput): Component @aws_api_key @aws_cognito_user_pools
+  updateComponent(input: UpdateComponentInput!, condition: ModelComponentConditionInput): Component @aws_api_key @aws_cognito_user_pools
+  deleteComponent(input: DeleteComponentInput!, condition: ModelComponentConditionInput): Component @aws_api_key @aws_cognito_user_pools
+  createFeedback(input: CreateFeedbackInput!, condition: ModelFeedbackConditionInput): Feedback @aws_api_key @aws_cognito_user_pools
+  updateFeedback(input: UpdateFeedbackInput!, condition: ModelFeedbackConditionInput): Feedback @aws_api_key @aws_cognito_user_pools
+  deleteFeedback(input: DeleteFeedbackInput!, condition: ModelFeedbackConditionInput): Feedback @aws_api_key @aws_cognito_user_pools
+}
+
+input ModelEventConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  and: [ModelEventConditionInput]
+  or: [ModelEventConditionInput]
+  not: ModelEventConditionInput
+}
+
+type Subscription {
+  onCreateEvent(owner: String): Event @aws_subscribe(mutations: ["createEvent"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateEvent(owner: String): Event @aws_subscribe(mutations: ["updateEvent"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteEvent(owner: String): Event @aws_subscribe(mutations: ["deleteEvent"]) @aws_api_key @aws_cognito_user_pools
+  onCreateComponent(owner: String): Component @aws_subscribe(mutations: ["createComponent"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateComponent(owner: String): Component @aws_subscribe(mutations: ["updateComponent"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteComponent(owner: String): Component @aws_subscribe(mutations: ["deleteComponent"]) @aws_api_key @aws_cognito_user_pools
+  onCreateFeedback(owner: String): Feedback @aws_subscribe(mutations: ["createFeedback"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateFeedback(owner: String): Feedback @aws_subscribe(mutations: ["updateFeedback"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteFeedback(owner: String): Feedback @aws_subscribe(mutations: ["deleteFeedback"]) @aws_api_key @aws_cognito_user_pools
+}
+
+type ModelComponentConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Component]
+  nextToken: String
+}
+
+input ModelComponentFilterInput {
+  id: ModelIDInput
+  type: ModelStringInput
+  text: ModelStringInput
+  event_id: ModelIDInput
+  and: [ModelComponentFilterInput]
+  or: [ModelComponentFilterInput]
+  not: ModelComponentFilterInput
+}
+
+input CreateComponentInput {
+  id: ID
+  type: String!
+  text: String!
+  event_id: ID!
+  componentEventId: ID
+}
+
+input UpdateComponentInput {
+  id: ID!
+  type: String
+  text: String
+  event_id: ID
+  componentEventId: ID
+}
+
+input DeleteComponentInput {
+  id: ID
+}
+
+input ModelComponentConditionInput {
+  type: ModelStringInput
+  text: ModelStringInput
+  event_id: ModelIDInput
+  and: [ModelComponentConditionInput]
+  or: [ModelComponentConditionInput]
+  not: ModelComponentConditionInput
+}
+
+type ModelFeedbackConnection @aws_api_key @aws_cognito_user_pools {
+  items: [Feedback]
+  nextToken: String
+}
+
+input ModelFeedbackFilterInput {
+  id: ModelIDInput
+  component_id: ModelIDInput
+  response: ModelStringInput
+  and: [ModelFeedbackFilterInput]
+  or: [ModelFeedbackFilterInput]
+  not: ModelFeedbackFilterInput
+}
+
+input CreateFeedbackInput {
+  id: ID
+  component_id: ID!
+  response: String!
+  feedbackComponentId: ID
+}
+
+input UpdateFeedbackInput {
+  id: ID!
+  component_id: ID
+  response: String
+  feedbackComponentId: ID
+}
+
+input DeleteFeedbackInput {
+  id: ID
+}
+
+input ModelFeedbackConditionInput {
+  component_id: ModelIDInput
+  response: ModelStringInput
+  and: [ModelFeedbackConditionInput]
+  or: [ModelFeedbackConditionInput]
+  not: ModelFeedbackConditionInput
+}
