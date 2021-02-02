@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "ferretapi",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authferret062ac125",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
