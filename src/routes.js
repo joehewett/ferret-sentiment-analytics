@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
-import AccountView from 'src/views/account/AccountView';
+import FeedbackView from 'src/views/feedback/FeedbackView';
 import DashboardView from 'src/views/reports/DashboardView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import EventsListView from 'src/views/events/EventsListView';
@@ -12,7 +12,7 @@ const routes = [
     path: 'app',
     element: <DashboardLayout />,
     children: [
-      { path: 'feedback', element: <AccountView /> },
+      { path: 'feedback', element: <FeedbackView /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'events', element: <EventsListView /> },
       { path: '*', element: <Navigate to="/404" /> }
