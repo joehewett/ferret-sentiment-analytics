@@ -31,6 +31,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.10.0",
+    "aws-amplify": "^3.3.16",
     "chart.js": "^2.9.4",
     "clsx": "^1.1.1",
     "formik": "^2.1.5",

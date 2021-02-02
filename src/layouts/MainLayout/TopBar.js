@@ -27,7 +27,7 @@ const TopBar = ({ className, ...rest }) => {
     >
       <Toolbar className={classes.toolbar}>
         <RouterLink to="/">
-          <Logo />
+          <Logo height="60px" />
         </RouterLink>
       </Toolbar>
     </AppBar>

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ProductCard = ({ className, product, ...rest }) => {
+const EventCard = ({ className, event, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -43,8 +43,8 @@ const ProductCard = ({ className, product, ...rest }) => {
           mb={3}
         >
           <Avatar
-            alt="Product"
-            src={product.media}
+            alt="Event"
+            src={event.media}
             variant="square"
           />
         </Box>
@@ -54,14 +54,14 @@ const ProductCard = ({ className, product, ...rest }) => {
           gutterBottom
           variant="h4"
         >
-          {product.title}
+          {event.title}
         </Typography>
         <Typography
           align="center"
           color="textPrimary"
           variant="body1"
         >
-          {product.description}
+          {event.description}
         </Typography>
       </CardContent>
       <Box flexGrow={1} />
@@ -101,7 +101,7 @@ const ProductCard = ({ className, product, ...rest }) => {
               display="inline"
               variant="body2"
             >
-              {product.totalDownloads}
+              {event.totalDownloads}
               {' '}
               Downloads
             </Typography>
@@ -112,9 +112,9 @@ const ProductCard = ({ className, product, ...rest }) => {
   );
 };
 
-ProductCard.propTypes = {
+EventCard.propTypes = {
   className: PropTypes.string,
-  product: PropTypes.object.isRequired
+  event: PropTypes.object.isRequired
 };
 
-export default ProductCard;
+export default EventCard;
