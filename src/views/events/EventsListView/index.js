@@ -11,7 +11,6 @@ import Page from 'src/components/Page';
 import { listEvents, eventsByUser } from '../../../graphql/queries';
 import Toolbar from './Toolbar';
 import EventCard from './EventCard';
-import CreateEventButton from './createEventButton';
 // import data from './data';
 
 const useStyles = makeStyles((theme) => ({
@@ -77,12 +76,6 @@ const EventsList = () => {
     >
       <Container maxWidth={false}>
         <Toolbar
-          events={events}
-          setEvents={setEvents}
-          eventCount={eventCount}
-          setEventCount={setEventCount}
-        />
-        <CreateEventButton
           events={events}
           setEvents={setEvents}
           eventCount={eventCount}

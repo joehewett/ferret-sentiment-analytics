@@ -70,7 +70,7 @@ const EventCard = ({ className, event, ...rest }) => {
           gutterBottom
           variant="h4"
         >
-          {event.title}
+          {event.name}
         </Typography>
         <Typography
           align="center"

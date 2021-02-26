@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
 import CreateEventButton from './createEventButton';
+/* eslint react/prop-types: 0 */
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -23,19 +24,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({
+  className,
+  events,
+  setEvents,
+  eventCount,
+  setEventCount
+}) => {
   const classes = useStyles();
 
   return (
     <div
       className={clsx(classes.root, className)}
-      {...rest}
     >
       <Box
         display="flex"
         justifyContent="flex-end"
       >
-        <CreateEventButton />
+        <CreateEventButton
+          events={events}
+          setEvents={setEvents}
+          eventCount={eventCount}
+          setEventCount={setEventCount}
+        />
       </Box>
       <Box mt={3}>
         <Card>

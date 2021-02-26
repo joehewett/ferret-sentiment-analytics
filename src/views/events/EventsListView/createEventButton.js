@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { API } from 'aws-amplify';
 import { createEvent as createEventMutation } from '../../../graphql/mutations';
+/* eslint react/prop-types: 0 */
 
 const initialFormState = { name: '', description: '' };
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +31,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function CreateEventButton({ events, setEvents, eventCount, setEventCount }) {
+export default function CreateEventButton({
+  events,
+  setEvents,
+  eventCount,
+  setEventCount
+}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = useState(initialFormState);
