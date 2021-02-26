@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   TextField,
@@ -12,6 +11,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
+import CreateEventButton from './createEventButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -35,18 +35,7 @@ const Toolbar = ({ className, ...rest }) => {
         display="flex"
         justifyContent="flex-end"
       >
-        {/* <Button className={classes.importButton}>
-          Import
-        </Button>
-        <Button className={classes.exportButton}>
-          Export
-        </Button> */}
-        <Button
-          color="primary"
-          variant="contained"
-        >
-          Add Event
-        </Button>
+        <CreateEventButton />
       </Box>
       <Box mt={3}>
         <Card>
@@ -66,7 +55,7 @@ const Toolbar = ({ className, ...rest }) => {
                     </InputAdornment>
                   )
                 }}
-                placeholder="Search product"
+                placeholder="Search Events"
                 variant="outlined"
               />
             </Box>
