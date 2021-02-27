@@ -25,11 +25,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const filterPosts = (posts, query) => {
+  if (!query) {
+    return posts;
+  }
+
+  return posts.filter((post) => {
+    const postName = post.name.toLowerCase();
+    return postName.includes(query);
+  });
+};
+
 const EventsList = () => {
   const classes = useStyles();
   // const [events] = useState(data);
   const [events, setEvents] = useState([]);
   const [eventCount, setEventCount] = useState(events.length);
+  const { search } = window.location;
+  const query = new URLSearchParams(search).get('s');
+  const [searchQuery, setSearchQuery] = useState(query || '');
+  const filteredPosts = filterPosts(events, searchQuery);
 
   async function fetchEvents(postType = 'my-events') {
     console.log('in event');
@@ -80,6 +95,8 @@ const EventsList = () => {
           setEvents={setEvents}
           eventCount={eventCount}
           setEventCount={setEventCount}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
         <Box mt={3}>
           <Grid
@@ -87,7 +104,7 @@ const EventsList = () => {
             spacing={3}
             pagesize={4}
           >
-            {events.map((event) => (
+            {filteredPosts.map((event) => (
               <Grid
                 item
                 key={event.id}

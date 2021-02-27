@@ -29,7 +29,9 @@ const Toolbar = ({
   events,
   setEvents,
   eventCount,
-  setEventCount
+  setEventCount,
+  searchQuery,
+  setSearchQuery
 }) => {
   const classes = useStyles();
 
@@ -66,7 +68,11 @@ const Toolbar = ({
                     </InputAdornment>
                   )
                 }}
+                value={searchQuery}
+                onInput={(e) => setSearchQuery(e.target.value)}
+                id="search-field"
                 placeholder="Search Events"
+                type="search"
                 variant="outlined"
               />
             </Box>
