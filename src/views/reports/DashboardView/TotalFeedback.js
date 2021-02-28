@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Avatar,
-  Box,
   Card,
   CardContent,
   Grid,
@@ -11,8 +10,9 @@ import {
   colors,
   makeStyles
 } from '@material-ui/core';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import * as queries from 'src/graphql/queries';
+import { API } from 'aws-amplify';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,9 +32,47 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TotalCustomers = ({ className, ...rest }) => {
-  const classes = useStyles();
+async function getEvent() {
+  try {
+    const result = await API.graphql({
+      query: queries.getEvent('098ce0d5-45bf-4f2b-8a02-d96a1257dcfe'),
+      authMode: 'AMAZON_COGNITO_USER_POOLS'
+    });
+    return result;
+  } catch (error) {
+    return console.log(error);
+  }
+}
 
+async function getComponent() {
+  try {
+    const result = await API.graphql({
+      query: queries.getComponent('0234b672-facf-44d3-872c-d29645d40180'),
+      authMode: 'AMAZON_COGNITO_USER_POOLS'
+    });
+    return result;
+  } catch (error) {
+    return console.log(error);
+  }
+}
+async function getFeedback() {
+  try {
+    const result = await API.graphql({
+      query: queries.getFeedback('a19ea111-f359-4434-b522-2b1108376e03'),
+      authMode: 'AMAZON_COGNITO_USER_POOLS'
+    });
+    return result;
+  } catch (error) {
+    return console.log(error);
+  }
+}
+const TotalFeedback = ({ className, ...rest }) => {
+  const classes = useStyles();
+  let count = 0;
+  console.log(count++);
+  console.log(getEvent());
+  console.log(getComponent());
+  console.log(getFeedback());
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -52,13 +90,13 @@ const TotalCustomers = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TOTAL CUSTOMERS
+              TOTAL FEEDBACKS
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              1,600
+              {count}
             </Typography>
           </Grid>
           <Grid item>
@@ -67,32 +105,13 @@ const TotalCustomers = ({ className, ...rest }) => {
             </Avatar>
           </Grid>
         </Grid>
-        <Box
-          mt={2}
-          display="flex"
-          alignItems="center"
-        >
-          <ArrowUpwardIcon className={classes.differenceIcon} />
-          <Typography
-            className={classes.differenceValue}
-            variant="body2"
-          >
-            16%
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="caption"
-          >
-            Since last month
-          </Typography>
-        </Box>
       </CardContent>
     </Card>
   );
 };
 
-TotalCustomers.propTypes = {
+TotalFeedback.propTypes = {
   className: PropTypes.string
 };
 
-export default TotalCustomers;
+export default TotalFeedback;

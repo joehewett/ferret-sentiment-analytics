@@ -37,7 +37,7 @@ const Sales = ({ className, ...rest }) => {
         label: 'Last year'
       }
     ],
-    labels: ['1st Hour', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
+    labels: ['Hour 1', 'Hour 2', 'Hour 3', 'Hour 4', 'Hour 5', 'Hour 6']
   };
 
   const options = {
@@ -107,10 +107,10 @@ const Sales = ({ className, ...rest }) => {
             size="small"
             variant="text"
           >
-            Last 7 days
+            Last 7 Hours
           </Button>
         )}
-        title="Latest Sales"
+        title="Time-Score Graph "
       />
       <Divider />
       <CardContent>
