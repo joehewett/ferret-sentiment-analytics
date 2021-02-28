@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import Page from 'src/components/Page';
-import { listEvents, eventsByUser } from '../../../graphql/queries';
+import { eventsByUser } from '../../../graphql/queries';
 import Toolbar from './Toolbar';
 import EventCard from './EventCard';
 // import data from './data';
@@ -46,33 +46,24 @@ const EventsList = () => {
   const [searchQuery, setSearchQuery] = useState(query || '');
   const filteredPosts = filterPosts(events, searchQuery);
 
-  async function fetchEvents(postType = 'my-events') {
-    console.log('in event');
-    let eventData;
+  async function fetchEvents() {
     let newEvents;
-    if (postType === 'my-events') {
+    try {
       const user = await Auth.currentAuthenticatedUser();
-      eventData = await API.graphql({
+      await API.graphql({
         query: eventsByUser,
         variables: {
           owner: user.username,
           limit: 100
-        }
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      }).then((result) => {
+        newEvents = result.data.eventsByUser.items;
+        setEvents(newEvents);
       });
-      console.log('Successful API request for my-events', eventData);
-      newEvents = eventData.data.eventsByUser.items;
-    } else {
-      eventData = await API.graphql({
-        query: listEvents,
-        variables: {
-          limit: 100
-        }
-      });
-      newEvents = eventData.data.listEvents.items;
-      console.log('Successful API request for all-events', eventData);
+    } catch (error) {
+      console.log(error);
     }
-    setEvents(newEvents);
-    console.log(events);
   }
   // On load, fetch all the events. This only happens when the component mo
   // unts because of the [] passed
@@ -106,8 +97,8 @@ const EventsList = () => {
           >
             {filteredPosts.map((event) => (
               <Grid
-                item
                 key={event.id}
+                item
                 lg={4}
                 md={6}
                 xs={12}

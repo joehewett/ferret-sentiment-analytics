@@ -15,7 +15,7 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import SendIcon from '@material-ui/icons/Send';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { componentsByEvent } from '../../../graphql/queries';
 import { createComponent, deleteEvent } from '../../../graphql/mutations';
 
@@ -64,8 +64,8 @@ export default function FeedbackForm() {
   // We don't know what components we're going to have yet
   // so just initialise our feedback to an empty array
   const [loadedComponents, setLoadedComponents] = useState(false);
-  // const { id } = useParams();
-  const id = '61d4bf80-a051-4f24-96d7-550472139622';
+  const { id } = useParams();
+  // const id = '61d4bf80-a051-4f24-96d7-550472139622';
 
   async function fetchComponents() {
     let feedbackComponents;

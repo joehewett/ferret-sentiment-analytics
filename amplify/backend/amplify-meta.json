@@ -18,7 +18,7 @@
       "providerPlugin": "awscloudformation",
       "type": "manual",
       "output": {},
-      "lastPushTimeStamp": "2021-02-02T14:54:31.121Z",
+      "lastPushTimeStamp": "2021-02-28T13:53:13.050Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-ferret-dev-230557-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
         "logicalId": "hostingamplifyhosting"
@@ -35,7 +35,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-ferret-dev-230557-deployment/amplify-cfn-templates/auth/ferret062ac125-cloudformation-template.yml",
         "logicalId": "authferret062ac125"
       },
-      "lastPushTimeStamp": "2021-02-02T14:54:31.124Z",
+      "lastPushTimeStamp": "2021-02-28T13:53:13.060Z",
       "output": {
         "AppClientSecret": "11lm86p85kj2pgmim3hsr2tc01mupkrod08jiaavkcjno4556jek",
         "UserPoolId": "eu-west-1_w3xxYf2ci",
@@ -76,7 +76,7 @@
         "GraphQLAPIEndpointOutput": "https://524e5az235gfxhgzei3bx2xa6i.appsync-api.eu-west-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-gmiizegisnca7msypqziz46hje"
       },
-      "lastPushTimeStamp": "2021-02-02T14:54:31.126Z",
+      "lastPushTimeStamp": "2021-02-28T13:53:13.064Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-ferret-dev-230557-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiferretapi"

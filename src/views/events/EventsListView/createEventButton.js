@@ -75,7 +75,7 @@ export default function CreateEventButton({
     <div>
       <Button color="primary" variant="contained" onClick={handleClickOpen}>Add Event</Button>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-        <DialogTitle classes={classes.typology}>Create Events</DialogTitle>
+        <DialogTitle className={classes.typology}>Create Events</DialogTitle>
         <DialogContent>
           <form className={classes.root}>
             <div>
