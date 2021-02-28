@@ -21,7 +21,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import * as queries from 'src/graphql/queries';
+import { feedbackByComponent, componentsByEvent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
 
 const data = [
@@ -94,35 +94,35 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-async function componentsByEvent(eventid) {
-  try {
-    const result = await API.graphql({
-      query: queries.componentsByEvent(eventid),
-      authMode: 'AMAZON_COGNITO_USER_POOLS'
-    });
-    return result;
-  } catch (error) {
-    return console.log(error);
-  }
-}
-async function feedbackByComponent(componentid) {
-  try {
-    const result = await API.graphql({
-      query: queries.feedbackByComponent(componentid),
-      authMode: 'AMAZON_COGNITO_USER_POOLS'
-    });
-    return result;
-  } catch (error) {
-    return console.log(error);
-  }
-}
-
 const LatestFeedbacks = ({ className, ...rest }) => {
   const classes = useStyles();
-  const component = componentsByEvent('768748d8-b987-4eb6-9c9c-8df44e13ab65');
-  const firstcomponentid = component.data.componentsByEvent.items[0].id;
-  const feedbacksforfirstcomponent = feedbackByComponent(firstcomponentid);
-  console.log(feedbacksforfirstcomponent);
+  // const [feedbacks, setFeedbacks] = useState(0);
+  async function getcomponentsByEvent(eventid) {
+    try {
+      const result = await API.graphql({
+        query: componentsByEvent,
+        variables: { event_id: eventid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function getfeedbackByComponent(componentid) {
+    try {
+      const result = await API.graphql({
+        query: feedbackByComponent,
+        variables: { component_id: componentid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(getcomponentsByEvent('c9bfe57e-0135-4610-9276-9797f700b758'));
+  console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
   const [orders] = useState(data);
 
   return (

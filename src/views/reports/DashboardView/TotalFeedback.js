@@ -11,7 +11,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
-import * as queries from 'src/graphql/queries';
+import { componentsByEvent, feedbackByComponent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,47 +32,39 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-async function getEvent() {
-  try {
-    const result = await API.graphql({
-      query: queries.getEvent('098ce0d5-45bf-4f2b-8a02-d96a1257dcfe'),
-      authMode: 'AMAZON_COGNITO_USER_POOLS'
-    });
-    return result;
-  } catch (error) {
-    return console.log(error);
-  }
-}
-
-async function getComponent() {
-  try {
-    const result = await API.graphql({
-      query: queries.getComponent('0234b672-facf-44d3-872c-d29645d40180'),
-      authMode: 'AMAZON_COGNITO_USER_POOLS'
-    });
-    return result;
-  } catch (error) {
-    return console.log(error);
-  }
-}
-async function getFeedback() {
-  try {
-    const result = await API.graphql({
-      query: queries.getFeedback('a19ea111-f359-4434-b522-2b1108376e03'),
-      authMode: 'AMAZON_COGNITO_USER_POOLS'
-    });
-    return result;
-  } catch (error) {
-    return console.log(error);
-  }
-}
 const TotalFeedback = ({ className, ...rest }) => {
   const classes = useStyles();
   let count = 0;
   console.log(count++);
-  console.log(getEvent());
-  console.log(getComponent());
-  console.log(getFeedback());
+  async function getcomponentsByEvent(eventid) {
+    try {
+      const result = await API.graphql({
+        query: componentsByEvent,
+        variables: { event_id: eventid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function getfeedbackByComponent(componentid) {
+    try {
+      const result = await API.graphql({
+        query: feedbackByComponent,
+        variables: { component_id: componentid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(getcomponentsByEvent('c9bfe57e-0135-4610-9276-9797f700b758'));
+  console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
+
+  // const firstcomponentid = component.data.componentsByEvent.items[0].id;
+  // const feedbacksforfirstcomponent = getfeedbackByComponent(firstcomponentid);
   return (
     <Card
       className={clsx(classes.root, className)}
