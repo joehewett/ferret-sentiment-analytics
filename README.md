@@ -1,2 +1,2 @@
-# Ferret #
-## Sentiment Analytics ##
+
+Ferret ML - Sentiment Analytics
