@@ -130,6 +130,7 @@ export default function FeedbackForm() {
   // Called when feedback form is submitted
   async function handleSubmit() {
     console.log('Submitting');
+    console.log(components);
     // const deepCopy = [...components];
 
     // try {
@@ -286,7 +287,6 @@ export default function FeedbackForm() {
                     setComponents(deepCopy);
                   }}
                   required
-                  value={component.response}
                   variant="outlined"
                 />
                 <IconButton
