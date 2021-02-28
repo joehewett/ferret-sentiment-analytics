@@ -1,9 +1,9 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Avatar,
-  Box,
   Card,
   CardContent,
   Grid,
@@ -11,8 +11,9 @@ import {
   colors,
   makeStyles
 } from '@material-ui/core';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+import { componentsByEvent, feedbackByComponent } from 'src/graphql/queries';
+import { API } from 'aws-amplify';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,9 +33,39 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TotalCustomers = ({ className, ...rest }) => {
+const TotalFeedback = ({ className, id, ...rest }) => {
   const classes = useStyles();
+  let count = 0;
+  console.log(count++);
+  async function getcomponentsByEvent(eventid) {
+    try {
+      const result = await API.graphql({
+        query: componentsByEvent,
+        variables: { event_id: eventid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function getfeedbackByComponent(componentid) {
+    try {
+      const result = await API.graphql({
+        query: feedbackByComponent,
+        variables: { component_id: componentid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(getcomponentsByEvent({ id }));
+  console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
 
+  // const firstcomponentid = component.data.componentsByEvent.items[0].id;
+  // const feedbacksforfirstcomponent = getfeedbackByComponent(firstcomponentid);
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -52,13 +83,13 @@ const TotalCustomers = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TOTAL CUSTOMERS
+              TOTAL FEEDBACKS
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              1,600
+              {count}
             </Typography>
           </Grid>
           <Grid item>
@@ -67,32 +98,13 @@ const TotalCustomers = ({ className, ...rest }) => {
             </Avatar>
           </Grid>
         </Grid>
-        <Box
-          mt={2}
-          display="flex"
-          alignItems="center"
-        >
-          <ArrowUpwardIcon className={classes.differenceIcon} />
-          <Typography
-            className={classes.differenceValue}
-            variant="body2"
-          >
-            16%
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="caption"
-          >
-            Since last month
-          </Typography>
-        </Box>
       </CardContent>
     </Card>
   );
 };
 
-TotalCustomers.propTypes = {
+TotalFeedback.propTypes = {
   className: PropTypes.string
 };
 
-export default TotalCustomers;
+export default TotalFeedback;

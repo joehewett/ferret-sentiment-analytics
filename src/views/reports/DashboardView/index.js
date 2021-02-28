@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import {
   Container,
   Grid,
@@ -6,11 +7,11 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Budget from './Budget';
-import LatestOrders from './LatestOrders';
+import LatestFeedbacks from './LatestFeedbacks';
 import LatestProducts from './LatestProducts';
 import Sales from './Sales';
 import TasksProgress from './TasksProgress';
-import TotalCustomers from './TotalCustomers';
+import TotalFeedback from './TotalFeedback';
 import TotalProfit from './TotalProfit';
 import TrafficByDevice from './TrafficByDevice';
 
@@ -25,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-
+  const { id } = useParams();
+  console.log(id);
   return (
     <Page
       className={classes.root}
@@ -52,7 +54,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalCustomers />
+            <TotalFeedback id={id} />
           </Grid>
           <Grid
             item
@@ -106,7 +108,7 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            <LatestOrders />
+            <LatestFeedbacks />
           </Grid>
         </Grid>
       </Container>

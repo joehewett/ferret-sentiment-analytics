@@ -21,6 +21,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { feedbackByComponent, componentsByEvent } from 'src/graphql/queries';
+import { API } from 'aws-amplify';
 
 const data = [
   {
@@ -92,8 +94,35 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const LatestOrders = ({ className, ...rest }) => {
+const LatestFeedbacks = ({ className, ...rest }) => {
   const classes = useStyles();
+  // const [feedbacks, setFeedbacks] = useState(0);
+  async function getcomponentsByEvent(eventid) {
+    try {
+      const result = await API.graphql({
+        query: componentsByEvent,
+        variables: { event_id: eventid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function getfeedbackByComponent(componentid) {
+    try {
+      const result = await API.graphql({
+        query: feedbackByComponent,
+        variables: { component_id: componentid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  console.log(getcomponentsByEvent('c9bfe57e-0135-4610-9276-9797f700b758'));
+  console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
   const [orders] = useState(data);
 
   return (
@@ -101,7 +130,7 @@ const LatestOrders = ({ className, ...rest }) => {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardHeader title="Latest Orders" />
+      <CardHeader title="Latest Feedbacks" />
       <Divider />
       <PerfectScrollbar>
         <Box minWidth={800}>
@@ -109,10 +138,10 @@ const LatestOrders = ({ className, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Order Ref
+                  Reference
                 </TableCell>
                 <TableCell>
-                  Customer
+                  Attendee ID
                 </TableCell>
                 <TableCell sortDirection="desc">
                   <Tooltip
@@ -123,12 +152,12 @@ const LatestOrders = ({ className, ...rest }) => {
                       active
                       direction="desc"
                     >
-                      Date
+                      Time
                     </TableSortLabel>
                   </Tooltip>
                 </TableCell>
                 <TableCell>
-                  Status
+                  View Feedback
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -178,8 +207,8 @@ const LatestOrders = ({ className, ...rest }) => {
   );
 };
 
-LatestOrders.propTypes = {
+LatestFeedbacks.propTypes = {
   className: PropTypes.string
 };
 
-export default LatestOrders;
+export default LatestFeedbacks;
