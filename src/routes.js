@@ -13,7 +13,7 @@ const routes = [
     element: <DashboardLayout />,
     children: [
       { path: 'events', element: <EventsListView /> },
-      { path: 'dashboard', element: <DashboardView /> },
+      { path: 'dashboard/:id', element: <DashboardView /> },
       { path: 'feedback/:id', element: <FeedbackView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

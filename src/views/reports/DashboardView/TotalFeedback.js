@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const TotalFeedback = ({ className, ...rest }) => {
+const TotalFeedback = ({ className, id, ...rest }) => {
   const classes = useStyles();
   let count = 0;
   console.log(count++);
@@ -60,7 +61,7 @@ const TotalFeedback = ({ className, ...rest }) => {
       console.log(error);
     }
   }
-  console.log(getcomponentsByEvent('c9bfe57e-0135-4610-9276-9797f700b758'));
+  console.log(getcomponentsByEvent({ id }));
   console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
 
   // const firstcomponentid = component.data.componentsByEvent.items[0].id;

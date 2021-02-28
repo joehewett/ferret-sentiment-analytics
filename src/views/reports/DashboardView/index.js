@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import {
   Container,
   Grid,
@@ -25,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-
+  const { id } = useParams();
+  console.log(id);
   return (
     <Page
       className={classes.root}
@@ -52,7 +54,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalFeedback />
+            <TotalFeedback id={id} />
           </Grid>
           <Grid
             item
