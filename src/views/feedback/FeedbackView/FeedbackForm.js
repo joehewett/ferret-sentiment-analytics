@@ -17,7 +17,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import SendIcon from '@material-ui/icons/Send';
 import { useParams } from 'react-router-dom';
 import { componentsByEvent } from '../../../graphql/queries';
-import { createComponent, deleteEvent } from '../../../graphql/mutations';
+import { createComponent, deleteComponent as deleteComponentMutation } from '../../../graphql/mutations';
 
 const states = [
   {
@@ -75,7 +75,8 @@ export default function FeedbackForm() {
         query: componentsByEvent,
         variables: {
           event_id: id
-        }
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
       }).then((result) => {
         feedbackComponents = result.data.componentsByEvent.items;
       });
@@ -97,6 +98,7 @@ export default function FeedbackForm() {
 
   // When user clicks Add Component, trigger createComponent mutation with data in state
   async function addComponent() {
+    console.log('Adding Component');
     if (!newComponentData.type || !newComponentData.text) {
       console.log('Not filled');
       return;
@@ -111,6 +113,7 @@ export default function FeedbackForm() {
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       }).then((result) => {
         console.log('Added new component: ', result);
+        fetchComponents();
         // let newID = 0;
         // newID = result.data.createComponent.id;
       });
@@ -150,19 +153,21 @@ export default function FeedbackForm() {
     // setComponents(deepCopy);
   }
 
-  async function deleteComponent() {
+  async function deleteComponent(cid) {
+    console.log('Deleting component ', cid);
     try {
       await API.graphql({
-        query: deleteEvent,
-        variables: { input: { id } }
+        query: deleteComponentMutation,
+        variables: { input: { id: cid } },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
       }).then(() => {
         const newComponentsArray = components.filter(
-          (newComponent) => newComponent.id !== id
+          (newComponent) => newComponent.id !== cid
         );
         setComponents(newComponentsArray);
       });
     } catch (error) {
-      console.log('Error while trying to delete component ', id, ' - ', error);
+      console.log('Error while trying to delete component ', cid, ' - ', error);
     }
   }
 
@@ -237,7 +242,7 @@ export default function FeedbackForm() {
           <Button
             color="secondary"
             variant="contained"
-            onChange={addComponent}
+            onClick={addComponent}
             startIcon={<AddBoxIcon />}
           >
             Add Component
@@ -257,6 +262,7 @@ export default function FeedbackForm() {
           >
             {components.map((component) => (
               <Grid
+                key={component.id}
                 item
                 md={10}
                 xs={10}

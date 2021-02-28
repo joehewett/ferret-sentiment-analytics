@@ -107,7 +107,7 @@ const EventCard = ({ className, event, ...rest }) => {
             item
           >
             <Button
-              href="/app/feedback"
+              href={`/app/feedback/${event.id}`}
               variant="contained"
               size="medium"
               color="secondary"
