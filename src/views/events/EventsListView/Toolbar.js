@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   TextField,
@@ -12,6 +11,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Search as SearchIcon } from 'react-feather';
+import CreateEventButton from './createEventButton';
+/* eslint react/prop-types: 0 */
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -23,30 +24,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({
+  className,
+  events,
+  setEvents,
+  eventCount,
+  setEventCount,
+  searchQuery,
+  setSearchQuery
+}) => {
   const classes = useStyles();
 
   return (
     <div
       className={clsx(classes.root, className)}
-      {...rest}
     >
       <Box
         display="flex"
         justifyContent="flex-end"
       >
-        {/* <Button className={classes.importButton}>
-          Import
-        </Button>
-        <Button className={classes.exportButton}>
-          Export
-        </Button> */}
-        <Button
-          color="primary"
-          variant="contained"
-        >
-          Add Event
-        </Button>
+        <CreateEventButton
+          events={events}
+          setEvents={setEvents}
+          eventCount={eventCount}
+          setEventCount={setEventCount}
+        />
       </Box>
       <Box mt={3}>
         <Card>
@@ -66,7 +68,11 @@ const Toolbar = ({ className, ...rest }) => {
                     </InputAdornment>
                   )
                 }}
-                placeholder="Search product"
+                value={searchQuery}
+                onInput={(e) => setSearchQuery(e.target.value)}
+                id="search-field"
+                placeholder="Search Events"
+                type="search"
                 variant="outlined"
               />
             </Box>

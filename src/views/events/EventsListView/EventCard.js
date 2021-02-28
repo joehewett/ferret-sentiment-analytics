@@ -1,8 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+// import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+// import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
+// import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+// import MoodBadIcon from '@material-ui/icons/MoodBad';
+// import {
+//   green,
+//   orange,
+//   lime,
+//   red
+// } from '@material-ui/core/colors';
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -12,8 +21,6 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,35 +34,43 @@ const useStyles = makeStyles((theme) => ({
   statsIcon: {
     marginRight: theme.spacing(1)
   },
+  ratingIcon: {
+    marginRight: theme.spacing(1)
+  }
 }));
 
 const EventCard = ({ className, event, ...rest }) => {
   const classes = useStyles();
-
+  // const [ratingIcon, setIcon] = useState(0);
+  // console.log(event.overallRating);
+  // useEffect(() => {
+  //   if (event.overallRating < 4) {
+  //     setIcon(<MoodBadIcon className={classes.ratingIcon}
+  //       fontSize="large" style={{ color: red[500] }} />);
+  //   } else if (event.overallRating < 6 && event.overallRating > 3) {
+  //     setIcon(<SentimentDissatisfiedIcon className={classes.ratingIcon}
+  //       fontSize="large" style={{ color: orange[500] }} />);
+  //   } else if (event.overallRating < 8 && event.overallRating > 5) {
+  //     setIcon(<SentimentSatisfiedIcon className={classes.ratingIcon}
+  //       fontSize="large" style={{ color: lime[700] }} />);
+  //   } else if (event.overallRating > 7) {
+  //     setIcon(<InsertEmoticonIcon className={classes.ratingIcon}
+  //       fontSize="large" style={{ color: green[400] }} />);
+  //   }
+  // });
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
     >
       <CardContent>
-        <Box
-          display="flex"
-          justifyContent="center"
-          mb={3}
-        >
-          <Avatar
-            alt="Event"
-            src={event.media}
-            variant="square"
-          />
-        </Box>
         <Typography
           align="center"
           color="textPrimary"
           gutterBottom
           variant="h4"
         >
-          {event.title}
+          {event.name}
         </Typography>
         <Typography
           align="center"
@@ -77,32 +92,27 @@ const EventCard = ({ className, event, ...rest }) => {
             className={classes.statsItem}
             item
           >
-            <AccessTimeIcon
-              className={classes.statsIcon}
-              color="action"
-            />
+            {/* {ratingIcon} */}
             <Typography
               color="textSecondary"
               display="inline"
               variant="body2"
             >
-              Updated 2hr ago
+              Overall Score :
+              {event.overallRating}
             </Typography>
           </Grid>
           <Grid
             className={classes.statsItem}
             item
           >
-            <GetAppIcon
-              className={classes.statsIcon}
-              color="action"
-            />
             <Button
+              href={`/app/feedback/${event.id}`}
               variant="contained"
               size="medium"
               color="secondary"
             >
-              Testing
+              View Form
             </Button>
           </Grid>
         </Grid>

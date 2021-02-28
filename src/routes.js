@@ -14,7 +14,7 @@ const routes = [
     children: [
       { path: 'events', element: <EventsListView /> },
       { path: 'dashboard', element: <DashboardView /> },
-      { path: 'feedback', element: <FeedbackView /> },
+      { path: 'feedback/:id', element: <FeedbackView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
