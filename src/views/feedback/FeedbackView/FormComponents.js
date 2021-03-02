@@ -98,8 +98,8 @@ export default function FormComponents({
             >
               <TextField
                 className={classes.input}
+                multiline
                 helperText={component.text}
-                name="firstName"
                 onChange={(e) => {
                   console.log('Making a component with id: ', component.id);
                   // Create an onChange handler that updates the feedback state with with this
@@ -116,6 +116,7 @@ export default function FormComponents({
                 }}
                 required
                 variant="outlined"
+                value={component.response || ''}
               />
               <IconButton
                 variant="contained"
@@ -136,7 +137,7 @@ export default function FormComponents({
         justifyContent="flex-end"
         p={2}
       >
-        <SubmitButton components={components} />
+        <SubmitButton components={components} setComponents={setComponents} />
       </Box>
     </Card>
   );

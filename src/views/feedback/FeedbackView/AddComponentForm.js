@@ -193,7 +193,7 @@ export default function AddComponentForm({ id, fetchComponents }) {
           p={2}
         >
           <Button
-            color="secondary"
+            color="primary"
             variant="contained"
             onClick={addComponent}
             startIcon={<AddBoxIcon />}

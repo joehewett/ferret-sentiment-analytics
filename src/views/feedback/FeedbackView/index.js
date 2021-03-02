@@ -33,7 +33,7 @@ const Account = () => {
           <Grid
             item
             lg={8}
-            md={6}
+            md={8}
             xs={12}
           >
             <FeedbackForm />

@@ -9,8 +9,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import SendIcon from '@material-ui/icons/Send';
 import { useTheme } from '@material-ui/core/styles';
+import { API } from 'aws-amplify';
+import { createFeedback as createFeedbackMutation } from '../../../graphql/mutations';
 
-export default function SubmitButton({ components }) {
+export default function SubmitButton({ components, setComponents }) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -28,27 +30,28 @@ export default function SubmitButton({ components }) {
     handleClickOpen();
     console.log('Submitting');
     console.log(components);
-    // const deepCopy = [...components];
+    const deepCopy = [...components];
 
-    // try {
-    //     await API.graphql({
-    //         query: createFeedback,
-    //         variables: {
-    //             input: newComponentData
-    //         },
-    //         authMode: "AMAZON_COGNITO_USER_POOLS"
-    //     }).then((result) => {
-    //         console.log("Added new component: ", result)
-    //         newID = result.data.createComponent.id
-    //     });
-    // } catch(error) {
-
-    // }
-    // deepCopy.map((component) => {
-    //   component.response = '';f
-    // });
+    try {
+      deepCopy.forEach((component) => {
+        API.graphql({
+          query: createFeedbackMutation,
+          variables: {
+            input: { component_id: component.id, response: component.response }
+          },
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        }).then(() => {
+          console.log('Added feedback for component');
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    deepCopy.forEach((component) => {
+      component.response = '';
+    });
     // // TODO - actually store this form data in the database
-    // setComponents(deepCopy);
+    setComponents(deepCopy);
   }
   return (
     <div>
