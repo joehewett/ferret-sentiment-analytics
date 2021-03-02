@@ -61,7 +61,7 @@ const TotalFeedback = ({ className, id, ...rest }) => {
       console.log(error);
     }
   }
-  console.log(getcomponentsByEvent({ id }));
+  console.log(getcomponentsByEvent(id));
   console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
 
   // const firstcomponentid = component.data.componentsByEvent.items[0].id;
