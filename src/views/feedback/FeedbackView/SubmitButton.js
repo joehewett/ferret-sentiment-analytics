@@ -40,8 +40,8 @@ export default function SubmitButton({ components, setComponents }) {
             input: { component_id: component.id, response: component.response }
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS'
-        }).then(() => {
-          console.log('Added feedback for component');
+        }).then((status) => {
+          console.log('Added feedback for component', status);
         });
       });
     } catch (error) {

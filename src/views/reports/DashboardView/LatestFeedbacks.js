@@ -97,52 +97,64 @@ const useStyles = makeStyles(() => ({
 
 const LatestFeedbacks = ({ className, id, ...rest }) => {
   const classes = useStyles();
-  const [componentidlist, setcomponentidlist] = useState([]);
-  const [feedbackidlist, setfeedbackidlist] = useState([]);
-  const [querydata, setquerydata] = useState([]);
-  async function getcomponentsByEvent(eventid) {
+  const [componentIdList, setComponentIdList] = useState([]);
+  const [feedbackIdList, setFeedbackIdList] = useState([]);
+  const [queryData, setQueryData] = useState([]);
+  // const [dataForTable, setDataForTable] = useState([]);
+  async function getComponentsByEvent(eventid) {
     try {
       const result = await API.graphql({
         query: componentsByEvent,
         variables: { event_id: eventid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      setcomponentidlist(result.data.componentsByEvent.items);
+      setComponentIdList(result.data.componentsByEvent.items);
       console.log('setcomponentid to result from query');
     } catch (error) {
       console.log(error);
     }
   }
-  async function getfeedbackByComponent(componentid) {
+  async function getFeedbackByComponent(componentid) {
     try {
       const result = await API.graphql({
         query: feedbackByComponent,
         variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      setfeedbackidlist(result.data.feedbackByComponent.items);
+      console.log(result);
+      setFeedbackIdList(result.data.feedbackByComponent.items);
       console.log('setfeedbackidlist to result from query');
     } catch (error) {
       console.log(error);
     }
   }
   useEffect(() => {
-    getcomponentsByEvent(id);
-  }, []);
-  console.log('componentidlist', componentidlist);
-  useEffect(() => {
-    if (componentidlist.length !== 0) {
-      getfeedbackByComponent(componentidlist[0].id);
-      console.log(componentidlist[0].id);
-    }
+    getComponentsByEvent(id);
   }, []);
 
   useEffect(() => {
-    if (feedbackidlist.length !== 0) {
-      setquerydata([...querydata, feedbackidlist]);
-      console.log('data', querydata);
+    console.log('componentidlist', componentIdList);
+    console.log(componentIdList.length);
+    if (componentIdList.length !== 0) {
+      getFeedbackByComponent(componentIdList[0].id);
+      console.log(componentIdList[0].id);
     }
-  }, []); 
+  }, [componentIdList]);
+  useEffect(() => {
+    console.log(feedbackIdList.length);
+    if (feedbackIdList.length !== 0) {
+      setQueryData([...queryData, feedbackIdList]);
+      console.log('data', queryData);
+    }
+  }, [feedbackIdList]);
+  // useEffect(() => {
+  //   getFeedbackByComponent('532160a2-e5ff-4c80-b761-d8b6ec51f30c');
+  // }, []);
+
+  // useEffect(() => {
+  //   setDataForTable(queryData);
+  //   console.log(dataForTable);
+  // }, []);
   const [orders] = useState(data);
 
   return (

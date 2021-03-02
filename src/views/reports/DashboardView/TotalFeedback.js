@@ -35,45 +35,49 @@ const useStyles = makeStyles((theme) => ({
 
 const TotalFeedback = ({ className, id, ...rest }) => {
   const classes = useStyles();
-  const [componentidlist, setcomponentidlist] = useState([]);
-  const [feedbackidlist, setfeedbackidlist] = useState([]);
-  async function getcomponentsByEvent(eventid) {
+  const [componentIdList, setComponentIdList] = useState([]);
+  const [feedbackIdList, setFeedbackIdList] = useState([]);
+  async function getComponentsByEvent(eventid) {
     try {
       const result = await API.graphql({
         query: componentsByEvent,
         variables: { event_id: eventid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      setcomponentidlist(result.data.componentsByEvent.items);
+      setComponentIdList(result.data.componentsByEvent.items);
       console.log('setcomponentid to result from query');
     } catch (error) {
       console.log(error);
     }
   }
-  async function getfeedbackByComponent(componentid) {
+  async function getFeedbackByComponent(componentid) {
     try {
       const result = await API.graphql({
         query: feedbackByComponent,
         variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      setfeedbackidlist(result.data.feedbackByComponent.items);
+      console.log(result);
+      setFeedbackIdList(result.data.feedbackByComponent.items);
       console.log('setfeedbackidlist to result from query');
     } catch (error) {
       console.log(error);
     }
   }
   useEffect(() => {
-    getcomponentsByEvent(id);
+    getComponentsByEvent(id);
   }, []);
-  console.log('componentidlist', componentidlist);
+
   useEffect(() => {
-    if (componentidlist.length !== 0) {
-      getfeedbackByComponent(componentidlist[0].id);
+    console.log('componentidlist', componentIdList);
+    console.log(componentIdList.length);
+    if (componentIdList.length !== 0) {
+      getFeedbackByComponent(componentIdList[0].id);
+      console.log(componentIdList[0].id);
     }
-  }, []);
-  console.log(feedbackidlist);
-  const count = feedbackidlist.length;
+  }, [componentIdList]);
+  console.log(feedbackIdList);
+  const count = feedbackIdList.length;
   return (
     <Card
       className={clsx(classes.root, className)}
