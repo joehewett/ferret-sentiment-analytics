@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint react/prop-types: 0 */
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
@@ -94,9 +95,11 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const LatestFeedbacks = ({ className, ...rest }) => {
+const LatestFeedbacks = ({ className, id, ...rest }) => {
   const classes = useStyles();
-  // const [feedbacks, setFeedbacks] = useState(0);
+  const [componentidlist, setcomponentidlist] = useState([]);
+  const [feedbackidlist, setfeedbackidlist] = useState([]);
+  const [querydata, setquerydata] = useState([]);
   async function getcomponentsByEvent(eventid) {
     try {
       const result = await API.graphql({
@@ -104,7 +107,8 @@ const LatestFeedbacks = ({ className, ...rest }) => {
         variables: { event_id: eventid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      console.log(result);
+      setcomponentidlist(result.data.componentsByEvent.items);
+      console.log('setcomponentid to result from query');
     } catch (error) {
       console.log(error);
     }
@@ -116,13 +120,29 @@ const LatestFeedbacks = ({ className, ...rest }) => {
         variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      console.log(result);
+      setfeedbackidlist(result.data.feedbackByComponent.items);
+      console.log('setfeedbackidlist to result from query');
     } catch (error) {
       console.log(error);
     }
   }
-  console.log(getcomponentsByEvent('c9bfe57e-0135-4610-9276-9797f700b758'));
-  console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
+  useEffect(() => {
+    getcomponentsByEvent(id);
+  }, []);
+  console.log('componentidlist', componentidlist);
+  useEffect(() => {
+    if (componentidlist.length !== 0) {
+      getfeedbackByComponent(componentidlist[0].id);
+      console.log(componentidlist[0].id);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (feedbackidlist.length !== 0) {
+      setquerydata([...querydata, feedbackidlist]);
+      console.log('data', querydata);
+    }
+  }, []); 
   const [orders] = useState(data);
 
   return (
@@ -138,7 +158,7 @@ const LatestFeedbacks = ({ className, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Reference
+                  Feedback ID
                 </TableCell>
                 <TableCell>
                   Attendee ID

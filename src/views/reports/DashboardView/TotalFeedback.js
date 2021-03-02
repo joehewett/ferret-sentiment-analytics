@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 const TotalFeedback = ({ className, id, ...rest }) => {
   const classes = useStyles();
-  let count = 0;
-  console.log(count++);
+  const [componentidlist, setcomponentidlist] = useState([]);
+  const [feedbackidlist, setfeedbackidlist] = useState([]);
   async function getcomponentsByEvent(eventid) {
     try {
       const result = await API.graphql({
@@ -44,7 +44,8 @@ const TotalFeedback = ({ className, id, ...rest }) => {
         variables: { event_id: eventid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      console.log(result);
+      setcomponentidlist(result.data.componentsByEvent.items);
+      console.log('setcomponentid to result from query');
     } catch (error) {
       console.log(error);
     }
@@ -56,16 +57,23 @@ const TotalFeedback = ({ className, id, ...rest }) => {
         variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      console.log(result);
+      setfeedbackidlist(result.data.feedbackByComponent.items);
+      console.log('setfeedbackidlist to result from query');
     } catch (error) {
       console.log(error);
     }
   }
-  console.log(getcomponentsByEvent(id));
-  console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
-
-  // const firstcomponentid = component.data.componentsByEvent.items[0].id;
-  // const feedbacksforfirstcomponent = getfeedbackByComponent(firstcomponentid);
+  useEffect(() => {
+    getcomponentsByEvent(id);
+  }, []);
+  console.log('componentidlist', componentidlist);
+  useEffect(() => {
+    if (componentidlist.length !== 0) {
+      getfeedbackByComponent(componentidlist[0].id);
+    }
+  }, []);
+  console.log(feedbackidlist);
+  const count = feedbackidlist.length;
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -83,7 +91,7 @@ const TotalFeedback = ({ className, id, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TOTAL FEEDBACKS
+              Total Feedbacks
             </Typography>
             <Typography
               color="textPrimary"

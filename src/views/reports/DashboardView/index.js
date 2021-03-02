@@ -6,11 +6,11 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Budget from './Budget';
+import AverageScore from './AvgScore';
 import LatestFeedbacks from './LatestFeedbacks';
 import LatestProducts from './LatestProducts';
 import Sales from './Sales';
-import TasksProgress from './TasksProgress';
+import EventProgress from './EventProgress';
 import TotalFeedback from './TotalFeedback';
 import TotalProfit from './TotalProfit';
 import TrafficByDevice from './TrafficByDevice';
@@ -45,7 +45,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <Budget />
+            <AverageScore />
           </Grid>
           <Grid
             item
@@ -63,7 +63,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TasksProgress />
+            <EventProgress />
           </Grid>
           <Grid
             item
@@ -108,7 +108,7 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            <LatestFeedbacks />
+            <LatestFeedbacks id={id} />
           </Grid>
         </Grid>
       </Container>
