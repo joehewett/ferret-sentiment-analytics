@@ -93,6 +93,16 @@ export default function FormComponents({
 
   if (!loadedComponents) return <h1>Loading</h1>;
 
+  if (!components || components.length === 0) {
+    return (
+      <Card>
+        <CardHeader
+          subheader="This feedback form doesn't have any questions!"
+          title="Feedback Form"
+        />
+      </Card>
+    );
+  }
   return (
     <Card>
       <CardHeader

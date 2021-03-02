@@ -10,7 +10,13 @@ import {
   CardContent,
   Box,
   Button,
-  makeStyles
+  makeStyles,
+  withStyles,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  InputBase
 } from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import { createComponent } from '../../../graphql/mutations';
@@ -32,6 +38,28 @@ const states = [
 
 const newComponentFormState = { type: '', text: '', event_id: '' };
 
+const BootstrapInput = withStyles((theme) => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3)
+    }
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)'
+    }
+  }
+}))(InputBase);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     // backgroundColor: theme.palette.background.light,
@@ -46,6 +74,9 @@ const useStyles = makeStyles((theme) => ({
   },
   deleteButton: {
     color: '#e0392d'
+  },
+  margin: {
+    margin: theme.spacing(1)
   }
 }));
 
@@ -111,28 +142,28 @@ export default function AddComponentForm({ id, fetchComponents }) {
               md={6}
               xs={12}
             >
-              <TextField
-                fullWidth
-                label="Select Component"
-                name="type"
-                required
-                select
-                SelectProps={{ native: true }}
-                variant="outlined"
-                onChange={(e) => setNewComponentData({
-                  ...newComponentData,
-                  type: e.target.value
-                })}
-              >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              <FormControl fullWidth>
+                <InputLabel id="component_type_label">Component Type</InputLabel>
+                <Select
+                  labelId="component_type_label"
+                  id="component_type"
+                  input={<BootstrapInput />}
+                  value={newComponentData.type || ''}
+                  onChange={(e) => setNewComponentData({
+                    ...newComponentData,
+                    type: e.target.value
+                  })}
+                >
+                  {states.map((option) => (
+                    <MenuItem
+                      key={option.value}
+                      value={option.value}
+                    >
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid
               item
@@ -140,6 +171,7 @@ export default function AddComponentForm({ id, fetchComponents }) {
               xs={12}
             >
               <TextField
+                className={classes.margin}
                 fullWidth
                 helperText="Please add a description to accompany your component"
                 name="text"
@@ -149,6 +181,7 @@ export default function AddComponentForm({ id, fetchComponents }) {
                 })}
                 required
                 variant="outlined"
+                value={newComponentData.text || ''}
               />
             </Grid>
           </Grid>
