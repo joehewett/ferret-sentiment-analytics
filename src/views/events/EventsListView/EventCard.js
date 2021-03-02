@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
   },
   ratingIcon: {
     marginRight: theme.spacing(1)
+  },
+  buttonIcon: {
+    marginRight: theme.spacing(1)
   }
 }));
 
@@ -108,6 +111,7 @@ const EventCard = ({ className, event, ...rest }) => {
           >
             <Button
               href={`/app/dashboard/${event.id}`}
+              className={classes.buttonIcon}
               variant="contained"
               size="medium"
               color="secondary"
@@ -116,6 +120,7 @@ const EventCard = ({ className, event, ...rest }) => {
             </Button>
             <Button
               href={`/app/feedback/${event.id}`}
+              className={classes.buttonIcon}
               variant="contained"
               size="medium"
               color="secondary"
