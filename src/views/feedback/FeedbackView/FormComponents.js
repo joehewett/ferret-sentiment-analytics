@@ -9,13 +9,12 @@ import {
   TextField,
   CardContent,
   Box,
-  Button,
   IconButton,
-  makeStyles
+  makeStyles,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import SendIcon from '@material-ui/icons/Send';
 import { deleteComponent as deleteComponentMutation } from '../../../graphql/mutations';
+import SubmitButton from './SubmitButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,33 +44,6 @@ export default function FormComponents({
   useEffect(() => {
     fetchComponents();
   }, []);
-
-  // Called when feedback form is submitted
-  async function handleSubmit() {
-    console.log('Submitting');
-    console.log(components);
-    // const deepCopy = [...components];
-
-    // try {
-    //     await API.graphql({
-    //         query: createFeedback,
-    //         variables: {
-    //             input: newComponentData
-    //         },
-    //         authMode: "AMAZON_COGNITO_USER_POOLS"
-    //     }).then((result) => {
-    //         console.log("Added new component: ", result)
-    //         newID = result.data.createComponent.id
-    //     });
-    // } catch(error) {
-
-    // }
-    // deepCopy.map((component) => {
-    //   component.response = '';
-    // });
-    // // TODO - actually store this form data in the database
-    // setComponents(deepCopy);
-  }
 
   async function deleteComponent(cid) {
     console.log('Deleting component ', cid);
@@ -103,6 +75,8 @@ export default function FormComponents({
       </Card>
     );
   }
+
+  // eslint-disable-next-line no-constant-condition
   return (
     <Card>
       <CardHeader
@@ -162,14 +136,7 @@ export default function FormComponents({
         justifyContent="flex-end"
         p={2}
       >
-        <Button
-          color="secondary"
-          variant="contained"
-          onClick={handleSubmit}
-          startIcon={<SendIcon />}
-        >
-          Submit Form
-        </Button>
+        <SubmitButton components={components} />
       </Box>
     </Card>
   );
