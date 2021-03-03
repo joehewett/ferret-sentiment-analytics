@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -25,9 +25,12 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TasksProgress = ({ className, ...rest }) => {
+const EventProgress = ({ className, ...rest }) => {
   const classes = useStyles();
-
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    setProgress(75.5);
+  }, []);
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -45,13 +48,14 @@ const TasksProgress = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TASKS PROGRESS
+              Event Progress
             </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
             >
-              75.5%
+              {progress}
+              %
             </Typography>
           </Grid>
           <Grid item>
@@ -62,7 +66,7 @@ const TasksProgress = ({ className, ...rest }) => {
         </Grid>
         <Box mt={3}>
           <LinearProgress
-            value={75.5}
+            value={progress}
             variant="determinate"
           />
         </Box>
@@ -71,8 +75,8 @@ const TasksProgress = ({ className, ...rest }) => {
   );
 };
 
-TasksProgress.propTypes = {
+EventProgress.propTypes = {
   className: PropTypes.string
 };
 
-export default TasksProgress;
+export default EventProgress;

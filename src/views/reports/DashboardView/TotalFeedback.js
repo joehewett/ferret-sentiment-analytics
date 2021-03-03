@@ -1,5 +1,5 @@
 /* eslint react/prop-types: 0 */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -35,37 +35,49 @@ const useStyles = makeStyles((theme) => ({
 
 const TotalFeedback = ({ className, id, ...rest }) => {
   const classes = useStyles();
-  let count = 0;
-  console.log(count++);
-  async function getcomponentsByEvent(eventid) {
+  const [componentIdList, setComponentIdList] = useState([]);
+  const [feedbackIdList, setFeedbackIdList] = useState([]);
+  async function getComponentsByEvent(eventid) {
     try {
       const result = await API.graphql({
         query: componentsByEvent,
         variables: { event_id: eventid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      console.log(result);
+      setComponentIdList(result.data.componentsByEvent.items);
+      // console.log('setcomponentid to result from query');
     } catch (error) {
       console.log(error);
     }
   }
-  async function getfeedbackByComponent(componentid) {
+  async function getFeedbackByComponent(componentid) {
     try {
       const result = await API.graphql({
         query: feedbackByComponent,
         variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      console.log(result);
+      // console.log(result);
+      setFeedbackIdList(result.data.feedbackByComponent.items);
+      // console.log('setfeedbackidlist to result from query');
     } catch (error) {
       console.log(error);
     }
   }
-  console.log(getcomponentsByEvent(id));
-  console.log(getfeedbackByComponent('705742a9-38cf-430e-8d8e-224f279a5d5c'));
+  useEffect(() => {
+    getComponentsByEvent(id);
+  }, []);
 
-  // const firstcomponentid = component.data.componentsByEvent.items[0].id;
-  // const feedbacksforfirstcomponent = getfeedbackByComponent(firstcomponentid);
+  useEffect(() => {
+    // console.log('componentidlist', componentIdList);
+    // console.log(componentIdList.length);
+    if (componentIdList.length !== 0) {
+      getFeedbackByComponent(componentIdList[0].id);
+      // console.log(componentIdList[0].id);
+    }
+  }, [componentIdList]);
+  // console.log(feedbackIdList);
+  const count = feedbackIdList.length;
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -83,7 +95,7 @@ const TotalFeedback = ({ className, id, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TOTAL FEEDBACKS
+              Total Feedbacks
             </Typography>
             <Typography
               color="textPrimary"

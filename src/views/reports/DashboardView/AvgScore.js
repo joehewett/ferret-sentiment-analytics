@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Budget = ({ className, ...rest }) => {
+const AverageScore = ({ className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -52,7 +52,7 @@ const Budget = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              BUDGET
+              Average Score
             </Typography>
             <Typography
               color="textPrimary"
@@ -91,8 +91,8 @@ const Budget = ({ className, ...rest }) => {
   );
 };
 
-Budget.propTypes = {
+AverageScore.propTypes = {
   className: PropTypes.string
 };
 
-export default Budget;
+export default AverageScore;
