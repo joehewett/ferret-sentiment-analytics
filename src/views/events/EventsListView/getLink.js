@@ -50,7 +50,7 @@ export default function GetLinkButton({
     setOpen(false);
   };
 
-  const eventURL = `/app/feedback/${eventid}`;
+  const eventURL = `https://ferret.ml/app/feedback/${eventid}`;
 
   const handleCopyLink = () => {
     clipboard.copy(eventURL); // programmatically copying a value
