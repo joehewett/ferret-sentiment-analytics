@@ -62,11 +62,7 @@ const BootstrapInput = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // backgroundColor: theme.palette.background.light,
-    // minHeight: '20%',
-    // paddingBottom: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    // paddingTop: theme.spacing(3)
   },
   input: {
     width: '70%',
@@ -84,9 +80,7 @@ export default function AddComponentForm({ id, fetchComponents }) {
   const classes = useStyles();
   const [components, setComponents] = useState([]);
   // Store data from the New Component form
-  const [newComponentData, setNewComponentData] = useState(
-    newComponentFormState
-  );
+  const [newComponentData, setNewComponentData] = useState(newComponentFormState);
 
   useEffect(() => {
     newComponentFormState.event_id = id;
@@ -148,7 +142,7 @@ export default function AddComponentForm({ id, fetchComponents }) {
                   labelId="component_type_label"
                   id="component_type"
                   input={<BootstrapInput />}
-                  value={newComponentData.type || ''}
+                  value={newComponentData.type || 'textbox'}
                   onChange={(e) => setNewComponentData({
                     ...newComponentData,
                     type: e.target.value
