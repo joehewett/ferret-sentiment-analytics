@@ -21,6 +21,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import GetLinkButton from './getLink';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,14 +68,23 @@ const EventCard = ({ className, event, ...rest }) => {
       {...rest}
     >
       <CardContent>
-        <Typography
-          align="center"
-          color="textPrimary"
-          gutterBottom
-          variant="h4"
+        <Grid
+          container
+          justify="space-between"
+          spacing={2}
         >
-          {event.name}
-        </Typography>
+          <Typography
+            align="center"
+            color="textPrimary"
+            gutterBottom
+            variant="h4"
+          >
+            {event.name}
+          </Typography>
+          <GetLinkButton
+            eventid={event.id}
+          />
+        </Grid>
         <Typography
           align="center"
           color="textPrimary"
