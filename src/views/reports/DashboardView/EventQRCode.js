@@ -1,8 +1,8 @@
 import React from 'react';
+import QRCode from 'react-qr-code';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
-  Avatar,
   Card,
   CardContent,
   Grid,
@@ -10,7 +10,7 @@ import {
   makeStyles,
   colors
 } from '@material-ui/core';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+/* eslint react/prop-types: 0 */
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,8 +23,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TotalProfit = ({ className, ...rest }) => {
+const EventQRCode = ({ className, id, ...rest }) => {
   const classes = useStyles();
+  const eventURL = `https://www.ferret.ml/app/feedback/${id}`;
 
   return (
     <Card
@@ -43,19 +44,9 @@ const TotalProfit = ({ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              TOTAL PROFIT
+              QR Code of the Event
             </Typography>
-            <Typography
-              color="textPrimary"
-              variant="h3"
-            >
-              $23,200
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Avatar className={classes.avatar}>
-              <AttachMoneyIcon />
-            </Avatar>
+            <QRCode value={eventURL} />
           </Grid>
         </Grid>
       </CardContent>
@@ -63,8 +54,8 @@ const TotalProfit = ({ className, ...rest }) => {
   );
 };
 
-TotalProfit.propTypes = {
+EventQRCode.propTypes = {
   className: PropTypes.string
 };
 
-export default TotalProfit;
+export default EventQRCode;
