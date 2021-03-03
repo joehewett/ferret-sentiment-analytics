@@ -99,31 +99,40 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
   const classes = useStyles();
   const [componentIdList, setComponentIdList] = useState([]);
   const [feedbackIdList, setFeedbackIdList] = useState([]);
-  const [queryData, setQueryData] = useState([]);
-  // const [dataForTable, setDataForTable] = useState([]);
-  async function getComponentsByEvent(eventid) {
+  const [queryData, setQueryData] = useState([{}]);
+  const [orders] = useState(data);
+  async function getFeedbackByComponent(componentid) {
     try {
-      const result = await API.graphql({
-        query: componentsByEvent,
-        variables: { event_id: eventid },
+      await API.graphql({
+        query: feedbackByComponent,
+        variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
+      }).then((result) => {
+        console.log(result);
+        setFeedbackIdList(result.data.feedbackByComponent.items);
+        console.log('setfeedbackidlist to result from query');
       });
-      setComponentIdList(result.data.componentsByEvent.items);
-      console.log('setcomponentid to result from query');
     } catch (error) {
       console.log(error);
     }
   }
-  async function getFeedbackByComponent(componentid) {
+  // const [dataForTable, setDataForTable] = useState([]);
+  async function getComponentsByEvent(eventid) {
     try {
-      const result = await API.graphql({
-        query: feedbackByComponent,
-        variables: { component_id: componentid },
+      await API.graphql({
+        query: componentsByEvent,
+        variables: { event_id: eventid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
+      }).then((result) => {
+        const componentIds = result.data.componentsByEvent.items;
+        setComponentIdList(componentIds);
+        console.log(componentIdList);
+        console.log('setcomponentid to result from query');
+        if (componentIds.length !== 0) {
+          getFeedbackByComponent(componentIds[0].id);
+          console.log(componentIds[0].id);
+        }
       });
-      console.log(result);
-      setFeedbackIdList(result.data.feedbackByComponent.items);
-      console.log('setfeedbackidlist to result from query');
     } catch (error) {
       console.log(error);
     }
@@ -132,31 +141,39 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
     getComponentsByEvent(id);
   }, []);
 
+  // useEffect(() => {
+  //   console.log('componentidlist', componentIdList);
+  //   console.log(componentIdList.length);
+  //   if (componentIdList.length !== 0) {
+  //     getFeedbackByComponent(componentIdList[0].id);
+  //     console.log(componentIdList[0].id);
+  //   }
+  // // }, [componentIdList]);
   useEffect(() => {
-    console.log('componentidlist', componentIdList);
-    console.log(componentIdList.length);
-    if (componentIdList.length !== 0) {
-      getFeedbackByComponent(componentIdList[0].id);
-      console.log(componentIdList[0].id);
-    }
-  }, [componentIdList]);
-  useEffect(() => {
+    console.log('a');
     console.log(feedbackIdList.length);
     if (feedbackIdList.length !== 0) {
-      setQueryData([...queryData, feedbackIdList]);
-      console.log('data', queryData);
+      console.log('b');
+      console.log('feedbackidlist', feedbackIdList);
+      const tableData = [];
+      feedbackIdList.forEach((feedback) => {
+        console.log('feedbacks', feedback);
+        const newData = {
+          id: feedback.id,
+          owner: feedback.owner,
+          createdAt: feedback.createdAt
+        };
+        tableData.push(newData);
+        console.log(tableData);
+        console.log(newData);
+        console.log('c');
+      });
+      setQueryData(tableData);
+      console.log('data', tableData);
     }
+    console.log('d');
   }, [feedbackIdList]);
-  // useEffect(() => {
-  //   getFeedbackByComponent('532160a2-e5ff-4c80-b761-d8b6ec51f30c');
-  // }, []);
-
-  // useEffect(() => {
-  //   setDataForTable(queryData);
-  //   console.log(dataForTable);
-  // }, []);
-  const [orders] = useState(data);
-
+  console.log(queryData);
   return (
     <Card
       className={clsx(classes.root, className)}

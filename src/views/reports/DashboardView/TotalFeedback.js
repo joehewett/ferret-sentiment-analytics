@@ -45,7 +45,7 @@ const TotalFeedback = ({ className, id, ...rest }) => {
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
       setComponentIdList(result.data.componentsByEvent.items);
-      console.log('setcomponentid to result from query');
+      // console.log('setcomponentid to result from query');
     } catch (error) {
       console.log(error);
     }
@@ -57,9 +57,9 @@ const TotalFeedback = ({ className, id, ...rest }) => {
         variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       });
-      console.log(result);
+      // console.log(result);
       setFeedbackIdList(result.data.feedbackByComponent.items);
-      console.log('setfeedbackidlist to result from query');
+      // console.log('setfeedbackidlist to result from query');
     } catch (error) {
       console.log(error);
     }
@@ -69,14 +69,14 @@ const TotalFeedback = ({ className, id, ...rest }) => {
   }, []);
 
   useEffect(() => {
-    console.log('componentidlist', componentIdList);
-    console.log(componentIdList.length);
+    // console.log('componentidlist', componentIdList);
+    // console.log(componentIdList.length);
     if (componentIdList.length !== 0) {
       getFeedbackByComponent(componentIdList[0].id);
-      console.log(componentIdList[0].id);
+      // console.log(componentIdList[0].id);
     }
   }, [componentIdList]);
-  console.log(feedbackIdList);
+  // console.log(feedbackIdList);
   const count = feedbackIdList.length;
   return (
     <Card

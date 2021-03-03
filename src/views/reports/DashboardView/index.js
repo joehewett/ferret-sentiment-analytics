@@ -13,7 +13,7 @@ import Sales from './Sales';
 import EventProgress from './EventProgress';
 import TotalFeedback from './TotalFeedback';
 import TotalProfit from './TotalProfit';
-import TrafficByDevice from './TrafficByDevice';
+import FeedbackRatio from './FeedbackRatio';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,7 +90,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TrafficByDevice />
+            <FeedbackRatio />
           </Grid>
           <Grid
             item
