@@ -12,7 +12,7 @@ import LatestProducts from './LatestProducts';
 import Sales from './Sales';
 import EventProgress from './EventProgress';
 import TotalFeedback from './TotalFeedback';
-import TotalProfit from './TotalProfit';
+import EventQRCode from './EventQRCode';
 import FeedbackRatio from './FeedbackRatio';
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +72,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <TotalProfit />
+            <EventQRCode id={id} />
           </Grid>
           <Grid
             item
