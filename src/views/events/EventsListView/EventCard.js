@@ -21,6 +21,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import GetLinkButton from './getLink';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1)
   },
   ratingIcon: {
+    marginRight: theme.spacing(1)
+  },
+  buttonIcon: {
     marginRight: theme.spacing(1)
   }
 }));
@@ -64,14 +68,23 @@ const EventCard = ({ className, event, ...rest }) => {
       {...rest}
     >
       <CardContent>
-        <Typography
-          align="center"
-          color="textPrimary"
-          gutterBottom
-          variant="h4"
+        <Grid
+          container
+          justify="space-between"
+          spacing={2}
         >
-          {event.name}
-        </Typography>
+          <Typography
+            align="center"
+            color="textPrimary"
+            gutterBottom
+            variant="h4"
+          >
+            {event.name}
+          </Typography>
+          <GetLinkButton
+            eventid={event.id}
+          />
+        </Grid>
         <Typography
           align="center"
           color="textPrimary"
@@ -108,6 +121,7 @@ const EventCard = ({ className, event, ...rest }) => {
           >
             <Button
               href={`/app/dashboard/${event.id}`}
+              className={classes.buttonIcon}
               variant="contained"
               size="medium"
               color="secondary"
@@ -116,6 +130,7 @@ const EventCard = ({ className, event, ...rest }) => {
             </Button>
             <Button
               href={`/app/feedback/${event.id}`}
+              className={classes.buttonIcon}
               variant="contained"
               size="medium"
               color="secondary"

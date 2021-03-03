@@ -13,9 +13,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import {
-  BarChart as BarChartIcon,
   ShoppingBag as ShoppingBagIcon,
-  Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -30,17 +28,7 @@ const items = [
     href: '/app/events',
     icon: ShoppingBagIcon,
     title: 'Events List'
-  },
-  {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Event Dashboard'
-  },
-  {
-    href: '/app/feedback',
-    icon: UsersIcon,
-    title: 'Feedback'
-  },
+  }
 ];
 
 const useStyles = makeStyles(() => ({
