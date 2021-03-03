@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
-import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
 import {
@@ -10,7 +9,6 @@ import {
   Button,
   Card,
   CardHeader,
-  Chip,
   Divider,
   Table,
   TableBody,
@@ -25,69 +23,68 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { feedbackByComponent, componentsByEvent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
 
-const data = [
-  {
-    id: uuid(),
-    ref: 'CDD1049',
-    amount: 30.5,
-    customer: {
-      name: 'Ekaterina Tankova'
-    },
-    createdAt: 1555016400000,
-    status: 'pending'
-  },
-  {
-    id: uuid(),
-    ref: 'CDD1048',
-    amount: 25.1,
-    customer: {
-      name: 'Cao Yu'
-    },
-    createdAt: 1555016400000,
-    status: 'delivered'
-  },
-  {
-    id: uuid(),
-    ref: 'CDD1047',
-    amount: 10.99,
-    customer: {
-      name: 'Alexa Richardson'
-    },
-    createdAt: 1554930000000,
-    status: 'refunded'
-  },
-  {
-    id: uuid(),
-    ref: 'CDD1046',
-    amount: 96.43,
-    customer: {
-      name: 'Anje Keizer'
-    },
-    createdAt: 1554757200000,
-    status: 'pending'
-  },
-  {
-    id: uuid(),
-    ref: 'CDD1045',
-    amount: 32.54,
-    customer: {
-      name: 'Clarke Gillebert'
-    },
-    createdAt: 1554670800000,
-    status: 'delivered'
-  },
-  {
-    id: uuid(),
-    ref: 'CDD1044',
-    amount: 16.76,
-    customer: {
-      name: 'Adam Denisov'
-    },
-    createdAt: 1554670800000,
-    status: 'delivered'
-  }
-];
-
+// const data = [
+//   {
+//     id: uuid(),
+//     ref: 'CDD1049',
+//     amount: 30.5,
+//     customer: {
+//       name: 'Ekaterina Tankova'
+//     },
+//     createdAt: 1555016400000,
+//     status: 'pending'
+//   },
+//   {
+//     id: uuid(),
+//     ref: 'CDD1048',
+//     amount: 25.1,
+//     customer: {
+//       name: 'Cao Yu'
+//     },
+//     createdAt: 1555016400000,
+//     status: 'delivered'
+//   },
+//   {
+//     id: uuid(),
+//     ref: 'CDD1047',
+//     amount: 10.99,
+//     customer: {
+//       name: 'Alexa Richardson'
+//     },
+//     createdAt: 1554930000000,
+//     status: 'refunded'
+//   },
+//   {
+//     id: uuid(),
+//     ref: 'CDD1046',
+//     amount: 96.43,
+//     customer: {
+//       name: 'Anje Keizer'
+//     },
+//     createdAt: 1554757200000,
+//     status: 'pending'
+//   },
+//   {
+//     id: uuid(),
+//     ref: 'CDD1045',
+//     amount: 32.54,
+//     customer: {
+//       name: 'Clarke Gillebert'
+//     },
+//     createdAt: 1554670800000,
+//     status: 'delivered'
+//   },
+//   {
+//     id: uuid(),
+//     ref: 'CDD1044',
+//     amount: 16.76,
+//     customer: {
+//       name: 'Adam Denisov'
+//     },
+//     createdAt: 1554670800000,
+//     status: 'delivered'
+//   }
+// ];
 const useStyles = makeStyles(() => ({
   root: {},
   actions: {
@@ -100,7 +97,6 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
   const [componentIdList, setComponentIdList] = useState([]);
   const [feedbackIdList, setFeedbackIdList] = useState([]);
   const [queryData, setQueryData] = useState([{}]);
-  const [orders] = useState(data);
   async function getFeedbackByComponent(componentid) {
     try {
       await API.graphql({
@@ -163,6 +159,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
           owner: feedback.owner,
           createdAt: feedback.createdAt
         };
+        console.log(moment(newData.createdAt).format('DD/MM/YYYY'));
         tableData.push(newData);
         console.log(tableData);
         console.log(newData);
@@ -190,7 +187,10 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
                   Feedback ID
                 </TableCell>
                 <TableCell>
-                  Attendee ID
+                  Attendee Name
+                </TableCell>
+                <TableCell>
+                  Individual Sentiment Score
                 </TableCell>
                 <TableCell sortDirection="desc">
                   <Tooltip
@@ -205,32 +205,25 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
                     </TableSortLabel>
                   </Tooltip>
                 </TableCell>
-                <TableCell>
-                  View Feedback
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => (
+              {queryData.map((data) => (
                 <TableRow
                   hover
-                  key={order.id}
+                  key={data.id}
                 >
                   <TableCell>
-                    {order.ref}
+                    {data.id}
                   </TableCell>
                   <TableCell>
-                    {order.customer.name}
+                    {data.owner}
                   </TableCell>
                   <TableCell>
-                    {moment(order.createdAt).format('DD/MM/YYYY')}
+                    2
                   </TableCell>
                   <TableCell>
-                    <Chip
-                      color="primary"
-                      label={order.status}
-                      size="small"
-                    />
+                    {moment(data.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
                 </TableRow>
               ))}
