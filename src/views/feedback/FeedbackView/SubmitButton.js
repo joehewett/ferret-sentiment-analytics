@@ -37,7 +37,11 @@ export default function SubmitButton({ components, setComponents }) {
         API.graphql({
           query: createFeedbackMutation,
           variables: {
-            input: { component_id: component.id, response: component.response }
+            input: {
+              component_id: component.id,
+              response: component.response,
+              sentiment_score: 0.568
+            }
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS'
         }).then((status) => {
@@ -50,9 +54,9 @@ export default function SubmitButton({ components, setComponents }) {
     deepCopy.forEach((component) => {
       component.response = '';
     });
-    // // TODO - actually store this form data in the database
     setComponents(deepCopy);
   }
+
   return (
     <div>
       <Button

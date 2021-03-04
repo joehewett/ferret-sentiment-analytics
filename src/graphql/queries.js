@@ -15,9 +15,6 @@ export const listEvents = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       nextToken
     }
@@ -33,15 +30,6 @@ export const getEvent = /* GraphQL */ `
       createdAt
       updatedAt
       components {
-        items {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -69,9 +57,6 @@ export const eventsByUser = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       nextToken
     }
@@ -91,18 +76,7 @@ export const listComponents = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       nextToken
     }
@@ -124,20 +98,9 @@ export const getComponent = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       owner
       feedbacks {
-        items {
-          id
-          component_id
-          response
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -165,18 +128,7 @@ export const componentsByEvent = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       nextToken
     }
@@ -188,6 +140,7 @@ export const getFeedback = /* GraphQL */ `
       id
       component_id
       response
+      sentiment_score
       createdAt
       updatedAt
       component {
@@ -197,18 +150,7 @@ export const getFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       owner
     }
@@ -225,17 +167,9 @@ export const listFeedbacks = /* GraphQL */ `
         id
         component_id
         response
+        sentiment_score
         createdAt
         updatedAt
-        component {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         owner
       }
       nextToken
@@ -261,17 +195,9 @@ export const feedbackByComponent = /* GraphQL */ `
         id
         component_id
         response
+        sentiment_score
         createdAt
         updatedAt
-        component {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         owner
       }
       nextToken

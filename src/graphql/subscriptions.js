@@ -11,15 +11,6 @@ export const onCreateEvent = /* GraphQL */ `
       createdAt
       updatedAt
       components {
-        items {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -35,15 +26,6 @@ export const onUpdateEvent = /* GraphQL */ `
       createdAt
       updatedAt
       components {
-        items {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -59,15 +41,6 @@ export const onDeleteEvent = /* GraphQL */ `
       createdAt
       updatedAt
       components {
-        items {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -89,20 +62,9 @@ export const onCreateComponent = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       owner
       feedbacks {
-        items {
-          id
-          component_id
-          response
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -124,20 +86,9 @@ export const onUpdateComponent = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       owner
       feedbacks {
-        items {
-          id
-          component_id
-          response
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -159,20 +110,9 @@ export const onDeleteComponent = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       owner
       feedbacks {
-        items {
-          id
-          component_id
-          response
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -184,6 +124,7 @@ export const onCreateFeedback = /* GraphQL */ `
       id
       component_id
       response
+      sentiment_score
       createdAt
       updatedAt
       component {
@@ -193,18 +134,7 @@ export const onCreateFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       owner
     }
@@ -216,6 +146,7 @@ export const onUpdateFeedback = /* GraphQL */ `
       id
       component_id
       response
+      sentiment_score
       createdAt
       updatedAt
       component {
@@ -225,18 +156,7 @@ export const onUpdateFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       owner
     }
@@ -248,6 +168,7 @@ export const onDeleteFeedback = /* GraphQL */ `
       id
       component_id
       response
+      sentiment_score
       createdAt
       updatedAt
       component {
@@ -257,18 +178,7 @@ export const onDeleteFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       owner
     }

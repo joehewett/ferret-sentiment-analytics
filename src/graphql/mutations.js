@@ -14,15 +14,6 @@ export const createEvent = /* GraphQL */ `
       createdAt
       updatedAt
       components {
-        items {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -41,15 +32,6 @@ export const updateEvent = /* GraphQL */ `
       createdAt
       updatedAt
       components {
-        items {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -68,15 +50,6 @@ export const deleteEvent = /* GraphQL */ `
       createdAt
       updatedAt
       components {
-        items {
-          id
-          type
-          text
-          event_id
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -101,20 +74,9 @@ export const createComponent = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       owner
       feedbacks {
-        items {
-          id
-          component_id
-          response
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -139,20 +101,9 @@ export const updateComponent = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       owner
       feedbacks {
-        items {
-          id
-          component_id
-          response
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -177,20 +128,9 @@ export const deleteComponent = /* GraphQL */ `
         owner
         createdAt
         updatedAt
-        components {
-          nextToken
-        }
       }
       owner
       feedbacks {
-        items {
-          id
-          component_id
-          response
-          createdAt
-          updatedAt
-          owner
-        }
         nextToken
       }
     }
@@ -205,6 +145,7 @@ export const createFeedback = /* GraphQL */ `
       id
       component_id
       response
+      sentiment_score
       createdAt
       updatedAt
       component {
@@ -214,18 +155,7 @@ export const createFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       owner
     }
@@ -240,6 +170,7 @@ export const updateFeedback = /* GraphQL */ `
       id
       component_id
       response
+      sentiment_score
       createdAt
       updatedAt
       component {
@@ -249,18 +180,7 @@ export const updateFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       owner
     }
@@ -275,6 +195,7 @@ export const deleteFeedback = /* GraphQL */ `
       id
       component_id
       response
+      sentiment_score
       createdAt
       updatedAt
       component {
@@ -284,18 +205,7 @@ export const deleteFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
-        event {
-          id
-          name
-          description
-          owner
-          createdAt
-          updatedAt
-        }
         owner
-        feedbacks {
-          nextToken
-        }
       }
       owner
     }
