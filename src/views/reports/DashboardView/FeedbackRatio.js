@@ -13,9 +13,9 @@ import {
   makeStyles,
   useTheme
 } from '@material-ui/core';
-import LaptopMacIcon from '@material-ui/icons/LaptopMac';
-import PhoneIcon from '@material-ui/icons/Phone';
-import TabletIcon from '@material-ui/icons/Tablet';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,11 +30,11 @@ const FeedbackRatio = ({ className, ...rest }) => {
   const data = {
     datasets: [
       {
-        data: [63, 15, 23],
+        data: [20, 5, 4],
         backgroundColor: [
-          colors.indigo[500],
-          colors.red[600],
-          colors.orange[600]
+          colors.green[500],
+          colors.amber[600],
+          colors.red[300]
         ],
         borderWidth: 8,
         borderColor: colors.common.white,
@@ -66,24 +66,24 @@ const FeedbackRatio = ({ className, ...rest }) => {
     }
   };
 
-  const devices = [
+  const score = [
     {
       title: 'Good',
-      value: 63,
-      icon: LaptopMacIcon,
-      color: colors.indigo[500]
+      value: 33,
+      icon: InsertEmoticonIcon,
+      color: colors.green[500]
     },
     {
       title: 'Average',
-      value: 15,
-      icon: TabletIcon,
-      color: colors.red[600]
+      value: 33,
+      icon: SentimentSatisfiedIcon,
+      color: colors.amber[600]
     },
     {
       title: 'Bad',
-      value: 23,
-      icon: PhoneIcon,
-      color: colors.orange[600]
+      value: 34,
+      icon: SentimentVeryDissatisfiedIcon,
+      color: colors.red[300]
     }
   ];
 
@@ -109,7 +109,7 @@ const FeedbackRatio = ({ className, ...rest }) => {
           justifyContent="center"
           mt={2}
         >
-          {devices.map(({
+          {score.map(({
             color,
             icon: Icon,
             title,
