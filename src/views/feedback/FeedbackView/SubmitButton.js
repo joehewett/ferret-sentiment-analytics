@@ -25,10 +25,11 @@ export default function SubmitButton({ components, setComponents }) {
     setOpen(false);
   };
 
-  function interpretFromPredictions(input) {
-    console.log('Interpeting from predictions', input);
+  async function interpretFromPredictions(input, type = 'textbox') {
+    let sentimentAnalysis = '';
+    if (type !== 'textbox') return '';
     try {
-      Predictions.interpret({
+      await Predictions.interpret({
         text: {
           source: {
             text: input,
@@ -36,40 +37,30 @@ export default function SubmitButton({ components, setComponents }) {
           type: 'ALL'
         }
       }).then((result) => {
-        console.log('got result');
-        console.log(result);
-        return JSON.stringify(result, null, 2);
+        sentimentAnalysis = JSON.stringify(result, null, 2);
       }).catch((err) => {
-        console.log('caught error', err);
+        console.log('Error while parsing sentiment analysis: ', err);
       });
     } catch (err) {
-      console.log(err);
+      console.log('Error while getting sentiment analysis: ', err);
     }
+    return sentimentAnalysis;
   }
 
-  // Called when feedback form is submitted
-  async function handleSubmit() {
-    handleClickOpen();
-    let sentimentAnalysis;
-    console.log('Submitting');
-    console.log(components);
-    const deepCopy = [...components];
-
-    try {
-      deepCopy.forEach((component) => {
-        if (component.type === 'textbox') {
-          sentimentAnalysis = interpretFromPredictions(component.response);
-        } else {
-          sentimentAnalysis = '';
-        }
-
+  // First analyse sentiment, then store feedback in database
+  async function storeFeedback(component) {
+    const resp = component.response;
+    console.log('comp resp 1 ', component.response);
+    await interpretFromPredictions(component.response, component.type)
+      .then((result) => {
+        console.log('comp resp ', resp);
         API.graphql({
           query: createFeedbackMutation,
           variables: {
             input: {
               component_id: component.id,
-              response: component.response,
-              sentiment_score: sentimentAnalysis
+              response: resp,
+              sentiment_score: result
             }
           },
           authMode: 'AMAZON_COGNITO_USER_POOLS'
@@ -77,9 +68,23 @@ export default function SubmitButton({ components, setComponents }) {
           console.log('Added feedback for component', status);
         });
       });
+  }
+
+  // Called when feedback form is submitted
+  function handleSubmit() {
+    handleClickOpen();
+    const deepCopy = [...components];
+
+    // For each component, store the feedback in the database
+    try {
+      deepCopy.forEach((component) => {
+        storeFeedback(component);
+      });
     } catch (error) {
       console.log(error);
     }
+
+    // Reset the form to blank
     deepCopy.forEach((component) => {
       component.response = '';
     });
