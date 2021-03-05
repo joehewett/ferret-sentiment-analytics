@@ -21,6 +21,7 @@ import {
 } from '@material-ui/core';
 import { feedbackByComponent, componentsByEvent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
+import SentimentIndicator from './SentimentIndicator';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -172,7 +173,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
                     {data.owner}
                   </TableCell>
                   <TableCell>
-                    {data.sentimentScore}
+                    <SentimentIndicator predominant={data.sentimentScore} />
                   </TableCell>
                   <TableCell>
                     {moment(data.createdAt).format('DD/MM/YYYY')}
