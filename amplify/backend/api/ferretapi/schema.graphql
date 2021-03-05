@@ -46,6 +46,6 @@ type Feedback @model
                 id: ID!
                 component_id: ID!
                 response: String!
-                sentiment_score: Float
+                sentiment_score: String
                 component: Component @connection(name: "ComponentFeedback")
             }
