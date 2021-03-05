@@ -6,7 +6,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
 import {
   Box,
-  Button,
   Card,
   CardHeader,
   Divider,
@@ -15,76 +14,14 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  TablePagination,
   TableSortLabel,
   Tooltip,
   makeStyles
 } from '@material-ui/core';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { feedbackByComponent, componentsByEvent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
 
-// const data = [
-//   {
-//     id: uuid(),
-//     ref: 'CDD1049',
-//     amount: 30.5,
-//     customer: {
-//       name: 'Ekaterina Tankova'
-//     },
-//     createdAt: 1555016400000,
-//     status: 'pending'
-//   },
-//   {
-//     id: uuid(),
-//     ref: 'CDD1048',
-//     amount: 25.1,
-//     customer: {
-//       name: 'Cao Yu'
-//     },
-//     createdAt: 1555016400000,
-//     status: 'delivered'
-//   },
-//   {
-//     id: uuid(),
-//     ref: 'CDD1047',
-//     amount: 10.99,
-//     customer: {
-//       name: 'Alexa Richardson'
-//     },
-//     createdAt: 1554930000000,
-//     status: 'refunded'
-//   },
-//   {
-//     id: uuid(),
-//     ref: 'CDD1046',
-//     amount: 96.43,
-//     customer: {
-//       name: 'Anje Keizer'
-//     },
-//     createdAt: 1554757200000,
-//     status: 'pending'
-//   },
-//   {
-//     id: uuid(),
-//     ref: 'CDD1045',
-//     amount: 32.54,
-//     customer: {
-//       name: 'Clarke Gillebert'
-//     },
-//     createdAt: 1554670800000,
-//     status: 'delivered'
-//   },
-//   {
-//     id: uuid(),
-//     ref: 'CDD1044',
-//     amount: 16.76,
-//     customer: {
-//       name: 'Adam Denisov'
-//     },
-//     createdAt: 1554670800000,
-//     status: 'delivered'
-//   }
-// ];
 const useStyles = makeStyles(() => ({
   root: {},
   actions: {
@@ -97,6 +34,16 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
   const [componentIdList, setComponentIdList] = useState([]);
   const [feedbackIdList, setFeedbackIdList] = useState([]);
   const [queryData, setQueryData] = useState([{}]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
   async function getFeedbackByComponent(componentid) {
     try {
       await API.graphql({
@@ -154,10 +101,15 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
       const tableData = [];
       feedbackIdList.forEach((feedback) => {
         console.log('feedbacks', feedback);
+        const sentimentInput = JSON.parse(
+          feedback.sentiment_score
+        );
+        console.log('sentiment', sentimentInput);
         const newData = {
           id: feedback.id,
           owner: feedback.owner,
-          createdAt: feedback.createdAt
+          createdAt: feedback.createdAt,
+          sentimentScore: sentimentInput.textInterpretation.sentiment.predominant
         };
         console.log(moment(newData.createdAt).format('DD/MM/YYYY'));
         tableData.push(newData);
@@ -190,7 +142,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
                   Attendee Name
                 </TableCell>
                 <TableCell>
-                  Individual Sentiment Score
+                  Individual Sentiment
                 </TableCell>
                 <TableCell sortDirection="desc">
                   <Tooltip
@@ -208,7 +160,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {queryData.map((data) => (
+              {queryData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data) => (
                 <TableRow
                   hover
                   key={data.id}
@@ -220,7 +172,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
                     {data.owner}
                   </TableCell>
                   <TableCell>
-                    2
+                    {data.sentimentScore}
                   </TableCell>
                   <TableCell>
                     {moment(data.createdAt).format('DD/MM/YYYY')}
@@ -231,20 +183,15 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
           </Table>
         </Box>
       </PerfectScrollbar>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        p={2}
-      >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          size="small"
-          variant="text"
-        >
-          View all
-        </Button>
-      </Box>
+      <TablePagination
+        rowsPerPageOptions={[6, 12, 18]}
+        component="div"
+        count={queryData.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </Card>
   );
 };
