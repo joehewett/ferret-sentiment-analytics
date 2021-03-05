@@ -1,6 +1,6 @@
 {
     "identityPoolName": "ferret062ac125_identitypool_062ac125",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "ferret062ac125",
     "userPoolName": "ferret062ac125_userpool_062ac125",
     "autoVerifiedAttributes": [

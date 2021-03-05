@@ -14,7 +14,13 @@
       "customAuth": false
     }
   },
-  "predictions": {},
+  "predictions": {
+    "InterpretSentiment": {
+      "providerPlugin": "awscloudformation",
+      "service": "Comprehend",
+      "interpretType": "interpretText"
+    }
+  },
   "function": {},
   "api": {
     "ferretapi": {
