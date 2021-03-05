@@ -6,7 +6,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
 import {
   Box,
-  Button,
   Card,
   CardHeader,
   Divider,
@@ -15,11 +14,11 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  TablePagination,
   TableSortLabel,
   Tooltip,
   makeStyles
 } from '@material-ui/core';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { feedbackByComponent, componentsByEvent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
 
@@ -35,6 +34,16 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
   const [componentIdList, setComponentIdList] = useState([]);
   const [feedbackIdList, setFeedbackIdList] = useState([]);
   const [queryData, setQueryData] = useState([{}]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
   async function getFeedbackByComponent(componentid) {
     try {
       await API.graphql({
@@ -151,7 +160,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {queryData.map((data) => (
+              {queryData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data) => (
                 <TableRow
                   hover
                   key={data.id}
@@ -174,20 +183,15 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
           </Table>
         </Box>
       </PerfectScrollbar>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        p={2}
-      >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          size="small"
-          variant="text"
-        >
-          View all
-        </Button>
-      </Box>
+      <TablePagination
+        rowsPerPageOptions={[6, 12, 18]}
+        component="div"
+        count={queryData.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </Card>
   );
 };
