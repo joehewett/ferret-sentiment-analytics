@@ -45,7 +45,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <AverageScore />
+            <AverageScore id={id} />
           </Grid>
           <Grid
             item
