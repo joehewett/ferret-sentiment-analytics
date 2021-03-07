@@ -48,6 +48,10 @@ export default function CreateEventButton({
   };
   async function createEvent() {
     if (!formData.name && !formData.description) return;
+    if (formData.endDateTime < formData.startDateTime) {
+      alert("Event's Ending Time can't comes before starting time");
+      return;
+    }
     console.log('createEventMutation');
     console.log(formData.name);
     console.log(formData.description);
@@ -96,6 +100,32 @@ export default function CreateEventButton({
                 multiline
                 rows={4}
                 variant="outlined"
+              />
+            </div>
+            <div>
+              <TextField
+                onChange={(e) => setFormData({ ...formData, startDateTime: e.target.value })}
+                value={formData.startDateTime}
+                id="datetime-local"
+                label="Event's starting Date and Time"
+                type="datetime-local"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                onChange={(e) => setFormData({ ...formData, endDateTime: e.target.value })}
+                value={formData.endDateTime}
+                id="datetime-local"
+                label="Event's ending Date and Time"
+                type="datetime-local"
+                className={classes.textField}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </div>
           </form>
