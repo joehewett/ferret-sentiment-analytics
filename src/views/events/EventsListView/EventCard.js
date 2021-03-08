@@ -22,6 +22,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import GetLinkButton from './getLink';
+import DeleteEventButton from './deleteButton';
+/* eslint react/prop-types: 0 */
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +49,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const EventCard = ({ className, event, ...rest }) => {
+const EventCard = ({
+  className, event, eventCount, setEventCount, ...rest
+}) => {
   const classes = useStyles();
   // const [ratingIcon, setIcon] = useState(0);
   // console.log(event.overallRating);
@@ -141,6 +145,11 @@ const EventCard = ({ className, event, ...rest }) => {
             >
               View Form
             </Button>
+            <DeleteEventButton
+              eventid={event.id}
+              eventCount={eventCount}
+              setEventCount={setEventCount}
+            />
           </Grid>
         </Grid>
       </Box>
