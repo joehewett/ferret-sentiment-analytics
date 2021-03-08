@@ -106,6 +106,8 @@ const EventsList = () => {
                 <EventCard
                   className={classes.eventCard}
                   event={event}
+                  eventCount={eventCount}
+                  setEventCount={setEventCount}
                 />
               </Grid>
             ))}

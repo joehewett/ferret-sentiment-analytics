@@ -49,6 +49,7 @@ export default function CreateEventButton({
   async function createEvent() {
     if (!formData.name && !formData.description) return;
     if (formData.endDateTime < formData.startDateTime) {
+      // eslint-disable-next-line
       alert("Event's Ending Time can't comes before starting time");
       return;
     }
