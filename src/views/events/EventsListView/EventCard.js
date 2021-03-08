@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   eventTitle: {
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(2)
+  },
+  eventDescription: {
+    marginLeft: theme.spacing(1)
   }
 }));
 
@@ -95,7 +98,8 @@ const EventCard = ({
           />
         </Grid>
         <Typography
-          align="center"
+          className={classes.eventDescription}
+          align="left"
           color="textPrimary"
           variant="body1"
         >
