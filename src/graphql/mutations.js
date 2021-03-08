@@ -11,9 +11,33 @@ export const createEvent = /* GraphQL */ `
       name
       description
       owner
+      startDateTime
+      endDateTime
       createdAt
       updatedAt
       components {
+        items {
+          id
+          type
+          text
+          event_id
+          createdAt
+          updatedAt
+          event {
+            id
+            name
+            description
+            owner
+            startDateTime
+            endDateTime
+            createdAt
+            updatedAt
+          }
+          owner
+          feedbacks {
+            nextToken
+          }
+        }
         nextToken
       }
     }
@@ -29,9 +53,33 @@ export const updateEvent = /* GraphQL */ `
       name
       description
       owner
+      startDateTime
+      endDateTime
       createdAt
       updatedAt
       components {
+        items {
+          id
+          type
+          text
+          event_id
+          createdAt
+          updatedAt
+          event {
+            id
+            name
+            description
+            owner
+            startDateTime
+            endDateTime
+            createdAt
+            updatedAt
+          }
+          owner
+          feedbacks {
+            nextToken
+          }
+        }
         nextToken
       }
     }
@@ -47,9 +95,33 @@ export const deleteEvent = /* GraphQL */ `
       name
       description
       owner
+      startDateTime
+      endDateTime
       createdAt
       updatedAt
       components {
+        items {
+          id
+          type
+          text
+          event_id
+          createdAt
+          updatedAt
+          event {
+            id
+            name
+            description
+            owner
+            startDateTime
+            endDateTime
+            createdAt
+            updatedAt
+          }
+          owner
+          feedbacks {
+            nextToken
+          }
+        }
         nextToken
       }
     }
@@ -72,11 +144,43 @@ export const createComponent = /* GraphQL */ `
         name
         description
         owner
+        startDateTime
+        endDateTime
         createdAt
         updatedAt
+        components {
+          items {
+            id
+            type
+            text
+            event_id
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
       }
       owner
       feedbacks {
+        items {
+          id
+          component_id
+          response
+          sentiment_score
+          createdAt
+          updatedAt
+          component {
+            id
+            type
+            text
+            event_id
+            createdAt
+            updatedAt
+            owner
+          }
+          owner
+        }
         nextToken
       }
     }
@@ -99,11 +203,43 @@ export const updateComponent = /* GraphQL */ `
         name
         description
         owner
+        startDateTime
+        endDateTime
         createdAt
         updatedAt
+        components {
+          items {
+            id
+            type
+            text
+            event_id
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
       }
       owner
       feedbacks {
+        items {
+          id
+          component_id
+          response
+          sentiment_score
+          createdAt
+          updatedAt
+          component {
+            id
+            type
+            text
+            event_id
+            createdAt
+            updatedAt
+            owner
+          }
+          owner
+        }
         nextToken
       }
     }
@@ -126,11 +262,43 @@ export const deleteComponent = /* GraphQL */ `
         name
         description
         owner
+        startDateTime
+        endDateTime
         createdAt
         updatedAt
+        components {
+          items {
+            id
+            type
+            text
+            event_id
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
       }
       owner
       feedbacks {
+        items {
+          id
+          component_id
+          response
+          sentiment_score
+          createdAt
+          updatedAt
+          component {
+            id
+            type
+            text
+            event_id
+            createdAt
+            updatedAt
+            owner
+          }
+          owner
+        }
         nextToken
       }
     }
@@ -155,7 +323,32 @@ export const createFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
+        event {
+          id
+          name
+          description
+          owner
+          startDateTime
+          endDateTime
+          createdAt
+          updatedAt
+          components {
+            nextToken
+          }
+        }
         owner
+        feedbacks {
+          items {
+            id
+            component_id
+            response
+            sentiment_score
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
       }
       owner
     }
@@ -180,7 +373,32 @@ export const updateFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
+        event {
+          id
+          name
+          description
+          owner
+          startDateTime
+          endDateTime
+          createdAt
+          updatedAt
+          components {
+            nextToken
+          }
+        }
         owner
+        feedbacks {
+          items {
+            id
+            component_id
+            response
+            sentiment_score
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
       }
       owner
     }
@@ -205,7 +423,32 @@ export const deleteFeedback = /* GraphQL */ `
         event_id
         createdAt
         updatedAt
+        event {
+          id
+          name
+          description
+          owner
+          startDateTime
+          endDateTime
+          createdAt
+          updatedAt
+          components {
+            nextToken
+          }
+        }
         owner
+        feedbacks {
+          items {
+            id
+            component_id
+            response
+            sentiment_score
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
       }
       owner
     }
