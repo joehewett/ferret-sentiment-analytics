@@ -38,8 +38,12 @@ const useStyles = makeStyles((theme) => ({
   ratingIcon: {
     marginRight: theme.spacing(1)
   },
-  buttonIcon: {
+  button: {
     marginRight: theme.spacing(1)
+  },
+  eventTitle: {
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(2)
   }
 }));
 
@@ -74,6 +78,7 @@ const EventCard = ({ className, event, ...rest }) => {
           spacing={2}
         >
           <Typography
+            className={classes.eventTitle}
             align="center"
             color="textPrimary"
             gutterBottom
@@ -120,8 +125,8 @@ const EventCard = ({ className, event, ...rest }) => {
             item
           >
             <Button
+              className={classes.button}
               href={`/app/dashboard/${event.id}`}
-              className={classes.buttonIcon}
               variant="contained"
               size="medium"
               color="secondary"
@@ -130,7 +135,6 @@ const EventCard = ({ className, event, ...rest }) => {
             </Button>
             <Button
               href={`/app/feedback/${event.id}`}
-              className={classes.buttonIcon}
               variant="contained"
               size="medium"
               color="secondary"

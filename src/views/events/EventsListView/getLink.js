@@ -13,7 +13,6 @@ import Grid from '@material-ui/core/Grid';
 import LinkIcon from '@material-ui/icons/Link';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import TextField from '@material-ui/core/TextField';
-import { grey } from '@material-ui/core/colors';
 /* eslint react/prop-types: 0 */
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     fontSize: '1rem',
     size: 'small',
-    backgroundColor: grey[100],
+    marginRight: theme.spacing(1),
+    marginTop: theme.spacing(1)
   }
 }));
 
@@ -62,7 +62,8 @@ export default function GetLinkButton({
         // style={{
         //   maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'
         // }}
-        className="button"
+        size="small"
+        className={classes.button}
         variant="contained"
         onClick={handleClickOpen}
         startIcon={<LinkIcon />}
