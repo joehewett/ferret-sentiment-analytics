@@ -54,7 +54,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
       }).then((result) => {
         console.log(result);
         setFeedbackIdList(result.data.feedbackByComponent.items);
-        console.log('setfeedbackidlist to result from query');
+        // console.log('setfeedbackidlist to result from query');
       });
     } catch (error) {
       console.log(error);
@@ -71,10 +71,10 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
         const componentIds = result.data.componentsByEvent.items;
         setComponentIdList(componentIds);
         console.log(componentIdList);
-        console.log('setcomponentid to result from query');
+        // console.log('setcomponentid to result from query');
         if (componentIds.length !== 0) {
           getFeedbackByComponent(componentIds[0].id);
-          console.log(componentIds[0].id);
+          // console.log(componentIds[0].id);
         }
       });
     } catch (error) {
@@ -85,43 +85,35 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
     getComponentsByEvent(id);
   }, []);
 
-  // useEffect(() => {
-  //   console.log('componentidlist', componentIdList);
-  //   console.log(componentIdList.length);
-  //   if (componentIdList.length !== 0) {
-  //     getFeedbackByComponent(componentIdList[0].id);
-  //     console.log(componentIdList[0].id);
-  //   }
-  // // }, [componentIdList]);
   useEffect(() => {
-    console.log('a');
-    console.log(feedbackIdList.length);
+    // console.log('a');
+    // console.log(feedbackIdList.length);
     if (feedbackIdList.length !== 0) {
       console.log('b');
-      console.log('feedbackidlist', feedbackIdList);
+      // console.log('feedbackidlist', feedbackIdList);
       const tableData = [];
       feedbackIdList.forEach((feedback) => {
-        console.log('feedbacks', feedback);
+        // console.log('feedbacks', feedback);
         const sentimentInput = JSON.parse(
           feedback.sentiment_score
         );
-        console.log('sentiment', sentimentInput);
+        // console.log('sentiment', sentimentInput);
         const newData = {
           id: feedback.id,
           owner: feedback.owner,
           createdAt: feedback.createdAt,
           sentimentScore: sentimentInput.textInterpretation.sentiment.predominant
         };
-        console.log(moment(newData.createdAt).format('DD/MM/YYYY'));
+        // console.log(moment(newData.createdAt).format('DD/MM/YYYY'));
         tableData.push(newData);
-        console.log(tableData);
-        console.log(newData);
-        console.log('c');
+        // console.log(tableData);
+        // console.log(newData);
+        // console.log('c');
       });
       setQueryData(tableData);
-      console.log('data', tableData);
+      // console.log('data', tableData);
     }
-    console.log('d');
+    // console.log('d');
   }, [feedbackIdList]);
   console.log(queryData);
   return (

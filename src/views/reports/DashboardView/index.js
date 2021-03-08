@@ -9,7 +9,7 @@ import Page from 'src/components/Page';
 import AverageScore from './AvgScore';
 import LatestFeedbacks from './LatestFeedbacks';
 import LatestProducts from './LatestProducts';
-import Sales from './Sales';
+import SentimentOvertime from './SentimentOvertime';
 import EventProgress from './EventProgress';
 import TotalFeedback from './TotalFeedback';
 import TotalProfit from './TotalProfit';
@@ -45,7 +45,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <AverageScore />
+            <AverageScore id={id} />
           </Grid>
           <Grid
             item
@@ -81,7 +81,7 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            <Sales />
+            <SentimentOvertime id={id} />
           </Grid>
           <Grid
             item
