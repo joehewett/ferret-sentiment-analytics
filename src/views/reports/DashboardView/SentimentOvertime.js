@@ -186,10 +186,33 @@ const SentimentOvertime = ({ className, id, ...rest }) => {
         if (datas.has(hours + 1)) {
           const newvalue = datas.get(hours + 1)[0] + addValue;
           const newcount = datas.get(hours + 1)[1] + 1;
-          datas.set(hours + 1,[newvalue,newcount]);
+          if (sentimentScore === 'POSITIVE') {
+            const newPositiveCount = datas.get(hours + 1)[2] + 1;
+            const oldNeutralCount = datas.get(hours + 1)[3];
+            const oldNegativeCount = datas.get(hours + 1)[4];
+            datas.set(hours + 1,[newvalue,newcount,newPositiveCount,oldNeutralCount,oldNegativeCount]);
+          } else if (sentimentScore === 'NEUTRAL') {
+            const oldPositiveCount = datas.get(hours + 1)[2];
+            const newNeutralCount = datas.get(hours + 1)[3] + 1;
+            const oldNegativeCount = datas.get(hours + 1)[4];
+            datas.set(hours + 1,[newvalue,newcount,oldPositiveCount,newNeutralCount,oldNegativeCount]);
+          }
+          else{
+            const oldPositiveCount = datas.get(hours + 1)[2];
+            const oldNeutralCount = datas.get(hours + 1)[3];
+            const newNegativeCount = datas.get(hours + 1)[4] + 1;
+            datas.set(hours + 1,[newvalue,newcount,oldPositiveCount,oldNeutralCount,newNegativeCount]);
+          }
         } else {
           total = 0;
-          datas.set(hours + 1,[addValue,1]);
+          if (sentimentScore === 'POSITIVE') {
+            datas.set(hours + 1,[addValue,1,1,0,0]);
+          } else if (sentimentScore === 'NEUTRAL') {
+            datas.set(hours + 1,[addValue,1,0,1,0]);
+          }
+          else{
+            datas.set(hours + 1,[addValue,1,0,0,1]);
+          }
         }
       });
       console.log(datas);
@@ -199,17 +222,26 @@ const SentimentOvertime = ({ className, id, ...rest }) => {
         return Math.max(a,b);
       })
       console.log(max);
-      let newlabels = []
-      let newData = []
+      let newlabels = [];
+      let newData = [];
+      let newPositive = [];
+      let newNeutral = [];
+      let newNegative = [];
       let i = 0;
       for (i = 0; i < max; i++) {
-        newlabels.push(i+1);
+        newlabels.push('Hour ' + i+1);
         newData.push(0);
+        newPositive.push(0);
+        newNeutral.push(0);
+        newNegative.push(0);
       }
       console.log(newlabels);
       datas.forEach(function(value,key) {
         console.log(key + '=' + value);
         newData[key-1] = Number((value[0] / value[1]).toFixed(1));
+        newPositive[key-1] = Number(value[2]);
+        newNeutral[key-1] = Number(value[3]);
+        newNegative[key-1] = Number(value[4]);
       })
       console.log(newData);
       const data = {
@@ -219,11 +251,21 @@ const SentimentOvertime = ({ className, id, ...rest }) => {
             data: newData,
             label: 'Average Sentiment'
           },
-          // {
-          //   backgroundColor: colors.grey[200],
-          //   data: [11, 20, 12, 29, 30, 25, 13],
-          //   label: 'Last year'
-          // }
+          {
+            backgroundColor: colors.grey[200],
+            data: newPositive,
+            label: 'Positive Feedbacks'
+          },
+          {
+            backgroundColor: colors.red[200],
+            data: newNeutral,
+            label: 'Neutral Feedbacks'
+          },
+          {
+            backgroundColor: colors.green[200],
+            data: newNegative,
+            label: 'Negative Feedbacks'
+          }
         ],
         labels: newlabels
       };
