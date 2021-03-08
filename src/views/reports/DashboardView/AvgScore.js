@@ -47,9 +47,9 @@ const AverageScore = ({ className, id, ...rest }) => {
         variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       }).then((result) => {
-        console.log(result);
+        // console.log(result);
         setFeedbackIdList(result.data.feedbackByComponent.items);
-        console.log('setfeedbackidlist to result from query');
+        // console.log('setfeedbackidlist to result from query');
       });
     } catch (error) {
       console.log(error);
@@ -66,10 +66,10 @@ const AverageScore = ({ className, id, ...rest }) => {
         const componentIds = result.data.componentsByEvent.items;
         setComponentIdList(componentIds);
         console.log(componentIdList);
-        console.log('setcomponentid to result from query');
+        // console.log('setcomponentid to result from query');
         if (componentIds.length !== 0) {
           getFeedbackByComponent(componentIds[0].id);
-          console.log(componentIds[0].id);
+          // console.log(componentIds[0].id);
         }
       });
     } catch (error) {
@@ -82,16 +82,16 @@ const AverageScore = ({ className, id, ...rest }) => {
   useEffect(() => {
     console.log(feedbackIdList.length);
     if (feedbackIdList.length !== 0) {
-      console.log('feedbackidlist', feedbackIdList);
+      // console.log('feedbackidlist', feedbackIdList);
       let count = 0;
       let total = 0;
       feedbackIdList.forEach((feedback) => {
         count += 1;
-        console.log('feedbacks', feedback);
+        // console.log('feedbacks', feedback);
         const sentimentInput = JSON.parse(
           feedback.sentiment_score
         );
-        console.log('sentiment', sentimentInput);
+        // console.log('sentiment', sentimentInput);
         const sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
         if (sentimentScore === 'POSITIVE') {
           total += 5;
