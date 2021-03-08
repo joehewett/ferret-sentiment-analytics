@@ -12,6 +12,8 @@ type Event @model
                 name: String!
                 description: String!
                 owner: String
+                startDateTime: AWSDateTime
+                endDateTime: AWSDateTime
                 components: [Component] @connection(name: "EventComponents")
             }
 
