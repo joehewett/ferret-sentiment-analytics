@@ -16,7 +16,8 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  InputBase
+  InputBase,
+  Typography
 } from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import { createComponent } from '../../../graphql/mutations';
@@ -66,13 +67,20 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: '70%',
-    marginRight: theme.spacing(3)
+    marginRight: theme.spacing(2)
   },
   deleteButton: {
     color: '#e0392d'
   },
   margin: {
     margin: theme.spacing(1)
+  },
+  componentType: {
+    marginLeft: theme.spacing(1),
+    marginTop: theme.spacing(1)
+  },
+  helpTitle: {
+    marginTop: theme.spacing(4)
   }
 }));
 
@@ -93,7 +101,8 @@ export default function AddComponentForm({ id, fetchComponents }) {
   async function addComponent() {
     console.log('Adding Component');
     if (!newComponentData.type || !newComponentData.text) {
-      console.log('Not filled');
+      // eslint-disable-next-line no-alert
+      alert('Please enter a component type and a question.');
       return;
     }
 
@@ -136,13 +145,13 @@ export default function AddComponentForm({ id, fetchComponents }) {
               md={6}
               xs={12}
             >
-              <FormControl fullWidth>
+              <FormControl className={classes.componentType} fullWidth>
                 <InputLabel id="component_type_label">Component Type</InputLabel>
                 <Select
                   labelId="component_type_label"
                   id="component_type"
                   input={<BootstrapInput />}
-                  value={newComponentData.type || 'textbox'}
+                  value={newComponentData.type}
                   onChange={(e) => setNewComponentData({
                     ...newComponentData,
                     type: e.target.value
@@ -158,15 +167,10 @@ export default function AddComponentForm({ id, fetchComponents }) {
                   ))}
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
               <TextField
                 className={classes.margin}
                 fullWidth
+                multiline
                 helperText="Please add a description to accompany your component"
                 name="text"
                 onChange={(e) => setNewComponentData({
@@ -177,6 +181,18 @@ export default function AddComponentForm({ id, fetchComponents }) {
                 variant="outlined"
                 value={newComponentData.text || ''}
               />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <Typography className={classes.helpTitle} variant="h5">Welcome to your feedback form!</Typography>
+              <Typography>
+                Please use the controls here to select the component type that
+                you want to add, and then enter the helper text to go along with your new
+                component.
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>

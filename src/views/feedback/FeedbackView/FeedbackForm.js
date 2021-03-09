@@ -9,7 +9,7 @@ export default function FeedbackForm() {
   const [components, setComponents] = useState([]);
   // Store data from the New Component form
   const [loadedComponents, setLoadedComponents] = useState(false);
-  const [userIsAdmin, setUserIsAdmin] = useState(false);
+  const [userIsOwner, setUserIsOwner] = useState(false);
   const { id } = useParams();
 
   async function fetchComponents() {
@@ -32,7 +32,7 @@ export default function FeedbackForm() {
     setLoadedComponents(true);
   }
 
-  async function checkIfAdmin(eventID) {
+  async function checkIfOwner(eventID) {
     console.log(eventID);
     const user = await Auth.currentAuthenticatedUser();
     try {
@@ -45,7 +45,7 @@ export default function FeedbackForm() {
       }).then((result) => {
         const { owner } = result.data.getEvent;
         if (owner === user.username) {
-          setUserIsAdmin(true);
+          setUserIsOwner(true);
         }
       });
     } catch (error) {
@@ -56,12 +56,12 @@ export default function FeedbackForm() {
   useEffect(() => {
     // Get existing components from the database for this feedback form
     fetchComponents();
-    checkIfAdmin(id);
+    checkIfOwner(id);
   }, []);
 
   if (!loadedComponents) return <h1>Loading</h1>;
 
-  if (userIsAdmin) {
+  if (userIsOwner) {
     return (
       <>
         <AddComponentForm id={id} fetchComponents={fetchComponents} />
@@ -70,6 +70,7 @@ export default function FeedbackForm() {
           components={components}
           setComponents={setComponents}
           loadedComponents={loadedComponents}
+          userIsOwner={userIsOwner}
         />
       </>
     );
@@ -81,6 +82,7 @@ export default function FeedbackForm() {
         components={components}
         setComponents={setComponents}
         loadedComponents={loadedComponents}
+        userIsOwner={userIsOwner}
       />
     </>
   );
