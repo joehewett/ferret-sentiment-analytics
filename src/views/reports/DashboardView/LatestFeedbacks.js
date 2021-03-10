@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
 
 const LatestFeedbacks = ({ className, id, ...rest }) => {
   const classes = useStyles();
-  const [componentIdList, setComponentIdList] = useState([]);
+  const [components, setComponents] = useState([]);
   const [feedbackIdList, setFeedbackIdList] = useState([]);
   const [queryData, setQueryData] = useState([{}]);
   const [page, setPage] = useState(0);
@@ -45,6 +45,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
   async function getFeedbackByComponent(componentid) {
     try {
       await API.graphql({
@@ -68,54 +69,76 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
         variables: { event_id: eventid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       }).then((result) => {
-        const componentIds = result.data.componentsByEvent.items;
-        setComponentIdList(componentIds);
-        console.log(componentIdList);
+        const componentList = result.data.componentsByEvent.items;
+        setComponents(componentList);
+        console.log(componentList);
         // console.log('setcomponentid to result from query');
-        if (componentIds.length !== 0) {
-          getFeedbackByComponent(componentIds[0].id);
-          // console.log(componentIds[0].id);
+        let done = false;
+        if (componentList.length !== 0) {
+          componentList.forEach((component) => {
+            if (!done) {
+              if (component.type === 'textbox') {
+                getFeedbackByComponent(components[0].id);
+                done = true;
+              }
+            }
+          });
+          // console.log(components[0].id);
         }
       });
     } catch (error) {
       console.log(error);
     }
   }
+
   useEffect(() => {
     getComponentsByEvent(id);
   }, []);
 
   useEffect(() => {
-    // console.log('a');
-    // console.log(feedbackIdList.length);
+    // Check we have feedback before parsing out information
     if (feedbackIdList.length !== 0) {
-      console.log('b');
-      // console.log('feedbackidlist', feedbackIdList);
       const tableData = [];
       feedbackIdList.forEach((feedback) => {
-        // console.log('feedbacks', feedback);
-        const sentimentInput = JSON.parse(
-          feedback.sentiment_score
-        );
-        // console.log('sentiment', sentimentInput);
+        let sentimentInput = '';
+        let sentimentScore = 0;
+
+        // Null check sentiment score and then parse string back to JSON
+        if (feedback.sentiment_score) {
+          sentimentInput = JSON.parse(
+            feedback.sentiment_score
+          );
+          if (sentimentInput) {
+            sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
+          }
+        }
+
+        // Add our parsed data to the table
         const newData = {
           id: feedback.id,
           owner: feedback.owner,
           createdAt: feedback.createdAt,
-          sentimentScore: sentimentInput.textInterpretation.sentiment.predominant
+          sentimentScore
         };
-        // console.log(moment(newData.createdAt).format('DD/MM/YYYY'));
         tableData.push(newData);
-        // console.log(tableData);
-        // console.log(newData);
-        // console.log('c');
       });
       setQueryData(tableData);
-      // console.log('data', tableData);
     }
-    // console.log('d');
   }, [feedbackIdList]);
-  console.log(queryData);
+
+  if (components.length === 0) {
+    return (
+      <Card
+        className={clsx(classes.root, className)}
+        {...rest}
+      >
+        <CardHeader title="Latest Feedbacks" subheader="There is no feedback avaialable for this event." />
+        <Divider />
+
+      </Card>
+    );
+  }
+
   return (
     <Card
       className={clsx(classes.root, className)}
