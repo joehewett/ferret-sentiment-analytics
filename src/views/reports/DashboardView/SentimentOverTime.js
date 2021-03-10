@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const SentimentOvertime = ({ className, id, ...rest }) => {
+const SentimentOverTime = ({ className, id, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [componentIdList, setComponentIdList] = useState([]);
@@ -279,7 +279,7 @@ const SentimentOvertime = ({ className, id, ...rest }) => {
       {...rest}
     >
       <CardHeader
-        title="Sentiment Overtime"
+        title="Sentiment Over Time"
       />
       <Divider />
       <CardContent>
@@ -305,8 +305,8 @@ const SentimentOvertime = ({ className, id, ...rest }) => {
   );
 };
 
-SentimentOvertime.propTypes = {
+SentimentOverTime.propTypes = {
   className: PropTypes.string
 };
 
-export default SentimentOvertime;
+export default SentimentOverTime;
