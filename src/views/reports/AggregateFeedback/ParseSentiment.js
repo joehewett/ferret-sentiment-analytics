@@ -1,30 +1,16 @@
 /* eslint react/prop-types: 0 */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import {
-// makeStyles,
-// colors
-// } from '@material-ui/core';
 import SentimentIndicator from '../DashboardView/SentimentIndicator';
 
-// const useStyles = makeStyles((theme) => ({
-//   chip: {
-//     marginRight: theme.spacing(1),
-//     marginBottom: theme.spacing(1),
-//     background: colors.grey[250],
-//     color: colors.grey[600]
-//   }
-// }));
-
 const ParseKeyPhrases = ({ sentimentJson }) => {
-  // const classes = useStyles();
   const [sentiment, setSentiment] = useState('');
 
   function parseJson(json) {
     let parsedJson = '';
     let predominant = '';
 
-    // Null check sentiment score and then parse string back to JSON
+    // parse json and extract predominant sentiment. Put in state
     if (json) {
       parsedJson = JSON.parse(json);
       predominant = parsedJson.textInterpretation.sentiment.predominant;
