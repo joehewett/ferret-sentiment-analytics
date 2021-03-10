@@ -12,21 +12,13 @@ import {
   TableHead,
   TableRow,
   makeStyles,
-  Chip
-  // makeStyles
+  Chip,
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
-// const useStyles = makeStyles(() => ({
-//   root: {},
-//   actions: {
-//     justifyContent: 'flex-end'
-//   }
-// }));
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100%'
+    marginTop: theme.spacing(2)
   },
   image: {
     height: 48,
@@ -35,12 +27,14 @@ const useStyles = makeStyles((theme) => ({
   greenChip: {
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(2),
+    marginBottom: theme.spacing(2),
     background: '#4cd980',
     color: '#ffffff'
   },
   redChip: {
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(2),
+    marginBottom: theme.spacing(2),
     background: '#ff776b',
     color: '#ffffff'
   }

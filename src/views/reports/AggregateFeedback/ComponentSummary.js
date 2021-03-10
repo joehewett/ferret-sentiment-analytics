@@ -20,6 +20,7 @@ import {
 import { API } from 'aws-amplify';
 import { feedbackByComponent } from 'src/graphql/queries';
 import BooleanSummary from './BooleanSummary';
+import ScaleSummary from './ScaleSummary';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,7 +77,7 @@ const ComponentSummary = ({
 
   if (component.type === 'textbox') {
     return (
-      <h2>textbox</h2>
+      <h2>textbox - under construction</h2>
     );
   }
 
@@ -88,7 +89,7 @@ const ComponentSummary = ({
 
   if (component.type === 'scale') {
     return (
-      <h2>Scale</h2>
+      <ScaleSummary feedback={feedback} component={component} />
     );
   }
 
