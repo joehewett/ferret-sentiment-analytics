@@ -71,8 +71,6 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
       }).then((result) => {
         const componentList = result.data.componentsByEvent.items;
         setComponents(componentList);
-        console.log(componentList);
-        // console.log('setcomponentid to result from query');
         let done = false;
         if (componentList.length !== 0) {
           componentList.forEach((component) => {
@@ -83,7 +81,6 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
               }
             }
           });
-          // console.log(components[0].id);
         }
       });
     } catch (error) {

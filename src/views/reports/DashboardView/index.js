@@ -9,10 +9,10 @@ import { componentsByEvent } from 'src/graphql/queries';
 // import { feedbackByComponent, componentsByEvent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
 import Page from 'src/components/Page';
-import AverageScore from './AvgScore';
+import AverageScore from './AverageScore';
 import LatestFeedbacks from './LatestFeedbacks';
 import LatestProducts from './LatestProducts';
-import SentimentOvertime from './SentimentOvertime';
+// import SentimentOvertime from './SentimentOvertime';
 import EventProgress from './EventProgress';
 import TotalFeedback from './TotalFeedback';
 import EventQRCode from './EventQRCode';
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const [components, setComponents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   // const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
   const { id } = useParams();
@@ -45,13 +46,7 @@ const Dashboard = () => {
       }).then((result) => {
         const componentList = result.data.componentsByEvent.items;
         setComponents(componentList);
-        console.log(componentList);
-        // console.log('setcomponentid to result from query');
-        if (componentList.length !== 0) {
-          console.log('Received some components');
-          // getFeedbackByComponent(componentIds[0].id);
-          // console.log(componentIds[0].id);
-        }
+        setIsLoading(false);
       });
     } catch (error) {
       console.log(error);
@@ -61,6 +56,10 @@ const Dashboard = () => {
   useEffect(() => {
     getComponentsByEvent(id);
   }, []);
+
+  if (isLoading) {
+    return <h2>Loading</h2>;
+  }
 
   return (
     <Page
@@ -79,7 +78,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <AverageScore id={id} />
+            <AverageScore components={components} id={id} />
           </Grid>
           <Grid
             item
@@ -115,7 +114,7 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            <SentimentOvertime id={id} />
+            Hello
           </Grid>
           <Grid
             item
