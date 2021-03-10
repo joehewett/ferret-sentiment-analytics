@@ -4,7 +4,11 @@ import {
   Box,
   Container,
   Grid,
-  makeStyles
+  makeStyles,
+  Card,
+  CardHeader,
+  Typography,
+  CardContent
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import Page from 'src/components/Page';
@@ -12,6 +16,7 @@ import { eventsByUser } from '../../../graphql/queries';
 import Toolbar from './Toolbar';
 import EventCard from './EventCard';
 // import data from './data';
+import CreateEventButton from './createEventButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,6 +80,32 @@ const EventsList = () => {
     fetchEvents();
   }, [eventCount]);
 
+  if (filteredPosts.length === 0) {
+    return (
+      <Page
+        className={classes.root}
+        title="Events List"
+      >
+        <Container maxWidth={false}>
+          <Card>
+            <CardHeader
+              title="No Events Found!"
+            />
+            <CardContent>
+              <Typography>Please click Add Event to add your first event.</Typography>
+              <CreateEventButton
+                events={events}
+                setEvents={setEvents}
+                eventCount={eventCount}
+                setEventCount={setEventCount}
+              />
+            </CardContent>
+          </Card>
+        </Container>
+      </Page>
+
+    );
+  }
   return (
     <Page
       className={classes.root}
