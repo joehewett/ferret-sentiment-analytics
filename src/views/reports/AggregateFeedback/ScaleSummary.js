@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ScaleSummary = ({ feedback, component }) => {
-  const [scoreCounts, setScoreCounts] = useState(new Array(10));
+  const [scoreCounts, setScoreCounts] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [showGraph, setShowGraph] = useState(false);
   const classes = useStyles();
   const theme = useTheme();
 
@@ -48,10 +49,14 @@ const ScaleSummary = ({ feedback, component }) => {
         const score = Number(f.response);
         if (score > 0 && score <= 10) {
           scoresCopy[score - 1] += 1;
+          if (!showGraph) {
+            setShowGraph(true);
+          }
         }
       }
     });
     setScoreCounts(scoresCopy);
+    console.log('Scores copy is..', scoresCopy);
   }
 
   useEffect(() => {
@@ -62,11 +67,11 @@ const ScaleSummary = ({ feedback, component }) => {
     datasets: [
       {
         backgroundColor: colors.indigo[500],
-        data: [18, 5, 19, 27, 29, 19, 20],
+        data: scoreCounts,
         label: 'This year'
       },
     ],
-    labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
   };
 
   const options = {
@@ -124,6 +129,16 @@ const ScaleSummary = ({ feedback, component }) => {
     }
   };
 
+  if (!showGraph) {
+    return (
+      <Card className={classes.root}>
+        <CardHeader
+          title={component.text}
+          subheader="There is no data to display for this 1-10 scale."
+        />
+      </Card>
+    );
+  }
   return (
     <Card className={classes.root}>
       <CardHeader

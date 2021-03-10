@@ -12,7 +12,7 @@ import Page from 'src/components/Page';
 import AverageScore from './AverageScore';
 // import LatestFeedbacks from './LatestFeedbacks';
 import LatestProducts from './LatestProducts';
-// import SentimentOvertime from './SentimentOvertime';
+import SentimentOverTime from './SentimentOverTime';
 import EventProgress from './EventProgress';
 import TotalFeedback from './TotalFeedback';
 import EventQRCode from './EventQRCode';
@@ -114,7 +114,7 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            Hello
+            <SentimentOverTime />
           </Grid>
           <Grid
             item
