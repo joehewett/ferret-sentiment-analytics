@@ -49,9 +49,7 @@ const ScaleSummary = ({ feedback, component }) => {
         const score = Number(f.response);
         if (score > 0 && score <= 10) {
           scoresCopy[score - 1] += 1;
-          console.log('here');
           if (!showGraph) {
-            console.log('switching');
             setShowGraph(true);
           }
         }

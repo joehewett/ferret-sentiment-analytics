@@ -21,6 +21,7 @@ import { API } from 'aws-amplify';
 import { feedbackByComponent } from 'src/graphql/queries';
 import BooleanSummary from './BooleanSummary';
 import ScaleSummary from './ScaleSummary';
+import TextboxSummary from './TextboxSummary';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,7 +78,7 @@ const ComponentSummary = ({
 
   if (component.type === 'textbox') {
     return (
-      <h2>textbox - under construction</h2>
+      <TextboxSummary feedback={feedback} component={component} />
     );
   }
 
