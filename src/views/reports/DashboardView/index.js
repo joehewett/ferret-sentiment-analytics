@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Container,
   Grid,
   makeStyles
 } from '@material-ui/core';
+import { componentsByEvent } from 'src/graphql/queries';
+// import { feedbackByComponent, componentsByEvent } from 'src/graphql/queries';
+import { API } from 'aws-amplify';
 import Page from 'src/components/Page';
 import AverageScore from './AvgScore';
 import LatestFeedbacks from './LatestFeedbacks';
@@ -14,6 +17,7 @@ import EventProgress from './EventProgress';
 import TotalFeedback from './TotalFeedback';
 import EventQRCode from './EventQRCode';
 import FeedbackRatio from './FeedbackRatio';
+import FeedbackSummary from '../AggregateFeedback/FeedbackSummary';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,9 +29,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
+  const [components, setComponents] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
   const classes = useStyles();
   const { id } = useParams();
   console.log(id);
+
+  // const [dataForTable, setDataForTable] = useState([]);
+  async function getComponentsByEvent(eventid) {
+    try {
+      await API.graphql({
+        query: componentsByEvent,
+        variables: { event_id: eventid },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      }).then((result) => {
+        const componentList = result.data.componentsByEvent.items;
+        setComponents(componentList);
+        console.log(componentList);
+        // console.log('setcomponentid to result from query');
+        if (componentList.length !== 0) {
+          console.log('Received some components');
+          // getFeedbackByComponent(componentIds[0].id);
+          // console.log(componentIds[0].id);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getComponentsByEvent(id);
+  }, []);
+
   return (
     <Page
       className={classes.root}
@@ -109,6 +143,13 @@ const Dashboard = () => {
             xs={12}
           >
             <LatestFeedbacks id={id} />
+          </Grid>
+          <Grid
+            item
+            lg={12}
+            xs={12}
+          >
+            <FeedbackSummary components={components} />
           </Grid>
         </Grid>
       </Container>
