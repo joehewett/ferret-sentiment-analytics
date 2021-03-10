@@ -50,7 +50,6 @@ export default function SubmitButton({ components, setComponents }) {
   // First analyse sentiment, then store feedback in database
   async function storeFeedback(component) {
     const resp = component.response;
-    console.log('comp resp 1 ', component.response);
     await interpretFromPredictions(component.response, component.type)
       .then((result) => {
         console.log('comp resp ', resp);
@@ -72,23 +71,37 @@ export default function SubmitButton({ components, setComponents }) {
 
   // Called when feedback form is submitted
   function handleSubmit() {
-    handleClickOpen();
     const deepCopy = [...components];
+    let validForm = true;
+
+    deepCopy.forEach((component) => {
+      if (component.response === '') {
+        validForm = false;
+      }
+    });
 
     // For each component, store the feedback in the database
-    try {
-      deepCopy.forEach((component) => {
-        storeFeedback(component);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    if (validForm) {
+      handleClickOpen();
+      try {
+        deepCopy.forEach((component) => {
+          storeFeedback(component);
+        });
+      } catch (error) {
+        console.log(error);
+      }
 
-    // Reset the form to blank
-    deepCopy.forEach((component) => {
-      component.response = '';
-    });
-    setComponents(deepCopy);
+      // Reset the form to blank
+      deepCopy.forEach((component) => {
+        if (component.type === 'textbox') {
+          component.response = '';
+        }
+      });
+      setComponents(deepCopy);
+    } else {
+      // eslint-disable-next-line no-alert
+      alert('Please answer every question in the form.');
+    }
   }
 
   return (

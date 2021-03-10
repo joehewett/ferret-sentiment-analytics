@@ -49,6 +49,7 @@ export default function Component({
     } else if (component.type === 'scale') {
       componentValue = e.target.innerText;
     }
+    console.log('Component Value: ', componentValue);
     deepCopy[i].response = componentValue;
     setComponents(deepCopy);
   };

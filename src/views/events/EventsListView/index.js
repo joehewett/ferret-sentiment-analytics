@@ -7,7 +7,6 @@ import {
   makeStyles,
   Card,
   CardHeader,
-  Typography,
   CardContent
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
@@ -89,10 +88,10 @@ const EventsList = () => {
         <Container maxWidth={false}>
           <Card>
             <CardHeader
+              subheader="Click Add Event to create your first event."
               title="No Events Found!"
             />
             <CardContent>
-              <Typography>Please click Add Event to add your first event.</Typography>
               <CreateEventButton
                 events={events}
                 setEvents={setEvents}
