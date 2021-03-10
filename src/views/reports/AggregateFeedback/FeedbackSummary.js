@@ -1,6 +1,7 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
 import ComponentSummary from './ComponentSummary';
 
 // For each component, fetch the feedback for that component and then render a ComponentSummary
@@ -11,6 +12,7 @@ const FeedbackSummary = ({
   console.log('components received: ', components);
   return (
     <>
+      <Typography variant="h2">Feedback Summaries</Typography>
       {components.map((component) => (
         <ComponentSummary key={component.id} component={component} />
       ))}

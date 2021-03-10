@@ -22,7 +22,9 @@ import { feedbackByComponent } from 'src/graphql/queries';
 import BooleanSummary from './BooleanSummary';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginTop: theme.spacing(2),
+  },
   actions: {
     justifyContent: 'flex-end'
   },
@@ -62,7 +64,14 @@ const ComponentSummary = ({
   if (isLoading) return <h2>Loading</h2>;
 
   if (feedback.length === 0) {
-    return <h2>No feedback received for this question.</h2>;
+    return (
+      <Card
+        className={classes.root}
+      >
+        <CardHeader title={component.text} subheader="No feedback has been received for this question yet." />
+        <Divider />
+      </Card>
+    );
   }
 
   if (component.type === 'textbox') {

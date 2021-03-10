@@ -50,14 +50,15 @@ const BooleanSummary = ({ feedback, component }) => {
   const [trueFalse, setTrueFalse] = useState({
     true: 0,
     false: 0,
+  });
+  const [percentages, setPercentages] = useState({
     truePercentage: 0,
     falsePercentage: 0
   });
   const classes = useStyles();
-  console.log('feedback for this box is: ', feedback);
-  console.log('component is :', component);
 
   function countTrueFalse() {
+    console.log('feedback for this boolean summary is: ', feedback);
     feedback.forEach((singleFeedback) => {
       if (singleFeedback.response === 'false') {
         let falseCount = trueFalse.false;
@@ -70,12 +71,17 @@ const BooleanSummary = ({ feedback, component }) => {
         setTrueFalse((currentCounts) => ({ ...currentCounts, true: trueCount }));
       }
     });
+  }
+
+  function calculatePercentages() {
     const t = trueFalse.true;
     const f = trueFalse.false;
     let tp = 0;
     let fp = 0;
 
     // Avoid NaN errors by catching division by 0. If both t & f count > 0, compute percentage
+    console.log('t is ', t);
+    console.log('f is ', f);
     if (t === 0 && f === 0) {
       tp = 0;
       fp = 0;
@@ -89,16 +95,19 @@ const BooleanSummary = ({ feedback, component }) => {
       tp = (t / (t + f)) * 100;
       fp = 100 - tp;
     }
-    setTrueFalse((currentCounts) => ({
-      ...currentCounts,
-      truePercentage: tp,
-      falsePercentage: fp
-    }));
+
+    console.log('tp is ', tp);
+    console.log('fp is ', fp);
+    setPercentages({ truePercentage: tp, falsePercentage: fp });
   }
 
   useEffect(() => {
     countTrueFalse();
   }, []);
+
+  useEffect(() => {
+    calculatePercentages();
+  }, [trueFalse.true, trueFalse.false]);
 
   return (
     <Card
@@ -137,8 +146,8 @@ const BooleanSummary = ({ feedback, component }) => {
               </TableRow>
             </TableBody>
           </Table>
-          <Chip className={classes.greenChip} label={`True: ${trueFalse.truePercentage}%`} />
-          <Chip className={classes.redChip} label={`False: ${trueFalse.falsePercentage}%`} />
+          <Chip className={classes.greenChip} label={`True: ${percentages.truePercentage}%`} />
+          <Chip className={classes.redChip} label={`False: ${percentages.falsePercentage}%`} />
         </Box>
       </PerfectScrollbar>
     </Card>

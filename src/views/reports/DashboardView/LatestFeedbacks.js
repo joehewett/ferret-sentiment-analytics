@@ -53,9 +53,7 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
         variables: { component_id: componentid },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       }).then((result) => {
-        console.log(result);
         setFeedbackIdList(result.data.feedbackByComponent.items);
-        // console.log('setfeedbackidlist to result from query');
       });
     } catch (error) {
       console.log(error);
@@ -175,8 +173,8 @@ const LatestFeedbacks = ({ className, id, ...rest }) => {
             <TableBody>
               {queryData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data) => (
                 <TableRow
-                  hover
                   key={data.id}
+                  hover
                 >
                   <TableCell>
                     {data.id}

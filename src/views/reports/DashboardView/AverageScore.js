@@ -107,8 +107,13 @@ const AverageScore = ({
   }, []);
 
   useEffect(() => {
-    const newAverage = totalAverage / componentsCounted;
-    setAverageFeedbackScore(newAverage);
+    if (componentsCounted > 0) {
+      const newAverage = totalAverage / componentsCounted;
+      console.log('Setting average score: ', newAverage);
+      setAverageFeedbackScore(newAverage);
+    } else {
+      setAverageFeedbackScore(0);
+    }
   }, [componentsCounted]);
 
   return (

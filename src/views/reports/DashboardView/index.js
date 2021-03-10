@@ -10,7 +10,7 @@ import { componentsByEvent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
 import Page from 'src/components/Page';
 import AverageScore from './AverageScore';
-import LatestFeedbacks from './LatestFeedbacks';
+// import LatestFeedbacks from './LatestFeedbacks';
 import LatestProducts from './LatestProducts';
 // import SentimentOvertime from './SentimentOvertime';
 import EventProgress from './EventProgress';
@@ -141,7 +141,8 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            <LatestFeedbacks id={id} />
+            {/* <LatestFeedbacks id={id} /> */}
+            Latest Feedback
           </Grid>
           <Grid
             item
