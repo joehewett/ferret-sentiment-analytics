@@ -1,16 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-// import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
-// import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
-// import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
-// import MoodBadIcon from '@material-ui/icons/MoodBad';
-// import {
-//   green,
-//   orange,
-//   lime,
-//   red
-// } from '@material-ui/core/colors';
 import {
   Box,
   Button,
@@ -23,6 +13,7 @@ import {
 } from '@material-ui/core';
 import GetLinkButton from './getLink';
 import DeleteEventButton from './deleteButton';
+import ExportButton from './ExportButton';
 /* eslint react/prop-types: 0 */
 
 const useStyles = makeStyles((theme) => ({
@@ -56,23 +47,7 @@ const EventCard = ({
   className, event, eventCount, setEventCount, ...rest
 }) => {
   const classes = useStyles();
-  // const [ratingIcon, setIcon] = useState(0);
-  // console.log(event.overallRating);
-  // useEffect(() => {
-  //   if (event.overallRating < 4) {
-  //     setIcon(<MoodBadIcon className={classes.ratingIcon}
-  //       fontSize="large" style={{ color: red[500] }} />);
-  //   } else if (event.overallRating < 6 && event.overallRating > 3) {
-  //     setIcon(<SentimentDissatisfiedIcon className={classes.ratingIcon}
-  //       fontSize="large" style={{ color: orange[500] }} />);
-  //   } else if (event.overallRating < 8 && event.overallRating > 5) {
-  //     setIcon(<SentimentSatisfiedIcon className={classes.ratingIcon}
-  //       fontSize="large" style={{ color: lime[700] }} />);
-  //   } else if (event.overallRating > 7) {
-  //     setIcon(<InsertEmoticonIcon className={classes.ratingIcon}
-  //       fontSize="large" style={{ color: green[400] }} />);
-  //   }
-  // });
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -81,30 +56,48 @@ const EventCard = ({
       <CardContent>
         <Grid
           container
-          justify="space-between"
-          spacing={2}
+          spacing={3}
         >
-          <Typography
-            className={classes.eventTitle}
-            align="center"
-            color="textPrimary"
-            gutterBottom
-            variant="h4"
-          >
-            {event.name}
-          </Typography>
-          <GetLinkButton
-            eventid={event.id}
-          />
+          <Grid item xs={12} md={12}>
+            <Typography
+              className={classes.eventTitle}
+              align="center"
+              color="textPrimary"
+              gutterBottom
+              variant="h4"
+            >
+              {event.name}
+            </Typography>
+            <Typography
+              className={classes.eventDescription}
+              align="center"
+              color="textPrimary"
+              variant="body1"
+            >
+              {event.description}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              spacing={0}
+            >
+              <GetLinkButton
+                eventid={event.id}
+              />
+              <ExportButton event={event} />
+              <DeleteEventButton
+                eventid={event.id}
+                eventCount={eventCount}
+                setEventCount={setEventCount}
+              />
+            </Grid>
+          </Grid>
         </Grid>
-        <Typography
-          className={classes.eventDescription}
-          align="left"
-          color="textPrimary"
-          variant="body1"
-        >
-          {event.description}
-        </Typography>
       </CardContent>
       <Box flexGrow={1} />
       <Divider />
@@ -149,11 +142,6 @@ const EventCard = ({
             >
               View Form
             </Button>
-            <DeleteEventButton
-              eventid={event.id}
-              eventCount={eventCount}
-              setEventCount={setEventCount}
-            />
           </Grid>
         </Grid>
       </Box>

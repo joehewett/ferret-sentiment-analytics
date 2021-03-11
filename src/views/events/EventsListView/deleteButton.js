@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { API } from 'aws-amplify';
 import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import { deleteEvent as deleteEventMutation } from '../../../graphql/mutations';
 /* eslint react/prop-types: 0 */
 
@@ -26,7 +26,10 @@ const useStyles = makeStyles((theme) => ({
   },
   typology: {
     fontSize: 24,
-    color: 'red',
+  },
+  button: {
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(1)
   }
 }));
 
@@ -64,9 +67,15 @@ export default function DeleteEventButton({
 
   return (
     <div>
-      <IconButton color="primary" variant="outlined" onClick={handleClickOpen}>
-        <DeleteIcon />
-      </IconButton>
+      <Button
+        startIcon={<DeleteIcon />}
+        className={classes.button}
+        color="primary"
+        variant="outlined"
+        onClick={handleClickOpen}
+      >
+        DELETE
+      </Button>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogTitle className={classes.typology}>Delete Event</DialogTitle>
         <DialogActions>
