@@ -96,7 +96,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <EventProgress />
+            <EventProgress id={id} />
           </Grid>
           <Grid
             item
@@ -123,7 +123,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <FeedbackRatio />
+            <FeedbackRatio id={id} />
           </Grid>
           <Grid
             item
