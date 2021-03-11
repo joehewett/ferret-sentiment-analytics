@@ -74,6 +74,7 @@ export default function Component({
     return (
       <FormControlLabel
         value={component.response}
+        defaultValue={false}
         onChange={(e) => handleInputChange(e)}
         control={<Checkbox color="primary" />}
         label={component.text}

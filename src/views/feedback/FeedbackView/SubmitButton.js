@@ -47,26 +47,36 @@ export default function SubmitButton({ components, setComponents }) {
     return sentimentAnalysis;
   }
 
+  function addToDatabase(component, sentiment) {
+    try {
+      API.graphql({
+        query: createFeedbackMutation,
+        variables: {
+          input: {
+            component_id: component.id,
+            response: component.response,
+            sentiment_score: sentiment
+          }
+        },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      }).then((status) => {
+        console.log('Added feedback for component', status);
+      });
+    } catch (error) {
+      console.log('Error while trying to get sentiment: ', error);
+    }
+  }
+
   // First analyse sentiment, then store feedback in database
   async function storeFeedback(component) {
-    const resp = component.response;
-    await interpretFromPredictions(component.response, component.type)
-      .then((result) => {
-        console.log('comp resp ', resp);
-        API.graphql({
-          query: createFeedbackMutation,
-          variables: {
-            input: {
-              component_id: component.id,
-              response: resp,
-              sentiment_score: result
-            }
-          },
-          authMode: 'AMAZON_COGNITO_USER_POOLS'
-        }).then((status) => {
-          console.log('Added feedback for component', status);
+    if (component.type === 'textbox') {
+      await interpretFromPredictions(component.response, component.type)
+        .then((result) => {
+          addToDatabase(component, result);
         });
-      });
+    } else {
+      addToDatabase(component, '');
+    }
   }
 
   // Called when feedback form is submitted
