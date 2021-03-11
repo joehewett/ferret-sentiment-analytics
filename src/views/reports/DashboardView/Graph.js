@@ -113,10 +113,10 @@ export default function Graph({ component, eventId }) {
   }
 
   useEffect(() => {
-    console.log('compongent is', component);
-    console.log('id is ', eventId);
-    getFeedbackByComponent(component.id);
-    setStartingTime();
+    if (component) {
+      getFeedbackByComponent(component.id);
+      setStartingTime();
+    }
   }, []);
 
   useEffect(() => {
@@ -133,7 +133,12 @@ export default function Graph({ component, eventId }) {
           fb.sentiment_score
         );
         // console.log('sentiment', sentimentInput);
-        const sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
+        let sentimentScore = '';
+        try {
+          sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
+        } catch {
+          sentimentScore = 'NEUTRAL';
+        }
         console.log('difference in hours', moment(fb.createdAt).diff(moment(startingHour), 'hours'));
         console.log(sentimentScore);
         const hours = moment(fb.createdAt).diff(moment(startingHour), 'hours');
@@ -237,6 +242,31 @@ export default function Graph({ component, eventId }) {
       setData(barData);
     }
   }, [feedback]);
+
+  if (!component) {
+    return (
+      <Card
+        className={classes.root}
+      >
+        <CardHeader
+          title="Sentiment Over Time"
+        />
+        <Divider />
+        <CardContent>
+          <Box
+            height={400}
+            position="relative"
+          >
+            <Bar
+              data={{}}
+              options={options}
+            />
+          </Box>
+        </CardContent>
+        <Divider />
+      </Card>
+    );
+  }
 
   return (
     <Card

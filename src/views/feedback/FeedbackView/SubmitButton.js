@@ -10,6 +10,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import SendIcon from '@material-ui/icons/Send';
 import { Predictions, API } from 'aws-amplify';
 import { useTheme } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import { createFeedback as createFeedbackMutation } from '../../../graphql/mutations';
 
 export default function SubmitButton({ components, setComponents }) {
@@ -48,13 +49,16 @@ export default function SubmitButton({ components, setComponents }) {
   }
 
   function addToDatabase(component, sentiment) {
+    const { response } = component;
+    console.log('Adding this response: ', component.response);
+    console.log('component structure: ', component);
     try {
       API.graphql({
         query: createFeedbackMutation,
         variables: {
           input: {
             component_id: component.id,
-            response: component.response,
+            response,
             sentiment_score: sentiment
           }
         },
@@ -95,6 +99,7 @@ export default function SubmitButton({ components, setComponents }) {
       handleClickOpen();
       try {
         deepCopy.forEach((component) => {
+          console.log('component structure in handleSubmit: ', component);
           storeFeedback(component);
         });
       } catch (error) {
@@ -102,11 +107,11 @@ export default function SubmitButton({ components, setComponents }) {
       }
 
       // Reset the form to blank
-      deepCopy.forEach((component) => {
-        if (component.type === 'textbox') {
-          component.response = '';
-        }
-      });
+      // deepCopy.forEach((component) => {
+      //   if (component.type === 'textbox') {
+      //     component.response = '';
+      //   }
+      // });
       setComponents(deepCopy);
     } else {
       // eslint-disable-next-line no-alert
@@ -137,9 +142,11 @@ export default function SubmitButton({ components, setComponents }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Continue
-          </Button>
+          <Link to="/">
+            <Button onClick={handleClose} color="primary" autoFocus>
+              Continue
+            </Button>
+          </Link>
         </DialogActions>
       </Dialog>
     </div>
