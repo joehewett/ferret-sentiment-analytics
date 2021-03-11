@@ -127,8 +127,10 @@ export default function Graph({ component, eventId }) {
       console.log(sortedFeedback);
       const datas = new Map();
       sortedFeedback.forEach((fb) => {
+        console.log('feedback.sentiment_score: ', fb.sentiment_score);
+        console.log('feeback is: ', feedback);
         const sentimentInput = JSON.parse(
-          feedback.sentiment_score
+          fb.sentiment_score
         );
         // console.log('sentiment', sentimentInput);
         const sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;

@@ -127,7 +127,7 @@ export default function SentimentOverTime({ components, eventId }) {
             index={index}
             dir={theme.direction}
           >
-            <Graph component={component} eventId={id} />
+            <Graph component={component} eventId={eventId} />
           </TabPanel>
         ))}
       </SwipeableViews>
