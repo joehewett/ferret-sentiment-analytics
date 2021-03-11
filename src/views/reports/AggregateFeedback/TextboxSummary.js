@@ -13,11 +13,10 @@ import {
   TableHead,
   TableRow,
   makeStyles,
-  Chip,
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import SentimentIndicator from '../DashboardView/SentimentIndicator';
 import ParseKeyPhrases from './ParseKeyPhrases';
+import ParseSentiment from './ParseSentiment';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +80,7 @@ const TextboxSummary = ({ feedback, component }) => {
                   hover
                 >
                   <TableCell>
-                    <SentimentIndicator predominant="POSITIVE" />
+                    <ParseSentiment sentimentJson={fb.sentiment_score} />
                   </TableCell>
                   <TableCell>
                     <ParseKeyPhrases sentimentJson={fb.sentiment_score} />
@@ -96,8 +95,8 @@ const TextboxSummary = ({ feedback, component }) => {
               ))}
             </TableBody>
           </Table>
-          <Chip className={classes.greenChip} label="test" />
-          <Chip className={classes.redChip} label="testing" />
+          {/* <Chip className={classes.greenChip} label="test" />
+          <Chip className={classes.redChip} label="testing" /> */}
         </Box>
       </PerfectScrollbar>
     </Card>

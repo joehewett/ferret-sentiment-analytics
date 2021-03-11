@@ -110,7 +110,7 @@ export default function SentimentOverTime({ components, eventId }) {
           {validComponents.map((component, index) => (
             <Tab
               key={component.id}
-              label={`Item ${index}`}
+              label={`Question ${index + 1}`}
               {...a11yProps(index)}
             />
           ))}

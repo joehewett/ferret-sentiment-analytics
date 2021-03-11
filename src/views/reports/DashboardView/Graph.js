@@ -221,17 +221,17 @@ export default function Graph({ component, eventId }) {
             label: 'Average Sentiment'
           },
           {
-            backgroundColor: colors.grey[200],
+            backgroundColor: colors.green[400],
             data: newPositive,
             label: 'Positive Feedbacks'
           },
           {
-            backgroundColor: colors.red[200],
+            backgroundColor: colors.orange[400],
             data: newNeutral,
             label: 'Neutral Feedbacks'
           },
           {
-            backgroundColor: colors.green[200],
+            backgroundColor: colors.red[400],
             data: newNegative,
             label: 'Negative Feedbacks'
           }
@@ -273,7 +273,7 @@ export default function Graph({ component, eventId }) {
       className={classes.root}
     >
       <CardHeader
-        title="Sentiment Over Time"
+        title={`Sentiment Over Time: ${component.text}`}
       />
       <Divider />
       <CardContent>
