@@ -22,7 +22,6 @@ const ParseKeyPhrases = ({ sentimentJson }) => {
   const [keyPhrases, setKeyPhrases] = useState('');
 
   function parseJson(json) {
-    console.log('json: ', json);
     let parsedJson = '';
     let kp = [];
 
@@ -30,7 +29,6 @@ const ParseKeyPhrases = ({ sentimentJson }) => {
     if (json) {
       parsedJson = JSON.parse(json);
       kp = parsedJson.textInterpretation.keyPhrases;
-      console.log('KP is: ', kp);
     }
 
     const fivePhrases = [];
@@ -40,7 +38,6 @@ const ParseKeyPhrases = ({ sentimentJson }) => {
       });
     }
 
-    console.log('five : ', fivePhrases);
     setKeyPhrases(fivePhrases);
     return kp;
   }

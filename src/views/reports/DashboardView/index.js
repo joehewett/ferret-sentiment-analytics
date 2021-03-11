@@ -114,7 +114,7 @@ const Dashboard = () => {
             xl={9}
             xs={12}
           >
-            <SentimentOverTime />
+            <SentimentOverTime components={components} eventId={id} />
           </Grid>
           <Grid
             item
