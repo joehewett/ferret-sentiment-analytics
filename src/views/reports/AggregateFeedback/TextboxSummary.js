@@ -15,10 +15,6 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-<<<<<<< HEAD
-=======
-// import SentimentIndicator from '../DashboardView/SentimentIndicator';
->>>>>>> fixed predominat in textbox summary
 import ParseKeyPhrases from './ParseKeyPhrases';
 import ParseSentiment from './ParseSentiment';
 
