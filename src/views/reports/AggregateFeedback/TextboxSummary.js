@@ -15,10 +15,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-<<<<<<< HEAD
 // import SentimentIndicator from '../DashboardView/SentimentIndicator';
-=======
->>>>>>> 7cc8eb654ca1caf28fd38c761ec5f4ca2daeb264
 import ParseKeyPhrases from './ParseKeyPhrases';
 import ParseSentiment from './ParseSentiment';
 
