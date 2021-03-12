@@ -30,16 +30,9 @@ const useStyles = makeStyles(() => ({
 const FeedbackRatio = ({ className, id, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
-  // const bad = 10;
-  // const good = 50;
-  // const normal = 15;
-  // const total = good + normal + bad;
-  // const goodPer = Math.round((good / total) * 100);
-  // const normalPer = Math.round((normal / total) * 100);
-  // const badPer = Math.round((bad / total) * 100);
-  // const classes = useStyles();
   const [componentIdList, setComponentIdList] = useState([]);
   const [feedbackIdList, setFeedbackIdList] = useState([]);
+  // Assigning Percentage of the event's Feedback
   const [positiveFeedback, setPositiveFeedback] = useState(0);
   const [neutralFeedback, setNeutralFeedback] = useState(0);
   const [negativeFeedback, setNegativeFeedback] = useState(0);
@@ -52,13 +45,11 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
       }).then((result) => {
         console.log(result);
         setFeedbackIdList(result.data.feedbackByComponent.items);
-        // console.log('setfeedbackidlist to result from query');
       });
     } catch (error) {
       console.log(error);
     }
   }
-  // const [dataForTable, setDataForTable] = useState([]);
   async function getComponentsByEvent(eventid) {
     try {
       await API.graphql({
@@ -69,10 +60,8 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
         const componentIds = result.data.componentsByEvent.items;
         setComponentIdList(componentIds);
         console.log(componentIdList);
-        // console.log('setcomponentid to result from query');
         if (componentIds.length !== 0) {
           getFeedbackByComponent(componentIds[0].id);
-          // console.log(componentIds[0].id);
         }
       });
     } catch (error) {
@@ -82,21 +71,18 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
   useEffect(() => {
     getComponentsByEvent(id);
   }, []);
+  //Count and get Percentage of Each Levels of feedback
   useEffect(() => {
-    console.log(feedbackIdList.length);
     if (feedbackIdList.length !== 0) {
-      // console.log('feedbackidlist', feedbackIdList);
       let count = 0;
       let positiveCount = 0;
       let neutralCount = 0;
       let negativeCount = 0
       feedbackIdList.forEach((feedback) => {
         count += 1;
-        // console.log('feedbacks', feedback);
         const sentimentInput = JSON.parse(
           feedback.sentiment_score
         );
-        // console.log('sentiment', sentimentInput);
         const sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
         if (sentimentScore === 'POSITIVE') {
           positiveCount += 1;

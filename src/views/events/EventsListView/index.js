@@ -6,8 +6,7 @@ import {
   Grid,
   makeStyles,
   Card,
-  CardHeader,
-  CardContent
+  CardHeader
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import Page from 'src/components/Page';
@@ -15,7 +14,6 @@ import { eventsByUser } from '../../../graphql/queries';
 import Toolbar from './Toolbar';
 import EventCard from './EventCard';
 // import data from './data';
-import CreateEventButton from './createEventButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,18 +85,18 @@ const EventsList = () => {
       >
         <Container maxWidth={false}>
           <Card>
+            <Toolbar
+              events={events}
+              setEvents={setEvents}
+              eventCount={eventCount}
+              setEventCount={setEventCount}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
             <CardHeader
               subheader="Click Add Event to create your first event."
               title="No Events Found!"
             />
-            <CardContent>
-              <CreateEventButton
-                events={events}
-                setEvents={setEvents}
-                eventCount={eventCount}
-                setEventCount={setEventCount}
-              />
-            </CardContent>
           </Card>
         </Container>
       </Page>

@@ -155,6 +155,7 @@ const EventCard = ({
     calculateProgress();
   }, []);
 
+  const count = feedbackIdList.length;
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -214,20 +215,6 @@ const EventCard = ({
           justify="space-between"
           spacing={2}
         >
-          <Grid
-            className={classes.statsItem}
-            item
-          >
-            {/* {ratingIcon} */}
-            <Typography
-              color="textSecondary"
-              display="inline"
-              variant="body2"
-            >
-              Overall Score :
-              {event.overallRating}
-            </Typography>
-          </Grid>
           <Grid
             className={classes.statsItem}
             item
@@ -345,8 +332,8 @@ const EventCard = ({
                   display="inline"
                   variant="body2"
                 >
-                  Keyword :
-                  {event.overallRating}
+                  Number of Feedback :
+                  {count}
                 </Typography>
               </Grid>
             </Grid>
