@@ -14,7 +14,6 @@ const ParseKeyPhrases = ({ sentimentJson }) => {
     if (json) {
       parsedJson = JSON.parse(json);
       predominant = parsedJson.textInterpretation.sentiment.predominant;
-      console.log('domiannt is', predominant);
     }
 
     setSentiment(predominant);

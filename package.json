@@ -44,6 +44,7 @@
     "qrcode.react": "^1.0.1",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
+    "react-csv": "^2.0.3",
     "react-dom": "^16.13.1",
     "react-feather": "^2.0.8",
     "react-helmet": "^6.1.0",
@@ -52,6 +53,7 @@
     "react-router": "^6.0.0-beta.0",
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "^4.0.0",
+    "react-swipeable-views": "^0.13.9",
     "use-clipboard-copy": "^0.1.2",
     "uuid": "^8.3.0",
     "yup": "^0.29.3"
