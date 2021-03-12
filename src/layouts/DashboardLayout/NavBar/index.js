@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AmplifySignOut } from '@aws-amplify/ui-react';
+import { Auth } from 'aws-amplify';
 import {
   Avatar,
   Box,
@@ -19,7 +20,7 @@ import NavItem from './NavItem';
 
 const user = {
   avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
+  jobTitle: 'Event Organiser',
   name: 'Katarina Smith'
 };
 
@@ -50,6 +51,7 @@ const useStyles = makeStyles(() => ({
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -57,6 +59,14 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
+  async function getUsername() {
+    const userObj = await Auth.currentAuthenticatedUser();
+    setUsername(userObj.username);
+  }
+  useEffect(() => {
+    getUsername();
+  }, []);
 
   const content = (
     <Box
@@ -81,7 +91,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {user.name}
+          {username}
         </Typography>
         <Typography
           color="textSecondary"
