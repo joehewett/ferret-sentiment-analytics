@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
     size: 'small',
     marginRight: theme.spacing(1),
     marginTop: theme.spacing(1)
+  },
+  code: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   }
 }));
 
@@ -75,8 +79,9 @@ export default function GetLinkButton({
         <DialogContent>
           <Grid
             container
-            size="small"
-            display="inline"
+            alignItems="center"
+            justify="center"
+            direction="column"
           >
             <TextField
               style={{
@@ -90,9 +95,12 @@ export default function GetLinkButton({
               value={eventURL}
               readOnly
             />
+            <QRCode
+              value={eventURL}
+              className={classes.code}
+            />
+
           </Grid>
-          <QRCode value={eventURL} />
-          <br />
           <Button
             startIcon={<FileCopyIcon />}
             onClick={handleCopyLink}
