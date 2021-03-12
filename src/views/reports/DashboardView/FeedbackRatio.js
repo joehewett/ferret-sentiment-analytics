@@ -19,7 +19,7 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
 import { API } from 'aws-amplify';
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import { componentsByEvent } from 'src/graphql/queries';
+import { componentsByEvent, feedbackByComponent } from 'src/graphql/queries';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,12 +30,13 @@ const useStyles = makeStyles(() => ({
 const FeedbackRatio = ({ className, id, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [componentIdList, setComponentIdList] = useState([]);
   const [feedbackIdList, setFeedbackIdList] = useState([]);
   // Assigning Percentage of the event's Feedback
   const [positiveFeedback, setPositiveFeedback] = useState(0);
   const [neutralFeedback, setNeutralFeedback] = useState(0);
   const [negativeFeedback, setNegativeFeedback] = useState(0);
+  const [question, setQuestion] = useState('');
+
   async function getFeedbackByComponent(componentid) {
     try {
       await API.graphql({
@@ -50,6 +51,7 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
       console.log(error);
     }
   }
+
   async function getComponentsByEvent(eventid) {
     try {
       await API.graphql({
@@ -58,10 +60,18 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       }).then((result) => {
         const componentIds = result.data.componentsByEvent.items;
-        setComponentIdList(componentIds);
-        console.log(componentIdList);
+        console.log(componentIds);
+
+        // Get a textbox, then get feedback for that textbox
         if (componentIds.length !== 0) {
-          getFeedbackByComponent(componentIds[0].id);
+          let validComponent = false;
+          componentIds.forEach((component) => {
+            if (!validComponent && component.type === 'textbox') {
+              validComponent = true;
+              getFeedbackByComponent(component.id);
+              setQuestion(component.text);
+            }
+          })
         }
       });
     } catch (error) {
@@ -71,7 +81,7 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
   useEffect(() => {
     getComponentsByEvent(id);
   }, []);
-  //Count and get Percentage of Each Levels of feedback
+
   useEffect(() => {
     if (feedbackIdList.length !== 0) {
       let count = 0;
@@ -80,10 +90,17 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
       let negativeCount = 0
       feedbackIdList.forEach((feedback) => {
         count += 1;
-        const sentimentInput = JSON.parse(
-          feedback.sentiment_score
-        );
-        const sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
+        let sentimentInput = '';
+        let sentimentScore = '';
+
+        if (feedback.sentiment_score) {
+          sentimentInput = JSON.parse(
+            feedback.sentiment_score
+          );
+          if (sentimentInput) {
+            sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
+          }
+        }
         if (sentimentScore === 'POSITIVE') {
           positiveCount += 1;
         } else if (sentimentScore === 'NEUTRAL') {
@@ -163,7 +180,7 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <CardHeader title="Feedback Ratios" />
+      <CardHeader title={`Feedback Ratios: "${question}"`} />
       <Divider />
       <CardContent>
         <Box
