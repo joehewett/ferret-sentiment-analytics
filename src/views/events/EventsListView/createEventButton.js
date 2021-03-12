@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   typology: {
     fontSize: 24,
-    color: 'red',
+    marginLeft: theme.spacing(1)
   }
 }));
 

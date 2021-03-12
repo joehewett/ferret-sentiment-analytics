@@ -56,6 +56,7 @@ const Toolbar = ({
             <Box maxWidth={500}>
               <TextField
                 fullWidth
+                autoFocus
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

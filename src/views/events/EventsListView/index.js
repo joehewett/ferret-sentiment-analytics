@@ -87,6 +87,14 @@ const EventsList = () => {
       >
         <Container maxWidth={false}>
           <Card>
+            <Toolbar
+              events={events}
+              setEvents={setEvents}
+              eventCount={eventCount}
+              setEventCount={setEventCount}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+            />
             <CardHeader
               subheader="Click Add Event to create your first event."
               title="No Events Found!"

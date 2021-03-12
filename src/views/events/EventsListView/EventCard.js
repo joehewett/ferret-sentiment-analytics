@@ -136,18 +136,28 @@ const EventCard = ({
       feedbackIdList.forEach((feedback) => {
         count += 1;
         // console.log('feedbacks', feedback);
-        const sentimentInput = JSON.parse(
-          feedback.sentiment_score
-        );
+        let sentimentInput = '';
+        let sentimentScore = '';
+        if (feedback.sentiment_score !== '') {
+          sentimentInput = JSON.parse(
+            feedback.sentiment_score
+          );
+          if (sentimentInput) {
+            sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
+          }
+        }
+
         // console.log('sentiment', sentimentInput);
-        const sentimentScore = sentimentInput.textInterpretation.sentiment.predominant;
+
         if (sentimentScore === 'POSITIVE') {
           total += 5;
         } else if (sentimentScore === 'NEUTRAL') {
           total += 2.5;
         }
       });
-      setAverageFeedback((total / count).toFixed(2));
+      if (count > 0) {
+        setAverageFeedback((total / count).toFixed(2));
+      }
     }
   }, [feedbackIdList]);
 
@@ -217,17 +227,7 @@ const EventCard = ({
           <Grid
             className={classes.statsItem}
             item
-          >
-            {/* {ratingIcon} */}
-            <Typography
-              color="textSecondary"
-              display="inline"
-              variant="body2"
-            >
-              Overall Score :
-              {event.overallRating}
-            </Typography>
-          </Grid>
+          />
           <Grid
             className={classes.statsItem}
             item
@@ -273,7 +273,7 @@ const EventCard = ({
                     display="inline"
                     variant="body2"
                   >
-                    Progress:
+                    Progress:&nbsp;
                     {progress}
                     %
                   </Typography>
@@ -293,7 +293,7 @@ const EventCard = ({
                     display="inline"
                     variant="body2"
                   >
-                    and ends
+                    &nbsp;and ends
                     {/* eslint-disable-next-line react/jsx-one-expression-per-line */}
                     <strong> {moment(event.endDateTime).fromNow()}</strong>
                   </Typography>
@@ -331,22 +331,8 @@ const EventCard = ({
                   display="inline"
                   variant="body2"
                 >
-                  Overall Score :
+                  Overall Score:&nbsp;
                   {averageFeedback}
-                </Typography>
-              </Grid>
-              <Grid
-                className={classes.statsItem}
-                item
-              >
-                {/* {ratingIcon} */}
-                <Typography
-                  color="textSecondary"
-                  display="inline"
-                  variant="body2"
-                >
-                  Keyword :
-                  {event.overallRating}
                 </Typography>
               </Grid>
             </Grid>
