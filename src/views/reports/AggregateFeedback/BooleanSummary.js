@@ -53,18 +53,21 @@ const BooleanSummary = ({ feedback, component }) => {
 
   function countTrueFalse() {
     console.log('feedback for this boolean summary is: ', feedback);
+    let falseCount = trueFalse.false;
+    let trueCount = trueFalse.true;
     feedback.forEach((singleFeedback) => {
       if (singleFeedback.response === 'false') {
-        let falseCount = trueFalse.false;
         falseCount += 1;
-        setTrueFalse((currentCounts) => ({ ...currentCounts, false: falseCount }));
       }
       if (singleFeedback.response === 'true') {
-        let trueCount = trueFalse.true;
         trueCount += 1;
-        setTrueFalse((currentCounts) => ({ ...currentCounts, true: trueCount }));
       }
     });
+    setTrueFalse((currentCounts) => ({
+      ...currentCounts,
+      false: falseCount,
+      true: trueCount
+    }));
   }
 
   function calculatePercentages() {
@@ -92,7 +95,7 @@ const BooleanSummary = ({ feedback, component }) => {
 
     console.log('tp is ', tp);
     console.log('fp is ', fp);
-    setPercentages({ truePercentage: tp, falsePercentage: fp });
+    setPercentages({ truePercentage: tp.toFixed(2), falsePercentage: fp.toFixed(2) });
   }
 
   useEffect(() => {

@@ -11,7 +11,6 @@ import { API } from 'aws-amplify';
 import Page from 'src/components/Page';
 import AverageScore from './AverageScore';
 // import LatestFeedbacks from './LatestFeedbacks';
-import LatestProducts from './LatestProducts';
 import SentimentOverTime from './SentimentOverTime';
 import EventProgress from './EventProgress';
 import TotalFeedback from './TotalFeedback';
@@ -124,15 +123,6 @@ const Dashboard = () => {
             xs={12}
           >
             <FeedbackRatio id={id} />
-          </Grid>
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <LatestProducts />
           </Grid>
           <Grid
             item
