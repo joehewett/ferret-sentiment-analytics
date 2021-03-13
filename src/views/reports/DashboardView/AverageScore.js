@@ -76,7 +76,8 @@ const AverageScore = ({
 
       if (count > 0) {
         setTotalAverage(totalAverage + (total / count).toFixed(2));
-        setComponentsCounted(componentsCounted + 1);
+        const componentCount = componentsCounted + 1;
+        setComponentsCounted(componentCount);
       }
     }
   }

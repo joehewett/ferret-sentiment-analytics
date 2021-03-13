@@ -42,6 +42,7 @@ const ScoreIndictor = ({
 
   useEffect(() => {
     setPercentage((score / 5) * 100);
+    console.log('score is ', score);
   }, []);
 
   if (percentage < 0) {

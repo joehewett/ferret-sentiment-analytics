@@ -127,7 +127,7 @@ const Dashboard = () => {
           </Grid>
           <Grid
             item
-            lg={8}
+            lg={12}
             md={12}
             xl={9}
             xs={12}
