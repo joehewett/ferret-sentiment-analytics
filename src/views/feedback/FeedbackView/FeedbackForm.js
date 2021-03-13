@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { componentsByEvent, getEvent } from '../../../graphql/queries';
 import AddComponentForm from './AddComponentForm';
 import FormComponents from './FormComponents';
+import Loading from '../../../components/Loading';
 
 export default function FeedbackForm() {
   const [components, setComponents] = useState([]);
@@ -59,7 +60,7 @@ export default function FeedbackForm() {
     checkIfOwner(id);
   }, []);
 
-  if (!loadedComponents) return <h1>Loading</h1>;
+  if (!loadedComponents) return <Loading />;
 
   if (userIsOwner) {
     return (

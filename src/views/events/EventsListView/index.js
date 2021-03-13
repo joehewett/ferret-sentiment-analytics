@@ -14,6 +14,7 @@ import { eventsByUser } from '../../../graphql/queries';
 import Toolbar from './Toolbar';
 import EventCard from './EventCard';
 // import data from './data';
+import Loading from '../../../components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
   eventCard: {
     height: '100%'
+  },
+  noEventCard: {
+    marginTop: theme.spacing(2)
   }
 }));
 
@@ -34,13 +38,14 @@ const filterPosts = (posts, query) => {
 
   return posts.filter((post) => {
     const postName = post.name.toLowerCase();
-    return postName.includes(query);
+    return postName.includes(query.toLowerCase());
   });
 };
 
 const EventsList = () => {
   const classes = useStyles();
   // const [events] = useState(data);
+  const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
   const [eventCount, setEventCount] = useState(events.length);
   const { search } = window.location;
@@ -62,6 +67,7 @@ const EventsList = () => {
       }).then((result) => {
         newEvents = result.data.eventsByUser.items;
         setEvents(newEvents);
+        setIsLoading(false);
       });
     } catch (error) {
       console.log(error);
@@ -77,6 +83,10 @@ const EventsList = () => {
     fetchEvents();
   }, [eventCount]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   if (filteredPosts.length === 0) {
     return (
       <Page
@@ -84,15 +94,15 @@ const EventsList = () => {
         title="Events List"
       >
         <Container maxWidth={false}>
-          <Card>
-            <Toolbar
-              events={events}
-              setEvents={setEvents}
-              eventCount={eventCount}
-              setEventCount={setEventCount}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-            />
+          <Toolbar
+            events={events}
+            setEvents={setEvents}
+            eventCount={eventCount}
+            setEventCount={setEventCount}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <Card className={classes.noEventCard}>
             <CardHeader
               subheader="Click Add Event to create your first event."
               title="No Events Found!"

@@ -17,6 +17,7 @@ import TotalFeedback from './TotalFeedback';
 import EventQRCode from './EventQRCode';
 import FeedbackRatio from './FeedbackRatio';
 import FeedbackSummary from '../AggregateFeedback/FeedbackSummary';
+import Loading from '../../../components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +58,7 @@ const Dashboard = () => {
   }, []);
 
   if (isLoading) {
-    return <h2>Loading</h2>;
+    return <Loading />;
   }
 
   return (
