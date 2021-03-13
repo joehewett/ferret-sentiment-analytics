@@ -82,6 +82,7 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
     getComponentsByEvent(id);
   }, []);
 
+  //Count and get Percentage of Each Levels of feedback
   useEffect(() => {
     if (feedbackIdList.length !== 0) {
       let count = 0;

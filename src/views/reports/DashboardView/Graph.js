@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { feedbackByComponent, getEvent } from 'src/graphql/queries';
 import { API } from 'aws-amplify';
+import Loading from '../../../components/Loading';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -24,6 +25,7 @@ export default function Graph({ component, eventId }) {
   const classes = useStyles();
   const theme = useTheme();
   const [startingHour, setStartingHour] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({});
   const [feedback, setFeedback] = useState([]);
 
@@ -106,6 +108,7 @@ export default function Graph({ component, eventId }) {
         console.log(result);
         setFeedback(result.data.feedbackByComponent.items);
         console.log('setfeedbackidlist to result from query');
+        setIsLoading(false);
       });
     } catch (error) {
       console.log(error);
@@ -127,8 +130,6 @@ export default function Graph({ component, eventId }) {
       console.log(sortedFeedback);
       const datas = new Map();
       sortedFeedback.forEach((fb) => {
-        console.log('feedback.sentiment_score: ', fb.sentiment_score);
-        console.log('feeback is: ', feedback);
         const sentimentInput = JSON.parse(
           fb.sentiment_score
         );
@@ -261,6 +262,28 @@ export default function Graph({ component, eventId }) {
               data={{}}
               options={options}
             />
+          </Box>
+        </CardContent>
+        <Divider />
+      </Card>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Card
+        className={classes.root}
+      >
+        <CardHeader
+          title="Sentiment Over Time"
+        />
+        <Divider />
+        <CardContent>
+          <Box
+            height={400}
+            position="relative"
+          >
+            <Loading />
           </Box>
         </CardContent>
         <Divider />
