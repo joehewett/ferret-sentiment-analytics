@@ -46,7 +46,7 @@ const EventQRCode = ({ className, id, ...rest }) => {
             >
               QR Code of the Event
             </Typography>
-            <QRCode value={eventURL} />
+            <QRCode size={64} value={eventURL} />
           </Grid>
         </Grid>
       </CardContent>
