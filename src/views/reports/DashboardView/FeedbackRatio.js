@@ -51,7 +51,7 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
       console.log(error);
     }
   }
-  
+
   async function getComponentsByEvent(eventid) {
     try {
       await API.graphql({
@@ -81,7 +81,7 @@ const FeedbackRatio = ({ className, id, ...rest }) => {
   useEffect(() => {
     getComponentsByEvent(id);
   }, []);
-  
+
   //Count and get Percentage of Each Levels of feedback
   useEffect(() => {
     if (feedbackIdList.length !== 0) {

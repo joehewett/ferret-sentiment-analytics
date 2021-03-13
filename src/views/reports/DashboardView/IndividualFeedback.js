@@ -47,7 +47,7 @@ const IndividualFeedback = ({ component }) => {
           {feedback.response}
         </TableCell>
         <TableCell>
-          {moment(feedback.createdAt).format('lll')}
+          {moment(feedback.createdAt).fromNow()}
         </TableCell>
       </TableRow>
     );

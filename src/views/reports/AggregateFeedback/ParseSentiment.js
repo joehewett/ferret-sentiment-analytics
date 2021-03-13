@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SentimentIndicator from '../DashboardView/SentimentIndicator';
 
-const ParseKeyPhrases = ({ sentimentJson }) => {
+const ParseSentiment = ({ sentimentJson }) => {
   const [sentiment, setSentiment] = useState('');
 
   function parseJson(json) {
@@ -32,8 +32,8 @@ const ParseKeyPhrases = ({ sentimentJson }) => {
   );
 };
 
-ParseKeyPhrases.propTypes = {
+ParseSentiment.propTypes = {
   sentimentJson: PropTypes.string
 };
 
-export default ParseKeyPhrases;
+export default ParseSentiment;
