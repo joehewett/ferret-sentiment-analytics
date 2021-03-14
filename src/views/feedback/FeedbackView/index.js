@@ -17,13 +17,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Account = () => {
+const Feedback = () => {
   const classes = useStyles();
 
   return (
     <Page
       className={classes.root}
-      title="Account"
+      title="Feedback"
     >
       <Container maxWidth="lg">
         <Grid
@@ -44,4 +44,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Feedback;
