@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import Page from 'src/components/Page';
+import { v4 as uuid } from 'uuid';
 import { eventsByUser } from '../../../graphql/queries';
 import Toolbar from './Toolbar';
 import EventCard from './EventCard';
@@ -135,13 +136,14 @@ const EventsList = () => {
           >
             {filteredPosts.map((event) => (
               <Grid
-                key={event.id}
+                key={uuid()}
                 item
                 lg={4}
                 md={6}
                 xs={12}
               >
                 <EventCard
+                  key={uuid()}
                   className={classes.eventCard}
                   event={event}
                   eventCount={eventCount}

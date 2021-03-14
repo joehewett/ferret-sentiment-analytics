@@ -5,6 +5,7 @@ import { componentsByEvent, getEvent } from '../../../graphql/queries';
 import AddComponentForm from './AddComponentForm';
 import FormComponents from './FormComponents';
 import Loading from '../../../components/Loading';
+import FormHeader from './FormHeader';
 
 export default function FeedbackForm() {
   const [components, setComponents] = useState([]);
@@ -66,6 +67,7 @@ export default function FeedbackForm() {
     return (
       <>
         <AddComponentForm id={id} fetchComponents={fetchComponents} />
+        <FormHeader id={id} />
         <FormComponents
           fetchComponents={fetchComponents}
           components={components}
@@ -78,6 +80,7 @@ export default function FeedbackForm() {
   }
   return (
     <>
+      <FormHeader id={id} />
       <FormComponents
         fetchComponents={fetchComponents}
         components={components}

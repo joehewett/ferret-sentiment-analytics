@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateEvent = /* GraphQL */ `
-  subscription OnCreateEvent($owner: String) {
-    onCreateEvent(owner: $owner) {
+  subscription OnCreateEvent {
+    onCreateEvent {
       id
       name
       description
@@ -41,8 +41,8 @@ export const onCreateEvent = /* GraphQL */ `
   }
 `;
 export const onUpdateEvent = /* GraphQL */ `
-  subscription OnUpdateEvent($owner: String) {
-    onUpdateEvent(owner: $owner) {
+  subscription OnUpdateEvent {
+    onUpdateEvent {
       id
       name
       description
@@ -80,8 +80,8 @@ export const onUpdateEvent = /* GraphQL */ `
   }
 `;
 export const onDeleteEvent = /* GraphQL */ `
-  subscription OnDeleteEvent($owner: String) {
-    onDeleteEvent(owner: $owner) {
+  subscription OnDeleteEvent {
+    onDeleteEvent {
       id
       name
       description
@@ -119,8 +119,8 @@ export const onDeleteEvent = /* GraphQL */ `
   }
 `;
 export const onCreateComponent = /* GraphQL */ `
-  subscription OnCreateComponent($owner: String) {
-    onCreateComponent(owner: $owner) {
+  subscription OnCreateComponent {
+    onCreateComponent {
       id
       type
       text
@@ -175,8 +175,8 @@ export const onCreateComponent = /* GraphQL */ `
   }
 `;
 export const onUpdateComponent = /* GraphQL */ `
-  subscription OnUpdateComponent($owner: String) {
-    onUpdateComponent(owner: $owner) {
+  subscription OnUpdateComponent {
+    onUpdateComponent {
       id
       type
       text
@@ -231,8 +231,8 @@ export const onUpdateComponent = /* GraphQL */ `
   }
 `;
 export const onDeleteComponent = /* GraphQL */ `
-  subscription OnDeleteComponent($owner: String) {
-    onDeleteComponent(owner: $owner) {
+  subscription OnDeleteComponent {
+    onDeleteComponent {
       id
       type
       text
@@ -287,8 +287,8 @@ export const onDeleteComponent = /* GraphQL */ `
   }
 `;
 export const onCreateFeedback = /* GraphQL */ `
-  subscription OnCreateFeedback($owner: String) {
-    onCreateFeedback(owner: $owner) {
+  subscription OnCreateFeedback {
+    onCreateFeedback {
       id
       component_id
       response
@@ -334,8 +334,8 @@ export const onCreateFeedback = /* GraphQL */ `
   }
 `;
 export const onUpdateFeedback = /* GraphQL */ `
-  subscription OnUpdateFeedback($owner: String) {
-    onUpdateFeedback(owner: $owner) {
+  subscription OnUpdateFeedback {
+    onUpdateFeedback {
       id
       component_id
       response
@@ -381,8 +381,8 @@ export const onUpdateFeedback = /* GraphQL */ `
   }
 `;
 export const onDeleteFeedback = /* GraphQL */ `
-  subscription OnDeleteFeedback($owner: String) {
-    onDeleteFeedback(owner: $owner) {
+  subscription OnDeleteFeedback {
+    onDeleteFeedback {
       id
       component_id
       response

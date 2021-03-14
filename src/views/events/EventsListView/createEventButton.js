@@ -6,11 +6,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import { API } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 import { createEvent as createEventMutation } from '../../../graphql/mutations';
 /* eslint react/prop-types: 0 */
 
-const initialFormState = { name: '', description: '' };
+const initialFormState = { name: '', description: '', owner: '' };
+
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -40,12 +41,14 @@ export default function CreateEventButton({
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = useState(initialFormState);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+
   async function createEvent() {
     if (!formData.name && !formData.description) return;
     if (formData.endDateTime < formData.startDateTime) {
@@ -53,6 +56,8 @@ export default function CreateEventButton({
       alert("Event's Ending Time can't comes before starting time");
       return;
     }
+    const user = await Auth.currentAuthenticatedUser();
+    formData.owner = user.username;
     console.log('createEventMutation');
     console.log(formData.name);
     console.log(formData.description);
@@ -63,14 +68,17 @@ export default function CreateEventButton({
           input: formData
         },
         authMode: 'AMAZON_COGNITO_USER_POOLS'
+      }).then(() => {
+        setOpen(false);
+        console.log('createEventMutation success');
+        console.log('data form is: ', formData);
+        const myEvents = [...events];
+        const myEventCount = eventCount;
+        setEvents([...myEvents, formData]);
+        console.log('EventCreated');
+        setEventCount(myEventCount + 1);
+        console.log('yes');
       });
-      setOpen(false);
-      console.log('createEventMutation success');
-      console.log('data form is: ', formData);
-      setEvents([...events, formData]);
-      console.log('EventCreated');
-      setEventCount(eventCount + 1);
-      console.log('yes');
     } catch (error) {
       console.log(error);
     }

@@ -7,6 +7,8 @@ type Event @model
          @auth(rules: [
              { allow: owner, operations: [read, create, delete, update]},
              { allow: public, operations: [read, create, delete, update]}
+             { allow: groups, operations: [read, create, delete, update]}
+             { allow: private, operations: [read, create, delete, update]}
          ]) {
                 id: ID!
                 name: String!
@@ -26,6 +28,8 @@ type Component @model
          @auth(rules: [
              { allow: owner, operations: [read, create, delete, update]},
              { allow: public, operations: [read, create, delete, update]}
+             { allow: groups, operations: [read, create, delete, update]}
+             { allow: private, operations: [read, create, delete, update]}
          ]) {
                 id: ID!
                 type: String!
@@ -44,6 +48,8 @@ type Feedback @model
          @auth(rules: [
              { allow: owner, operations: [read, create, delete, update]},
              { allow: public, operations: [read, create, delete, update]}
+             { allow: groups, operations: [read, create, delete, update]}
+             { allow: private, operations: [read, create, delete, update]}
          ]) {
                 id: ID!
                 component_id: ID!
